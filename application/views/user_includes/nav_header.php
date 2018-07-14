@@ -28,13 +28,15 @@
         <meta name="msapplication-TileImage" content="<?= base_url() ?>images/favicon/ms-icon-144x144.png">
         <meta name="theme-color" content="#ffffff">
         
+        <script src="<?= base_url() ?>assets/lumino_template/js/jquery-1.11.1.min.js"></script>
+        <script src="<?= base_url() ?>assets/lumino_template/js/bootstrap.min.js"></script>
         <!--Custom Font-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->
-        
+
         <style>
             /* - CUSTOM STYLE - */
             .navbar-header img {
@@ -45,11 +47,13 @@
                 background:rgb(244,211,12);
                 background: linear-gradient(135deg, rgb(244,211,12) 50%, rgba(0,114,54,1) 50%);
             }
-            
+
         </style>
+
+
     </head>
     <body>
-        
+
         <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -57,27 +61,27 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span></button>
-                        <a class="navbar-brand" href="<?= base_url()?>userdashboard"><img src = "<?= base_url()?>images/logo.png"></a>
+                    <a class="navbar-brand" href="<?= base_url() ?>userdashboard"><img src = "<?= base_url() ?>images/logo.png"></a>
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
         <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
             <div class="profile-sidebar">
                 <div class="profile-userpic">
-                    <img src="<?= base_url().$currentuser->user_picture?>" class="img-responsive" alt="">
+                    <img src="<?= base_url() . $currentuser->user_picture ?>" class="img-responsive" alt="">
                 </div>
                 <div class="profile-usertitle">
-                    <div class="profile-usertitle-name"><?= $currentuser->user_lastname?>, <?= $currentuser->user_firstname." ".substr($currentuser->user_middlename, 0,1)."."?> </div>
-                    <div class="profile-usertitle-status"><?= $currentuser->user_number?></div>
+                    <div class="profile-usertitle-name"><?= $currentuser->user_lastname ?>, <?= $currentuser->user_firstname . " " . substr($currentuser->user_middlename, 0, 1) . "." ?> </div>
+                    <div class="profile-usertitle-status"><?= $currentuser->user_number ?></div>
                 </div>
                 <div class="clear"></div>
             </div>
             <div class="divider"></div>
             <ul class="nav menu">
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userdashboard") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url()?>userdashboard"><em class="fa fa-home">&nbsp;</em> Home</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userprofile") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url()?>userprofile"><em class="fa fa-user">&nbsp;</em> <?= ucfirst($currentuser->user_access)?> Profile</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userviolation") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url()?>userviolation"><em class="fa fa-exclamation-triangle">&nbsp;</em> <?= ucfirst($currentuser->user_access)?> Violation</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userincidentreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url()?>userincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Report</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userdashboard") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userdashboard"><em class="fa fa-home">&nbsp;</em> Home</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userprofile") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userprofile"><em class="fa fa-user">&nbsp;</em> <?= ucfirst($currentuser->user_access) ?> Profile</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userviolation") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userviolation"><em class="fa fa-exclamation-triangle">&nbsp;</em> <?= ucfirst($currentuser->user_access) ?> Violation</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userincidentreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Report</a></li>
                 <li class="parent">
                     <a data-toggle="collapse" href="#dussap">
                         <em class="fa fa-calendar-alt">&nbsp;</em> DUSSAP <span data-toggle="collapse" href="#dussap" class="icon pull-right"><em class="fa fa-plus"></em></span>
@@ -105,14 +109,14 @@
                         </li>
                     </ul>
                 </li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "useroffensereport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url()?>useroffensereport"><em class="fa fa-exclamation-circle">&nbsp;</em> Offense Report</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "studenthandbook") !== FALSE ? "active" : ""; ?>"><a href="<?=  base_url()?>studenthandbook"><em class="fa fa-book-open">&nbsp;</em> Student Handbook</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "usernotification") !== FALSE ? "active" : ""; ?>"><a href="<?=  base_url()?>usernotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "faq") !== FALSE ? "active" : ""; ?>"><a href="<?=  base_url()?>faq"><em class="fa fa-lightbulb">&nbsp;</em> FAQ</a></li>
-                <li><a href="<?=  base_url()?>logout"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "useroffensereport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>useroffensereport"><em class="fa fa-exclamation-circle">&nbsp;</em> Offense Report</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "studenthandbook") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>studenthandbook"><em class="fa fa-book-open">&nbsp;</em> Student Handbook</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "usernotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>usernotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "faq") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>faq"><em class="fa fa-lightbulb">&nbsp;</em> FAQ</a></li>
+                <li><a href="<?= base_url() ?>logout"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
-        
+
         <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
         <!-- Start of content -->
         <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">

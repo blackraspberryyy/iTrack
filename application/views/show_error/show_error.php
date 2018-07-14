@@ -41,3 +41,21 @@
         </button>
     </div>
 <?php endif; ?>
+
+<?php if (!empty($this->session->flashdata("uploading_error"))): ?>
+    <div class="alert alert-danger alert-dismissible show" role="alert">
+        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("uploading_error"); ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php endif; ?>
+
+<?php if (!empty($this->session->flashdata("uploading_success"))): ?>
+    <div class="alert alert-success alert-dismissible show" role="alert">
+        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("uploading_success"); ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php endif; ?>

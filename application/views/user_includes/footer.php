@@ -4,15 +4,14 @@
     </footer>    
 </div><!--/.main-->
 
-<script src="<?= base_url() ?>assets/lumino_template/js/jquery-1.11.1.min.js"></script>
-<script src="<?= base_url() ?>assets/lumino_template/js/bootstrap.min.js"></script>
+
 <script src="<?= base_url() ?>assets/lumino_template/js/chart.min.js"></script>
 <script src="<?= base_url() ?>assets/lumino_template/js/chart-data.js"></script>
 <script src="<?= base_url() ?>assets/lumino_template/js/easypiechart.js"></script>
 <script src="<?= base_url() ?>assets/lumino_template/js/easypiechart-data.js"></script>
 <script src="<?= base_url() ?>assets/lumino_template/js/bootstrap-datepicker.js"></script>
 <script src="<?= base_url() ?>assets/lumino_template/js/custom.js"></script>
-<script>
+<!--<script>
     window.onload = function () {
         var chart1 = document.getElementById("line-chart").getContext("2d");
         window.myLine = new Chart(chart1).Line(lineChartData, {
@@ -22,6 +21,6 @@
             scaleFontColor: "#c5c7cc"
         });
     };
-</script>
+</script>-->
 </body>
 </html>
