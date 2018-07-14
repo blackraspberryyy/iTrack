@@ -38,11 +38,11 @@ class AdminIncidentReport_model extends CI_Model {
         return $this->db->affected_rows();
     }
     
-    function get_student_id($student_number){
+    function get_user_id($user_number){
         $table = "user";
         $where = array(
             "user_access" => "student",
-            "user_number" => $student_number
+            "user_number" => $user_number
         );
         if ($where !== NULL) {
             $this->db->where($where);

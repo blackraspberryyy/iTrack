@@ -8,21 +8,21 @@
 <script type="text/javascript">
     window.onload = function () {
 
-        $(document).on("focus keyup", "#student_number.autocomplete", function () {
+        $(document).on("focus keyup", "#user_number.autocomplete", function () {
             $.ajax({
                 "method": "POST",
-                "url": '<?= base_url() ?>' + "adminincidentreport/search_student_number",
+                "url": '<?= base_url() ?>' + "adminincidentreport/search_user_number",
                 "dataType": "JSON",
                 "data": {
                     'id': $(".autocomplete").val()
                 },
                 success: function (res) {
-                    $("#student_number_menu").empty();
+                    $("#user_number_menu").empty();
                     if (res.length == 0) {
-                        $("#student_number_menu").append("<li class = 'no-matches'><a>No match found</a></li>");
+                        $("#user_number_menu").append("<li class = 'no-matches'><a>No match found</a></li>");
                     } else {
                         for (var i = 0; i < res.length; i++) {
-                            $("#student_number_menu").append("<li data-firstname = '" + res[i].user_firstname + "' data-lastname = '" + res[i].user_lastname + "' data-middlename = '" + res[i].user_middlename + "'><a>" + res[i].user_number + "</a></li>");
+                            $("#user_number_menu").append("<li title = '" +res[i].user_firstname +" "+res[i].user_lastname +"' data-firstname = '" + res[i].user_firstname + "' data-lastname = '" + res[i].user_lastname + "' data-middlename = '" + res[i].user_middlename + "'><a>" + res[i].user_number + "</a></li>");
                         }
                     }
                 },
@@ -60,9 +60,9 @@
             // Cache useful selectors
             $li = $(this);
             $input = $li.parent("ul").prev("input");
-            $firstname = $("#student_firstname");
-            $lastname = $("#student_lastname");
-            $middlename = $("#student_middlename");
+            $firstname = $("#user_firstname");
+            $lastname = $("#user_lastname");
+            $middlename = $("#user_middlename");
 
             // Update input text with selected entry
             if (!$li.is(".no-matches")) {
@@ -116,7 +116,7 @@
     </div>
 </div>
 
-<form action = "<?= base_url() ?>adminincidentreport/incident_report_exec" method="POST">
+<form action = "<?= base_url() ?>adminincidentreport/incident_report_exec" method="POST" autocomplete="off">
     <div class ="row">
         <div class = "col-xs-8 col-sm-offset-2">
             <div class = "row">
@@ -157,58 +157,58 @@
                 </div>
                 <div class = "col-sm-6 <?= !empty(form_error("place")) ? "has-error" : ""; ?>">
                     <span class="control-label">Place of the Offense Committed</span>
-                    <input type="text" class="form-control" name = "place" placeholder="Type Here">
+                    <input type="text" class="form-control" name = "place" placeholder="Type Here" value = "<?= set_value("place") ?>">
                     <small><?= form_error("place") ?></small>
                 </div>
             </div>
             <br/>
             <div class ="row">
-                <div class = "col-sm-8 col-sm-offset-2 <?= !empty(form_error("student_number")) ? "has-error" : ""; ?>" >
-                    <span class="control-label">Student Number</span><br/>
-                    <input onkeypress = 'return keypresshandler(event)' maxlength="9" type="text" class="form-control autocomplete" name = "student_number" id = "student_number" placeholder="Type Here" data-toggle="dropdown" value = "<?= set_value("student_number") ?>">
-                    <ul class="dropdown-menu " role="menu" id = "student_number_menu" style="width:100%;"></ul>          
-                    <small><?= form_error("student_number") ?></small>
+                <div class = "col-sm-8 col-sm-offset-2 <?= !empty(form_error("user_number")) ? "has-error" : ""; ?>" >
+                    <span class="control-label">User Number</span><br/>
+                    <input onkeypress = 'return keypresshandler(event)' maxlength="9" type="text" class="form-control autocomplete" name = "user_number" id = "user_number" placeholder="Type Here" data-toggle="dropdown" value = "<?= set_value("user_number") ?>" >
+                    <ul class="dropdown-menu " role="menu" id = "user_number_menu" style="width:100%;"></ul>          
+                    <small><?= form_error("user_number") ?></small>
                 </div>
 
             </div>
             <div class ="row">
                 <div class = "col-sm-8 col-sm-offset-2">
                     <br/>
-                    <div class = "<?= !empty(form_error("student_lastname")) ? "has-error" : ""; ?>">
+                    <div class = "<?= !empty(form_error("user_lastname")) ? "has-error" : ""; ?>">
                         <span class="control-label">Lastname</span><br/>
-                        <input type="text" class="form-control" name = "student_lastname" id = "student_lastname" placeholder="Lastname" readonly="" value = "<?= set_value("student_lastname") ?>">
-                        <small><?= form_error("student_lastname") ?></small>
+                        <input type="text" class="form-control" name = "user_lastname" id = "user_lastname" placeholder="Lastname" readonly="" value = "<?= set_value("user_lastname") ?>">
+                        <small><?= form_error("user_lastname") ?></small>
                         <br/>
                     </div>
-                    <div class = "<?= !empty(form_error("student_firstname")) ? "has-error" : ""; ?>">
+                    <div class = "<?= !empty(form_error("user_firstname")) ? "has-error" : ""; ?>">
                         <span class="control-label">Firstname</span><br/>
-                        <input type="text" class="form-control" name = "student_firstname" id = "student_firstname" placeholder="Firstname" readonly="" value = "<?= set_value("student_firstname") ?>">
-                        <small><?= form_error("student_firstname") ?></small>
+                        <input type="text" class="form-control" name = "user_firstname" id = "user_firstname" placeholder="Firstname" readonly="" value = "<?= set_value("user_firstname") ?>">
+                        <small><?= form_error("user_firstname") ?></small>
                         <br/>
                     </div>
                     <span class="control-label">Middlename</span><br/>
-                    <input type="text" class="form-control" name = "student_middlename" id = "student_middlename" placeholder="Middlename" readonly="">
+                    <input type="text" class="form-control" name = "user_middlename" id = "user_middlename" placeholder="Middlename" readonly="">
                 </div>
             </div>
             <div class = "row">
-                <div class = "col-xs-3 col-xs-offset-2 <?= !empty(form_error("student_age")) ? "has-error" : ""; ?>">
+                <div class = "col-xs-3 col-xs-offset-2 <?= !empty(form_error("user_age")) ? "has-error" : ""; ?>">
                     <br/>
                     <span class="control-label">Age</span><br/>
-                    <input type="text" maxlength="3" onkeypress = 'return keypresshandler(event)' class="form-control" name = "student_age" id = "student_age" placeholder="Age" value = "<?= set_value("student_age") ?>">
-                    <small><?= form_error("student_age") ?></small>
+                    <input type="text" maxlength="3" onkeypress = 'return keypresshandler(event)' class="form-control" name = "user_age" id = "user_age" placeholder="Age" value = "<?= set_value("user_age") ?>">
+                    <small><?= form_error("user_age") ?></small>
                 </div>
-                <div class = "col-xs-5 <?= !empty(form_error("student_course_section_year")) ? "has-error" : ""; ?>">
+                <div class = "col-xs-5 <?= !empty(form_error("user_course_section_year")) ? "has-error" : ""; ?>">
                     <br/>
                     <span class="control-label">Course/Section/Year</span><br/>
-                    <input type="text" class="form-control" name = "student_course_section_year" id = "student_course_section_year" placeholder="Type Here" value = "<?= set_value("student_course_section_year") ?>">
-                    <small><?= form_error("student_course_section_year") ?></small>
+                    <input type="text" class="form-control" name = "user_course_section_year" id = "user_course_section_year" placeholder="Type Here" value = "<?= set_value("user_course_section_year") ?>">
+                    <small><?= form_error("user_course_section_year") ?></small>
                 </div>
             </div>
             <div class = "row">
                 <div class = "col-xs-8 col-xs-offset-2 <?= !empty(form_error("message")) ? "has-error" : ""; ?>">
                     <br/>
                     <span class="control-label">Message</span><br/>
-                    <textarea class="form-control" rows ="5" name = "message" style = "resize: none;" placeholder="Write a message. . ." value = "<?= set_value("message") ?>"></textarea>
+                    <textarea class="form-control" rows ="5" name = "message" style = "resize: none;" placeholder="Write a message. . ."><?= set_value("message") ?></textarea>
                     <small><?= form_error("message") ?></small>
                     <br/>
                     <center>
