@@ -7,7 +7,11 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li><a href="<?= base_url() ?>admindashboard">
+            <?php if($this->session->userdata("useraccess") == "admin"):?>
+                <li><a href="<?= base_url() ?>admindashboard">
+            <?php else:?>
+                <li><a href="<?= base_url() ?>userdashboard">
+            <?php endif;?>
                     <em class="fa fa-home"></em>
                 </a></li>
             <li class="active">Student Handbook</li>

@@ -25,15 +25,15 @@ class StudentHandbook extends CI_Controller {
             $this->load->view("admin_includes/footer");
         } else {
             $where = array(
-                "student_id" => $this->session->userdata("userid")
+                "user_id" => $this->session->userdata("userid")
             );
             $data = array(
                 "title" => "Student Handbook",
-                'currentstudent' => $this->StudentDashboard_model->getStudent($where)[0]
+                'currentuser' => $this->UserDashboard_model->getUser($where)[0]
             );
-            $this->load->view("student_includes/nav_header", $data);
+            $this->load->view("user_includes/nav_header", $data);
             $this->load->view("student_handbook/student_handbook");
-            $this->load->view("student_includes/footer");
+            $this->load->view("user_includes/footer");
         }
     }
 

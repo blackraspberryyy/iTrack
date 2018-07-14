@@ -136,6 +136,6 @@ $autoload['model'] = array(
     "Login_model",
     "AdminDashboard_model",
     "Sms_model",
-    "StudentDashboard_model",
+    "UserDashboard_model",
     "AdminIncidentReport_model"
     );

@@ -18,7 +18,7 @@ class Login extends CI_Controller {
 
     public function login_exec() {
         $credentials = array(
-            "user_number" => $this->input->post("studentnumber"),
+            "user_number" => $this->input->post("usernumber"),
             "user_password" => sha1($this->input->post("password"))
         );
 
@@ -38,7 +38,7 @@ class Login extends CI_Controller {
                 $this->session->set_userdata('isloggedin', true);
                 $this->session->set_userdata('userid', $getUser->user_id);
                 $this->session->set_userdata('useraccess', $getUser->user_access);
-                redirect(base_url() . 'studentdashboard/');
+                redirect(base_url() . 'userdashboard/');
             }
         }
     }

@@ -104,7 +104,7 @@
                                 <form action = "<?= base_url() ?>login/login_exec" method ="POST">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class = "fa fa-user" id="basic-addon1"></i></span>
-                                        <input type="text" class="form-control" id="studentnumber" name = "studentnumber" placeholder="Student Number" aria-describedby="basic-addon1" autocomplete="off" autofocus="true">
+                                        <input type="text" class="form-control" id="usernumber" name = "usernumber" placeholder="User Number" aria-describedby="basic-addon1" autocomplete="off" autofocus="true">
                                     </div>
                                     <br/>
                                     <div class="input-group">
