@@ -22,7 +22,7 @@
                         $("#user_number_menu").append("<li class = 'no-matches'><a>No match found</a></li>");
                     } else {
                         for (var i = 0; i < res.length; i++) {
-                            $("#user_number_menu").append("<li title = '" +res[i].user_firstname +" "+res[i].user_lastname +"' data-firstname = '" + res[i].user_firstname + "' data-lastname = '" + res[i].user_lastname + "' data-middlename = '" + res[i].user_middlename + "'><a>" + res[i].user_number + "</a></li>");
+                            $("#user_number_menu").append("<li title = '" + res[i].user_firstname + " " + res[i].user_lastname + "' data-firstname = '" + res[i].user_firstname + "' data-lastname = '" + res[i].user_lastname + "' data-middlename = '" + res[i].user_middlename + "' data-course = '" + res[i].user_course + "' data-access = '" + res[i].user_access + "'><a>" + res[i].user_number + "</a></li>");
                         }
                     }
                 },
@@ -63,6 +63,8 @@
             $firstname = $("#user_firstname");
             $lastname = $("#user_lastname");
             $middlename = $("#user_middlename");
+            $course = $("#user_course");
+            $access = $("#user_access");
 
             // Update input text with selected entry
             if (!$li.is(".no-matches")) {
@@ -70,6 +72,8 @@
                 $firstname.val($li.data('firstname'));
                 $lastname.val($li.data('lastname'));
                 $middlename.val($li.data('middlename'));
+                $course.val($li.data('course'));
+                $access.val($li.data('access'));
             }
         });
 
@@ -97,7 +101,14 @@
                 $("#nature").prop("disabled", true);
                 $("#nature").val($(this).find(":selected").attr("data-type"));
             }
-        })
+        });
+
+        $('.datetimepicker').datetimepicker({
+            maxDate: moment()
+        }).on('dp.show', function () {
+            $('#datetimepicker').data("DateTimePicker").maxDate(moment());
+        });
+
     });
 </script>
 
@@ -191,19 +202,35 @@
                 </div>
             </div>
             <div class = "row">
+                <div class = "col-xs-4 col-xs-offset-2 <?= !empty(form_error("user_course")) ? "has-error" : ""; ?>">
+                    <br/>
+                    <span class="control-label">Course</span><br/>
+                    <input type="text" class="form-control" name = "user_course" id = "user_course" placeholder="Course" readonly="" value = "<?= set_value("user_course") ?>">
+                    <small><?= form_error("user_course") ?></small>
+                </div>
+                <div class = "col-xs-4 <?= !empty(form_error("user_access")) ? "has-error" : ""; ?>">
+                    <br/>
+                    <span class="control-label">User Access</span><br/>
+                    <input type="text" class="form-control" name = "user_access" id = "user_access" placeholder="User Access" readonly="" value = "<?= set_value("user_access") ?>">
+                    <small><?= form_error("user_access") ?></small>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class = "col-xs-3 col-xs-offset-2 <?= !empty(form_error("user_age")) ? "has-error" : ""; ?>">
                     <br/>
                     <span class="control-label">Age</span><br/>
                     <input type="text" maxlength="3" onkeypress = 'return keypresshandler(event)' class="form-control" name = "user_age" id = "user_age" placeholder="Age" value = "<?= set_value("user_age") ?>">
                     <small><?= form_error("user_age") ?></small>
                 </div>
-                <div class = "col-xs-5 <?= !empty(form_error("user_course_section_year")) ? "has-error" : ""; ?>">
+                <div class = "col-xs-5 <?= !empty(form_error("user_section_year")) ? "has-error" : ""; ?>">
                     <br/>
-                    <span class="control-label">Course/Section/Year</span><br/>
-                    <input type="text" class="form-control" name = "user_course_section_year" id = "user_course_section_year" placeholder="Type Here" value = "<?= set_value("user_course_section_year") ?>">
-                    <small><?= form_error("user_course_section_year") ?></small>
+                    <span class="control-label">Section/Year</span><br/>
+                    <input type="text" class="form-control" name = "user_section_year" id = "user_section_year" placeholder="Type Here" value = "<?= set_value("user_section_year") ?>">
+                    <small><?= form_error("user_section_year") ?></small>
                 </div>
             </div>
+
             <div class = "row">
                 <div class = "col-xs-8 col-xs-offset-2 <?= !empty(form_error("message")) ? "has-error" : ""; ?>">
                     <br/>

@@ -46,6 +46,8 @@ class AdminIncidentReport extends CI_Controller {
             $res[$key]['user_firstname'] = $arr['user_firstname'];
             $res[$key]['user_lastname'] = $arr['user_lastname'];
             $res[$key]['user_middlename'] = $arr['user_middlename'];
+            $res[$key]['user_course'] = $arr['user_course'];
+            $res[$key]['user_access'] = $arr['user_access'];
             $res[$key]['user_picture'] = $arr['user_picture'];
         }
         echo json_encode($res);
@@ -60,8 +62,10 @@ class AdminIncidentReport extends CI_Controller {
         $this->form_validation->set_rules('user_number', 'User Number', 'required|integer');
         $this->form_validation->set_rules('user_lastname', 'Lastname', 'required');
         $this->form_validation->set_rules('user_firstname', 'Firstname', 'required');
-        $this->form_validation->set_rules('user_age', 'Firstname', 'required|max_length[3]|integer');
-        //$this->form_validation->set_rules('user_course_section_year', 'Course/Section/Year', 'required');
+        $this->form_validation->set_rules('user_age', 'Age', 'required|max_length[3]|integer');
+        $this->form_validation->set_rules('user_course', 'Course', 'required');
+        $this->form_validation->set_rules('user_access', 'Access', 'required');
+        $this->form_validation->set_rules('user_section_year', 'Section/Year', 'required');
         $this->form_validation->set_rules('message', 'Message', 'required');
 
         if ($this->form_validation->run() == FALSE) {
@@ -105,7 +109,7 @@ class AdminIncidentReport extends CI_Controller {
                 "incident_report_datetime" => strtotime($this->input->post("date_time")),
                 "incident_report_place" => $this->input->post("place"),
                 "incident_report_age" => $this->input->post("user_age"),
-                "incident_report_course_section_year" => $this->input->post("user_course_section_year"),
+                "incident_report_section_year" => $this->input->post("user_section_year"),
                 "incident_report_message" => $this->input->post("message"),
                 "incident_report_added_at" => time()
             );
