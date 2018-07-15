@@ -71,7 +71,7 @@
                     <img src="<?= base_url() . $currentuser->user_picture ?>" class="img-responsive" alt="">
                 </div>
                 <div class="profile-usertitle">
-                    <div class="profile-usertitle-name"><?= $currentuser->user_lastname ?>, <?= $currentuser->user_firstname . " " . substr($currentuser->user_middlename, 0, 1) . "." ?> </div>
+                    <div class="profile-usertitle-name"><?= $currentuser->user_lastname ?>, <?= $currentuser->user_firstname?> <?=substr($currentuser->user_middlename, 0, 1) == ""? "" : substr($currentuser->user_middlename, 0, 1).".";?></div>
                     <div class="profile-usertitle-status"><?= $currentuser->user_number ?></div>
                 </div>
                 <div class="clear"></div>

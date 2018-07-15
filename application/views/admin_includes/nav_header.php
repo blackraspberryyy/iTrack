@@ -76,7 +76,7 @@
                     <img src="<?= base_url().$currentadmin->admin_picture?>" class="img-responsive" alt="">
                 </div>
                 <div class="profile-usertitle">
-                    <div class="profile-usertitle-name"><?= $currentadmin->admin_lastname.", ".$currentadmin->admin_firstname." ".  substr($currentadmin->admin_middlename, 0,1)."."?> </div>
+                    <div class="profile-usertitle-name"><?= $currentadmin->admin_lastname.", ".$currentadmin->admin_firstname?> <?= substr($currentadmin->admin_middlename, 0,1) == "" ? "" : substr($currentadmin->admin_middlename, 0,1)."."?></div>
                     <div class="profile-usertitle-status"><?= $currentadmin->admin_title?></div>
                 </div>
                 <div class="clear"></div>

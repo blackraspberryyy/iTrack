@@ -23,7 +23,7 @@ class UserProfile extends CI_Controller {
             "user_id" => $this->session->userdata("userid")
         );
         $data = array(
-            "title" => "Home",
+            "title" => ucfirst($this->session->userdata("useraccess")) . "'s Profile",
             'currentuser' => $this->UserDashboard_model->getUser($where)[0]
         );
         $this->load->view("user_includes/nav_header", $data);
@@ -72,8 +72,7 @@ class UserProfile extends CI_Controller {
             } else {
                 echo $this->upload->display_errors();
                 $this->session->set_flashdata("uploading_error", "Please make sure that the max size is 5MB the types may only be .jpg, .jpeg, .gif, .png");
-                redirect(base_url()."userprofile");
-                
+                redirect(base_url() . "userprofile");
             }
         } else {
             // IF PICTURE IS EMPTY
@@ -81,16 +80,43 @@ class UserProfile extends CI_Controller {
         }
 
         $data = array(
-            "user_picture"      => $imagePath,
-            "user_updated_at"   => time()
+            "user_picture" => $imagePath,
+            "user_updated_at" => time()
         );
-        
-        if($this->UserProfile_model->update_user($data, $this->session->userdata("userid"))){
+
+        if ($this->UserProfile_model->update_user($data, $this->session->userdata("userid"))) {
             $this->session->set_flashdata("uploading_success", "Picture Successfully Changed");
-            redirect(base_url()."userprofile");
-        }else{
+            redirect(base_url() . "userprofile");
+        } else {
             $this->session->set_flashdata("uploading_error", "Something went wrong. Reupload your picture");
-            redirect(base_url()."userprofile");
+            redirect(base_url() . "userprofile");
+        }
+    }
+
+    public function change_password_exec() {
+        $this->form_validation->set_rules('password', "Password", "required|min_length[8]");
+        $this->form_validation->set_rules('confpassword', "Confirm Password", "required|min_length[8]");
+        if ($this->form_validation->run() == FALSE) {
+            //ERROR IN FORM
+            $this->session->set_flashdata("err_profile", "Password must be atleast 8 characters");
+            echo form_error();
+            die;
+            //redirect(base_url() . "userprofile");
+        } else {
+            $password = $this->input->post("password");
+            $confpassword = $this->input->post("confpassword");
+
+            if ($password != $confpassword) {
+                $this->session->set_flashdata("err_profile", "password and Confirm Password does not match.");
+                redirect(base_url() . "userprofile");
+            } else {
+                $data = array(
+                    "user_password" => sha1($password)
+                );
+                $this->UserProfile_model->update_user($data, $this->session->userdata("userid"));
+                $this->session->set_flashdata("success_profile", "Password changed.");
+                redirect(base_url() . "userprofile");
+            }
         }
     }
 

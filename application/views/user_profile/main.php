@@ -5,6 +5,7 @@
         overflow: hidden;
         border-radius: 50%;
         margin:20px auto;
+        box-shadow: 0px 0px 10px gray;
     }
 
     .image-cropper img {
@@ -12,6 +13,9 @@
         margin: 0 auto;
         height: 100%;
         width: auto;
+    }
+    .form-control:read-only { 
+        background-color: white;
     }
     .btn-file {
         position: relative;
@@ -48,16 +52,48 @@
     </ol>
 </div><!--/.row breadcrumb-->
 
-<form action = "<?= base_url() ?>userprofile/change_profile_exec" method="POST">
-    <div class = "row">
-        <div class = "col-xs-10 col-xs-offset-1 text-center">
-            <div class="image-cropper">
-                <img src = "<?= base_url() . $currentuser->user_picture ?>" alt="<?= $currentuser->user_firstname . " " . $currentuser->user_lastname ?>">
-            </div>
-            <button type = "button" class = "btn btn-primary" data-toggle="modal" data-target="#change_picture">Change Picture</button>
+<div class = "row">
+    <div class = "col-sm-3 text-center">
+        <div class="image-cropper" >
+            <img src = "<?= base_url() . $currentuser->user_picture ?>" alt="<?= $currentuser->user_firstname . " " . $currentuser->user_lastname ?>">
         </div>
+        <button type = "button" class = "btn btn-primary" data-toggle="modal" data-target="#change_picture"><i class="fa fa-images"></i> Change Picture</button>
     </div>
-</form>
+    <div class = "col-sm-9" style="padding:15px;">
+        <div class ="row">
+            <div class ="col-md-4">
+                <span>Firstname</span>
+                <input type = "text" class = "form-control" value = "<?= $currentuser->user_firstname ?>" readonly="">
+            </div>
+            <div class ="col-md-4">
+                <span>Middlename</span>
+                <input type = "text" class = "form-control" value = "<?= $currentuser->user_middlename ?>" readonly="">
+            </div>
+            <div class ="col-md-4">
+                <span>Lastname</span>
+                <input type = "text" class = "form-control" value = "<?= $currentuser->user_lastname ?>" readonly="">
+            </div>
+        </div>
+        <div class="row" style = "margin-top:10px">
+            <div class ="col-md-4">
+                <span><?= ucfirst($currentuser->user_access) ?> Number</span>
+                <input type = "text" class = "form-control" value = "<?= $currentuser->user_number ?>" readonly="">
+            </div>
+            <div class ="col-md-4">
+                <span>Course</span>
+                <input type = "text" class = "form-control" value = "<?= $currentuser->user_course ?>" readonly="">
+            </div>
+        </div>
+        <br/>
+        <center>
+            <button class = "btn btn-primary" data-toggle="modal" data-target="#change_password"><i class="fa fa-pen"></i> Change Password</button>
+        </center>
+    </div>
+
+</div>
+
+<!-- TENTATIVE IDEA HERE: Display Audit Logs of this user -->
+
 
 <script>
     $(document).ready(function () {
@@ -117,6 +153,42 @@
                         <input type="text" class="form-control" readonly>
                     </div>
                     <img id='img-upload'/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal fade" id="change_password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <form action = "<?= base_url() ?>userprofile/change_password_exec" method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Change Password</h4>
+                </div>
+                <div class="modal-body">
+                    <div class = "row">
+                        <div class = "col-xs-6">
+                            <div class="form-group <?= !empty(form_error("password")) ? "has-error" : ""; ?>">
+                                <span class="control-label">Password</span>
+                                <input type="password" class="form-control" name = "password" placeholder="Password">
+                                <small><?= form_error("password") ?></small>
+                            </div>
+                        </div>
+                        <div class = "col-xs-6">
+                            <div class="form-group">
+                                <span class="control-label">Confirm Password</span>
+                                <input type="password" class="form-control" name = "confpassword" placeholder="Confirm Password" >
+                                <small><?= form_error("confpassword") ?></small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
