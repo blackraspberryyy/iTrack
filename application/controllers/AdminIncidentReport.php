@@ -24,11 +24,13 @@ class AdminIncidentReport extends CI_Controller {
         );
 
         $data = array(
-            "title" => "Incident Report",
-            'currentadmin' => $this->AdminDashboard_model->getAdmin($where)[0],
-            'violations' => $this->AdminIncidentReport_model->getViolations()
+            "title"             => "Incident Report",
+            'currentadmin'      => $this->AdminDashboard_model->getAdmin($where)[0],
+            'violations'        => $this->AdminIncidentReport_model->getViolations(),
+            'incident_reports'  => $this->AdminIncidentReport_model->getIncidentReport()
         );
-
+        
+        
         $this->load->view("admin_includes/nav_header", $data);
         $this->load->view("admin_incident_report/main");
         $this->load->view("admin_includes/footer");
@@ -57,15 +59,19 @@ class AdminIncidentReport extends CI_Controller {
         if ($this->input->post("classification") == "0") {
             $this->form_validation->set_rules('classification_other', 'Name of Violation', 'required');
         }
+        
+        if ($this->input->post("user_course") == "student"){
+            $this->form_validation->set_rules('user_course', 'Course', 'required');
+            $this->form_validation->set_rules('user_section_year', 'Section/Year', 'required');
+        }
+        
         $this->form_validation->set_rules('date_time', 'Date and Time', 'required');
         $this->form_validation->set_rules('place', 'Place', 'required');
         $this->form_validation->set_rules('user_number', 'User Number', 'required|integer');
         $this->form_validation->set_rules('user_lastname', 'Lastname', 'required');
         $this->form_validation->set_rules('user_firstname', 'Firstname', 'required');
         $this->form_validation->set_rules('user_age', 'Age', 'required|max_length[3]|integer');
-        $this->form_validation->set_rules('user_course', 'Course', 'required');
         $this->form_validation->set_rules('user_access', 'Access', 'required');
-        $this->form_validation->set_rules('user_section_year', 'Section/Year', 'required');
         $this->form_validation->set_rules('message', 'Message', 'required');
 
         if ($this->form_validation->run() == FALSE) {
@@ -84,10 +90,6 @@ class AdminIncidentReport extends CI_Controller {
             $this->load->view("admin_incident_report/main");
             $this->load->view("admin_includes/footer");
         } else {
-            echo "<pre>";
-            print_r($this->input->post());
-            echo "</pre>";
-            die;
             $currentAdmin = $this->AdminIncidentReport_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0];
             if ($this->input->post("classification") == "0") {
                 $violation = array(
@@ -101,9 +103,9 @@ class AdminIncidentReport extends CI_Controller {
             }else{
                 $violation_id = $this->input->post("classification");
             }
-
+            
             $incident_report = array(
-                "admin_id" => $currentAdmin->admin_id,
+                "admin_reported_by" => $currentAdmin->admin_id,
                 "user_id" => $this->AdminIncidentReport_model->get_user_id($this->input->post("user_number"))[0]->user_id,
                 "violation_id" => $violation_id,
                 "incident_report_datetime" => strtotime($this->input->post("date_time")),
@@ -115,6 +117,7 @@ class AdminIncidentReport extends CI_Controller {
             );
             $this->AdminIncidentReport_model->insert_incident_report($incident_report);
             $this->session->set_flashdata("success_incident_report", "Incident Report successfully recorded.");
+            redirect(base_url()."adminincidentreport");
         }
     }
 
