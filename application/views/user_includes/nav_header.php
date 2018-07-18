@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         <link href="<?= base_url() ?>assets/lumino_template/css/datepicker3.css" rel="stylesheet">
         <link href="<?= base_url() ?>assets/lumino_template/css/styles.css" rel="stylesheet">
-
+        <!-- Page level plugin CSS-->
+        <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
         <!-- FAVICON COMPATIBILITY -->
         <link rel="apple-touch-icon" sizes="57x57" href="<?= base_url() ?>images/favicon/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="<?= base_url() ?>images/favicon/apple-icon-60x60.png">
@@ -27,7 +28,7 @@
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="<?= base_url() ?>images/favicon/ms-icon-144x144.png">
         <meta name="theme-color" content="#ffffff">
-        
+
         <script src="<?= base_url() ?>assets/lumino_template/js/jquery-1.11.1.min.js"></script>
         <script src="<?= base_url() ?>assets/lumino_template/js/bootstrap.min.js"></script>
         <!--Custom Font-->
@@ -71,7 +72,7 @@
                     <img src="<?= base_url() . $currentuser->user_picture ?>" class="img-responsive" alt="">
                 </div>
                 <div class="profile-usertitle">
-                    <div class="profile-usertitle-name"><?= $currentuser->user_lastname ?>, <?= $currentuser->user_firstname?> <?=substr($currentuser->user_middlename, 0, 1) == ""? "" : substr($currentuser->user_middlename, 0, 1).".";?></div>
+                    <div class="profile-usertitle-name"><?= $currentuser->user_lastname ?>, <?= $currentuser->user_firstname ?> <?= substr($currentuser->user_middlename, 0, 1) == "" ? "" : substr($currentuser->user_middlename, 0, 1) . "."; ?></div>
                     <div class="profile-usertitle-status"><?= $currentuser->user_number ?></div>
                 </div>
                 <div class="clear"></div>
