@@ -59,7 +59,7 @@ class AdminIncidentReport_model extends CI_Model {
         $on1 = "incident_report.user_id = user1.user_id";
         $on2 = "incident_report.violation_id = violation.violation_id";
         $on3 = "incident_report.admin_reported_by = admin.admin_id";
-        $on4 = "incident_report.student_reported_by = student_reported_by.user_id";
+        $on4 = "incident_report.user_reported_by = student_reported_by.user_id";
         
         $this->db->join($join1, $on1, "left outer");
         $this->db->join($join2, $on2, "left outer");
