@@ -25,7 +25,8 @@ class AdminAuditTrail extends CI_Controller {
         
         $data = array(
             'title'         => "Audit Trail",
-            'currentadmin'  => $this->AdminDashboard_model->getAdmin($where)[0]
+            'currentadmin'  => $this->AdminDashboard_model->getAdmin($where)[0],
+            'audits'        => $this->AuditTrail_model->getAuditTrails()
         );
         $this->load->view("admin_includes/nav_header", $data);
         $this->load->view("admin_audit_trail/main");

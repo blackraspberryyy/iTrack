@@ -144,29 +144,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($incident_reports as $report): ?>
-                        <tr>
-                            <td><span class = "hidden"><?= $report->incident_report_datetime ?></span><?= date('F d, Y \a\t h:m A', $report->incident_report_datetime) ?></td>
-                            <td><?= ucfirst($report->violation_name) ?></td>
-                            <td>
-                                <?php
-                                if ($report->admin_id == "") {
-                                    echo $report->student_reported_by_firstname . " " . ($report->student_reported_by_middlename == "" ? "" : substr($report->student_reported_by_middlename, 0, 1)) . ". " . $report->student_reported_by_lastname;
-                                } else {
-                                    echo $report->admin_firstname . " " . ($report->admin_middlename == "" ? "" : substr($report->admin_middlename, 0, 1)) . ". " . $report->admin_lastname;
-                                }
-                                ?>
-                            </td>
-                            <td><?= $report->user_firstname . " " . ($report->user_middlename == "" ? "" : substr($report->user_middlename, 0, 1)) . $report->user_lastname; ?></td>
-                            <td><?= ucfirst($report->incident_report_place) ?></td>
-                            <td>
-                                <div class="btn-group" role="group">
-                                    <a href = "<?= base_url()?>adminincidentreport/details/<?= $report->incident_report_id?>" class="btn btn-primary">Details</a>
-                                    <a href = "<?= base_url()?>adminincidentreport/edit/<?= $report->incident_report_id?>" class="btn btn-warning">Edit</a>
-                                </div>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
+                    <?php if($incident_reports):?>
+                        <?php foreach ($incident_reports as $report): ?>
+                            <tr>
+                                <td><span class = "hidden"><?= $report->incident_report_datetime ?></span><?= date('F d, Y \a\t h:m A', $report->incident_report_datetime) ?></td>
+                                <td><?= ucfirst($report->violation_name) ?></td>
+                                <td>
+                                    <?php
+                                    if ($report->admin_id == "") {
+                                        echo $report->student_reported_by_firstname . " " . ($report->student_reported_by_middlename == "" ? "" : substr($report->student_reported_by_middlename, 0, 1)) . ". " . $report->student_reported_by_lastname;
+                                    } else {
+                                        echo $report->admin_firstname . " " . ($report->admin_middlename == "" ? "" : substr($report->admin_middlename, 0, 1)) . ". " . $report->admin_lastname;
+                                    }
+                                    ?>
+                                </td>
+                                <td><?= $report->user_firstname . " " . ($report->user_middlename == "" ? "" : substr($report->user_middlename, 0, 1)) . $report->user_lastname; ?></td>
+                                <td><?= ucfirst($report->incident_report_place) ?></td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href = "<?= base_url()?>adminincidentreport/details/<?= $report->incident_report_id?>" class="btn btn-primary">Details</a>
+                                        <a href = "<?= base_url()?>adminincidentreport/edit/<?= $report->incident_report_id?>" class="btn btn-warning">Edit</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
