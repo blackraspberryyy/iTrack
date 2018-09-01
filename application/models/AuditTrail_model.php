@@ -15,4 +15,10 @@ class AuditTrail_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0) ? $query->result() : false;
     }
+
+    function insertAudit($data){
+        $table = "audit_trail";
+        $this->db->insert("audit_trail", $data);
+        return $this->db->affected_rows();
+    }
 }

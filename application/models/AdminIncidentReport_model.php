@@ -21,9 +21,15 @@ class AdminIncidentReport_model extends CI_Model {
 
         return ($query->num_rows() > 0) ? $query->result() : false;
     }
-    function getViolations() {
+    function getMajorViolations() {
         $table = "violation";
         $this->db->where(array("violation_type" => "major", "violation_category" => "default"));
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0) ? $query->result() : false;
+    }
+    function getMinorViolations() {
+        $table = "violation";
+        $this->db->where(array("violation_type" => "minor", "violation_category" => "default"));
         $query = $this->db->get($table);
         return ($query->num_rows() > 0) ? $query->result() : false;
     }
@@ -52,23 +58,28 @@ class AdminIncidentReport_model extends CI_Model {
     }
     
     function getIncidentReport(){
-        $join1 = "user AS user1";
-        $join2 = "violation";
-        $join3 = "admin";
-        $join4 = "user AS student_reported_by";
-        $on1 = "incident_report.user_id = user1.user_id";
-        $on2 = "incident_report.violation_id = violation.violation_id";
-        $on3 = "incident_report.admin_reported_by = admin.admin_id";
-        $on4 = "incident_report.user_reported_by = student_reported_by.user_id";
+        $this->db->select('ir.*, a.*, u.*,'
+            .'u2.user_id AS reportedby_id,'
+            .'u2.user_number AS reportedby_number,'
+            .'u2.user_firstname AS reportedby_firstname,'
+            .'u2.user_lastname AS reportedby_lastname,'
+            .'u2.user_middlename AS reportedby_middlename,'
+            .'u2.user_password AS reportedby_password,'
+            .'u2.user_picture AS reportedby_picture,'
+            .'u2.user_course AS reportedby_course,'
+            .'u2.user_access AS reportedby_access,'
+            .'u2.user_isActive AS reportedby_isActive,'
+            .'u2.user_added_at AS reportedby_added_at,'
+            .'u2.user_updated_at AS reportedby_updated_at,'
+            .'v.*'
+        );
+        $this->db->from('incident_report AS ir');
         
-        $this->db->join($join1, $on1, "left outer");
-        $this->db->join($join2, $on2, "left outer");
-        $this->db->join($join3, $on3, "left outer");
-        $this->db->join($join4, $on4, "left outer");
-        
-        $this->db->select("admin.*, incident_report.*, violation.*, user1.*, "
-                . "`student_reported_by`.`user_id` AS `student_reported_by_id`, `student_reported_by`.`user_number` AS `student_reported_by_number`, `student_reported_by`.`user_firstname` AS `student_reported_by_firstname`, `student_reported_by`.`user_lastname` AS `student_reported_by_lastname`, `student_reported_by`.`user_middlename` AS `student_reported_by_middlename`, `student_reported_by`.`user_password` AS `student_reported_by_password`, `student_reported_by`.`user_picture` AS `student_reported_by_picture`, `student_reported_by`.`user_course` AS `student_reported_by_course`, `student_reported_by`.`user_access` AS `student_reported_by_access`, `student_reported_by`.`user_isactive` AS `student_reported_by_isactive`, `student_reported_by`.`user_added_at` AS `student_reported_by_added_at`, `student_reported_by`.`user_updated_at` AS `student_reported_by_updated_at`");
-        $this->db->from("incident_report");
+        $this->db->join('admin AS a', 'ir.admin_reported_by = a.admin_id','LEFT OUTER');
+        $this->db->join('user AS u', 'ir.user_id = u.user_id','LEFT OUTER');
+        $this->db->join('user AS u2', 'ir.user_reported_by = u2.user_id','LEFT OUTER');
+        $this->db->join('violation AS v', 'ir.violation_id = v.violation_id','LEFT OUTER');
+
         $query = $this->db->get();
         return ($query->num_rows() > 0) ? $query->result() : false;
     }

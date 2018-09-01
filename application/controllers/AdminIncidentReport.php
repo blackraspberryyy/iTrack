@@ -19,17 +19,13 @@ class AdminIncidentReport extends CI_Controller {
     }
 
     public function index() {
-        $where = array(
-            "admin_id" => $this->session->userdata("userid")
-        );
-
         $data = array(
             "title"             => "Incident Report",
-            'currentadmin'      => $this->AdminDashboard_model->getAdmin($where)[0],
-            'violations'        => $this->AdminIncidentReport_model->getViolations(),
+            'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
+            'major_violations'  => $this->AdminIncidentReport_model->getMajorViolations(),
+            'minor_violations'  => $this->AdminIncidentReport_model->getMinorViolations(),
             'incident_reports'  => $this->AdminIncidentReport_model->getIncidentReport()
         );
-        
         
         $this->load->view("admin_includes/nav_header", $data);
         $this->load->view("admin_incident_report/main");
@@ -120,5 +116,4 @@ class AdminIncidentReport extends CI_Controller {
             redirect(base_url()."adminincidentreport");
         }
     }
-
 }

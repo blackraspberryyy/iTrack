@@ -2,7 +2,9 @@
     .dropdown-menu li{
         cursor: pointer;
     }
-
+    .table > tbody > tr > td {
+        vertical-align: middle;
+    }
 </style>
 
 <script type="text/javascript">
@@ -94,9 +96,11 @@
 
         $('#classification').change(function () {
             if ($(this).find(":selected").attr("data-type") == "other") {
+                //Creation of new violation
                 $("#nature").prop("disabled", false);
                 $("#classification_other").show();
             } else {
+                //Existing Violation
                 $("#classification_other").hide();
                 $("#nature").prop("disabled", true);
                 $("#nature").val($(this).find(":selected").attr("data-type"));
@@ -128,19 +132,29 @@
     </div>
 </div>
 
+<?php
+    function determineStatus($status){
+        if($status == 0){
+            echo '<span class = "badge badge-secondary">Inactive</span>';
+        }else{
+            echo '<span class = "badge badge-danger" style = "background:#ff3232;">Active</span>';
+        }
+    }
+?>
+
 <div class = "row">
-    <div class = "col-md-12 text-center">
+    <div class = "col-md-12">
         <h1>Incident Report</h1>
         <div class ="table-responsive">
             <table class="table table-striped datatable" style="width:100%">
                 <thead>
                     <tr>
                         <th>Date &amp; Time</th>
-                        <th>Violation</th>
+                        <th>Status</th>
+                        <th>Student</th>
                         <th>Reported By</th>
-                        <th>Reported</th>
-                        <th>Place</th>
-                        <th>Details</th>
+                        <th>Violation</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,25 +162,64 @@
                         <?php foreach ($incident_reports as $report): ?>
                             <tr>
                                 <td><span class = "hidden"><?= $report->incident_report_datetime ?></span><?= date('F d, Y \a\t h:m A', $report->incident_report_datetime) ?></td>
-                                <td><?= ucfirst($report->violation_name) ?></td>
+                                <td><?= determineStatus($report->incident_report_status);?></td>
+                                <td><?= $report->user_firstname . " " . ($report->user_middlename == "" ? "" : substr($report->user_middlename, 0, 1) .". ").$report->user_lastname; ?></td>
                                 <td>
                                     <?php
                                     if ($report->admin_id == "") {
-                                        echo $report->student_reported_by_firstname . " " . ($report->student_reported_by_middlename == "" ? "" : substr($report->student_reported_by_middlename, 0, 1)) . ". " . $report->student_reported_by_lastname;
+                                        //if REPORTED_BY teacher, get user's name 
+                                        echo $report->reportedby_firstname . " " . ($report->reportedby_middlename == "" ? "" : substr($report->reportedby_middlename, 0, 1).". "). $report->reportedby_lastname;
                                     } else {
-                                        echo $report->admin_firstname . " " . ($report->admin_middlename == "" ? "" : substr($report->admin_middlename, 0, 1)) . ". " . $report->admin_lastname;
+                                        //if REPORTED_BY admin, get admin's name
+                                        echo $report->admin_firstname . " " . ($report->admin_middlename == "" ? "" : substr($report->admin_middlename, 0, 1). ". ") . $report->admin_lastname;
                                     }
                                     ?>
                                 </td>
-                                <td><?= $report->user_firstname . " " . ($report->user_middlename == "" ? "" : substr($report->user_middlename, 0, 1)) . $report->user_lastname; ?></td>
-                                <td><?= ucfirst($report->incident_report_place) ?></td>
+                                
+                                <td><?= ucfirst($report->violation_name) ?></td>
                                 <td>
-                                    <div class="btn-group" role="group">
-                                        <a href = "<?= base_url()?>adminincidentreport/details/<?= $report->incident_report_id?>" class="btn btn-primary">Details</a>
-                                        <a href = "<?= base_url()?>adminincidentreport/edit/<?= $report->incident_report_id?>" class="btn btn-warning">Edit</a>
+                                    <div class="btn-group-vertical" role="group">
+                                        <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id)?>">Details</a>
+                                        <button type = "button" class="btn btn-warning" data-toggle="modal" data-target="#edit_<?= sha1($report->incident_report_id)?>">Edit</a>
                                     </div>
                                 </td>
                             </tr>
+
+                            <!-- DETAILS MODAL -->
+                            <div class="modal fade text-left" id="details_<?= sha1($report->incident_report_id)?>" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="detailsTitle">Details</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            Details Here
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- EDIT MODAL -->
+                            <div class="modal fade text-left" id="edit_<?= sha1($report->incident_report_id)?>" tabindex="-1" role="dialog" aria-labelledby="editTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="editTitle">Edit</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            EDIT Here
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </tbody>
@@ -195,13 +248,24 @@
                             </div>
                             <span>Classification of Offense/Violation</span>
                             <select id = "classification" name = "classification" class = "form-control">
+                                <option disabled="disabled" style = "background:#ddd;">-- Major --</option>
                                 <?php
-                                foreach ($violations as $violation) {
+                                foreach ($major_violations as $violation) {
                                     ?>
                                     <option value = "<?= $violation->violation_id ?>" data-type = "<?= $violation->violation_type ?>" title = "<?= ucfirst($violation->violation_name) ?>" <?= set_select('classification', $violation->violation_id); ?>><?= ucfirst($violation->violation_name) ?></option>    
                                     <?php
                                 }
                                 ?>
+                                <option disabled="disabled" style = "background:#ddd;">-- Minor --</option>
+                                <?php
+                                foreach ($minor_violations as $violation) {
+                                    ?>
+                                    <option value = "<?= $violation->violation_id ?>" data-type = "<?= $violation->violation_type ?>" title = "<?= ucfirst($violation->violation_name) ?>" <?= set_select('classification', $violation->violation_id); ?>><?= ucfirst($violation->violation_name) ?></option>    
+                                    <?php
+                                }
+                                ?>
+                                <option disabled="disabled" style = "background:#ddd;">-- New Violation --</option>
+
                                 <option value="0" data-type = "other" title = "Other Violation" <?= set_select('classification', '0'); ?>>Other Violation</option>
                             </select>
 
@@ -312,5 +376,3 @@
         }
     }
 </script>
-
-
