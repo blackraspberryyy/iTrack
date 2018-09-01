@@ -58,7 +58,7 @@ class AdminIncidentReport_model extends CI_Model {
     }
     
     function getIncidentReport(){
-        $this->db->select('ir.*, a.*, u.*,'
+        $this->db->select('ir.*, u.*,'
             .'u2.user_id AS reportedby_id,'
             .'u2.user_number AS reportedby_number,'
             .'u2.user_firstname AS reportedby_firstname,'
@@ -75,7 +75,6 @@ class AdminIncidentReport_model extends CI_Model {
         );
         $this->db->from('incident_report AS ir');
         
-        $this->db->join('admin AS a', 'ir.admin_reported_by = a.admin_id','LEFT OUTER');
         $this->db->join('user AS u', 'ir.user_id = u.user_id','LEFT OUTER');
         $this->db->join('user AS u2', 'ir.user_reported_by = u2.user_id','LEFT OUTER');
         $this->db->join('violation AS v', 'ir.violation_id = v.violation_id','LEFT OUTER');

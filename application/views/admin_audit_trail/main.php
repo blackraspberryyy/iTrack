@@ -15,19 +15,19 @@
                 <thead>
                     <tr>
                         <th>Date &amp; Time<br><small class = "text-muted">[MM/DD/YYYY] - HH:mm:ss</small></th>
-                        <th>ID</th>
-                        <th>User</th>
-                        <th>Action</th>
+                        <th>User Number</th>
+                        <th>Type</th>
+                        <th>Desc</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if ($audits): ?>
                         <?php foreach ($audits as $audit): ?>
                             <tr>
-                                <td><span class = "hidden"><?= $audit->atrail_added_at?></span><?= date('[ m/d/Y ] - H:i:s',$audit->atrail_added_at)?></td>
-                                <td><?= $audit->atrail_user_number?></td>
-                                <td><?= $audit->atrail_user_name?></td>
-                                <td><?= $audit->atrail_desc?></td>
+                                <td><span class = "hidden"><?= $audit->log_added_at?></span><?= date('[ m/d/Y ] - H:i:s',$audit->log_added_at)?></td>
+                                <td><?= $audit->user_id?></td>
+                                <td><?= $audit->log_type?></td>
+                                <td><?= $audit->log_desc?></td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>

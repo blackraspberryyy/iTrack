@@ -166,12 +166,12 @@
                                 <td><?= $report->user_firstname . " " . ($report->user_middlename == "" ? "" : substr($report->user_middlename, 0, 1) .". ").$report->user_lastname; ?></td>
                                 <td>
                                     <?php
-                                    if ($report->admin_id == "") {
+                                    if ($report->reportedby_id != "") {
                                         //if REPORTED_BY teacher, get user's name 
                                         echo $report->reportedby_firstname . " " . ($report->reportedby_middlename == "" ? "" : substr($report->reportedby_middlename, 0, 1).". "). $report->reportedby_lastname;
                                     } else {
                                         //if REPORTED_BY admin, get admin's name
-                                        echo $report->admin_firstname . " " . ($report->admin_middlename == "" ? "" : substr($report->admin_middlename, 0, 1). ". ") . $report->admin_lastname;
+                                        echo "Admin";
                                     }
                                     ?>
                                 </td>
@@ -193,7 +193,11 @@
                                             <h3 class="modal-title" id="detailsTitle">Details</h3>
                                         </div>
                                         <div class="modal-body">
-                                            Details Here
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    DETAILS HERE
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

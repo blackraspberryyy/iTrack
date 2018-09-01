@@ -50,8 +50,6 @@
             }
 
         </style>
-
-
     </head>
     <body>
 
@@ -83,33 +81,7 @@
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userprofile") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userprofile"><em class="fa fa-user">&nbsp;</em> <?= ucfirst($currentuser->user_access) ?> Profile</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userviolation") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userviolation"><em class="fa fa-exclamation-triangle">&nbsp;</em> <?= ucfirst($currentuser->user_access) ?> Violation</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userincidentreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Report</a></li>
-                <li class="parent">
-                    <a data-toggle="collapse" href="#dussap">
-                        <em class="fa fa-calendar-alt">&nbsp;</em> DUSSAP <span data-toggle="collapse" href="#dussap" class="icon pull-right"><em class="fa fa-plus"></em></span>
-                    </a>
-                    <ul class="children collapse" id="dussap">
-                        <li>
-                            <a class="" href="#">
-                                <span class="fa fa-arrow-right">&nbsp;</span> Forms
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <span class="fa fa-arrow-right">&nbsp;</span> Attendance
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <span class="fa fa-arrow-right">&nbsp;</span> Time Sheet
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <span class="fa fa-arrow-right">&nbsp;</span> Departments
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userdussap") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userdussap"><em class="fa fa-clock">&nbsp;</em> DUSSAP</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "useroffensereport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>useroffensereport"><em class="fa fa-exclamation-circle">&nbsp;</em> Offense Report</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "studenthandbook") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>studenthandbook"><em class="fa fa-book-open">&nbsp;</em> Student Handbook</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "usernotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>usernotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li>
