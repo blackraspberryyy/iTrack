@@ -48,7 +48,26 @@
                 background:rgb(244,211,12);
                 background: linear-gradient(135deg, rgb(244,211,12) 50%, rgba(0,114,54,1) 50%);
             }
+            /* - SCROLLBAR -*/
+            /* width */
+            ::-webkit-scrollbar {
+                width: 5px;
+            }
 
+            /* Track */
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1; 
+            }
+            
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                background: rgb(244,211,12); 
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: rgb(183, 158, 9); 
+            }
         </style>
     </head>
     <body>

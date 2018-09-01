@@ -25,6 +25,7 @@ class AdminAuditTrail extends CI_Controller {
             'cms'        => $this->AdminCMS_model->getCMS()[0],
             'audits'        => $this->AuditTrail_model->getAuditTrails()
         );
+
         $this->load->view("admin_includes/nav_header", $data);
         $this->load->view("admin_audit_trail/main");
         $this->load->view("admin_includes/footer");

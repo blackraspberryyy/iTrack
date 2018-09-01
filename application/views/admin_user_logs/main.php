@@ -16,7 +16,7 @@
                     <tr>
                         <th>Date &amp; Time<br><small class = "text-muted">[MM/DD/YYYY] - HH:mm:ss</small></th>
                         <th>User Number</th>
-                        <th>Type</th>
+                        <th>User</th>
                         <th>Desc</th>
                     </tr>
                 </thead>
@@ -25,8 +25,8 @@
                         <?php foreach ($logs as $log): ?>
                             <tr>
                                 <td><span class = "hidden"><?= $log->log_added_at?></span><?= date('[ m/d/Y ] - H:i:s',$log->log_added_at)?></td>
-                                <td><?= $log->user_id?></td>
-                                <td><?= $log->log_type?></td>
+                                <td><?= $log->user_number?></td>
+                                <td><?= $log->user_firstname." ".($log->user_middlename == '' ? '':  substr($log->user_middlename, 0, 1))." ".$log->user_lastname?></td>
                                 <td><?= $log->log_desc?></td>
                             </tr>
                         <?php endforeach; ?>

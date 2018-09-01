@@ -26,7 +26,7 @@
                         <?php foreach ($audits as $audit): ?>
                             <tr>
                                 <td><span class = "hidden"><?= $audit->log_added_at?></span><?= date('[ m/d/Y ] - H:i:s',$audit->log_added_at)?></td>
-                                <td><?= $audit->user_id?></td>
+                                <td><?= $audit->user_number?></td>
                                 <td><?= $audit->log_type?></td>
                                 <td><?= $audit->log_desc?></td>
                             </tr>
