@@ -86,6 +86,8 @@ class UserProfile extends CI_Controller {
 
         if ($this->UserProfile_model->update_user($data, $this->session->userdata("userid"))) {
             $this->session->set_flashdata("uploading_success", "Picture Successfully Changed");
+            //-- AUDIT TRAIL
+            $this->Logger->saveToAudit($this->session->userdata("userid"), "Changed Picture of ".$currentUser->firstname." ".$currentUser->lastname);
             redirect(base_url() . "userprofile");
         } else {
             $this->session->set_flashdata("uploading_error", "Something went wrong. Reupload your picture");

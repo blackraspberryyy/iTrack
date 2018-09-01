@@ -113,6 +113,10 @@ class AdminIncidentReport extends CI_Controller {
             );
             $this->AdminIncidentReport_model->insert_incident_report($incident_report);
             $this->session->set_flashdata("success_incident_report", "Incident Report successfully recorded.");
+
+            //-- AUDIT TRAIL
+            $this->Logger->saveToAudit("admin", "Filed an incident report");
+
             redirect(base_url()."adminincidentreport");
         }
     }

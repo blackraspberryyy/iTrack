@@ -169,6 +169,7 @@
                                     if ($report->reportedby_id != "") {
                                         //if REPORTED_BY teacher, get user's name 
                                         echo $report->reportedby_firstname . " " . ($report->reportedby_middlename == "" ? "" : substr($report->reportedby_middlename, 0, 1).". "). $report->reportedby_lastname;
+                                        echo " <small class = 'text-muted'><b>(".$report->reportedby_access.")</b></small>";
                                     } else {
                                         //if REPORTED_BY admin, get admin's name
                                         echo "Admin";

@@ -73,6 +73,10 @@ class Sms extends CI_Controller {
             curl_close($ch);
 
             $this->session->set_flashdata("success_sms", "Successfully messaged " . $mobile_str . ".");
+
+            //-- AUDIT TRAIL
+            $this->Logger->saveToAudit("admin", "Send an SMS to ".$mobile_str);
+            
             redirect(base_url() . "sms");
         }
     }

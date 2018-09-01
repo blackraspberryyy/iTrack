@@ -38,6 +38,9 @@ class Login extends CI_Controller {
                 $this->session->set_userdata('isloggedin', true);
                 $this->session->set_userdata('userid', $getUser->user_id);
                 $this->session->set_userdata('useraccess', $getUser->user_access);
+
+                //-- Insert to USER LOGS
+                $this->Logger->saveToLogs($this->session->userdata("userid"), 'in');
                 redirect(base_url() . 'userdashboard/');
             }
         }
