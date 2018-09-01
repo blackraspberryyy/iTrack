@@ -8,8 +8,14 @@
         </ol>
     </div><!--/.row breadcrumb-->
 
+    <div class = "row ">
+        <div class="col-xs-12">
+            <h1><?= $cms->sms_title?></h1>
+            <h5><?= $cms->sms_text?></h5>
+        </div>
+    </div>
+
     <div class = "row">
-        <h2 style = "text-align: center;">Send SMS</h2>
         <div class = "col-xs-8 col-xs-offset-2">
             <form action ="<?= base_url() ?>sms/send_sms_exec" method="POST">
                 <div class="input-group">

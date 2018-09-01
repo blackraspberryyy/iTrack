@@ -8,8 +8,13 @@
 </div><!--/.row breadcrumb-->
 
 <div class="row">
-    <div class = "col-xs-8 col-xs-offset-2">
-        <h1 class="text-center">ITrack Google Drive</h1>
-        <iframe src="https://drive.google.com/embeddedfolderview?id=1BjrnzCLpa9jKfJBoXsKqcoqNws47PCi7#list" style="width:100%; height:100%; box-shadow: 3px 3px 10px black; border-radius: 3px;" ></iframe>
+    <div class="col-xs-12">
+        <h1><?= $cms->google_drive_title?></h1>
+        <h5><?= $cms->google_drive_text?></h5>
+    </div>
+</div>
+<div class="row">
+    <div class = "col-xs-10 col-xs-offset-1">
+        <iframe src="https://drive.google.com/embeddedfolderview?id=1BjrnzCLpa9jKfJBoXsKqcoqNws47PCi7#list" style="width:100%; height:100%; border-radius: 3px; border:none; box-shadow:0 .5rem 1rem rgba(0,0,0,.15)!important;" ></iframe>
     </div>
 </div>

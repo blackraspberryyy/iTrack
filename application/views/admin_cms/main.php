@@ -7,3 +7,10 @@
     </ol>
 </div><!--/.row breadcrumb-->
 
+<div class="row">
+    <div class="col-xs-12">
+        <h1><?= $cms->cms_title?></h1>
+        <h5><?= $cms->cms_text?></h5>
+    </div>
+</div>
+

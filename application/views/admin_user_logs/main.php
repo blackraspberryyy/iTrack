@@ -3,14 +3,13 @@
         <li><a href="<?= base_url() ?>admindashboard">
                 <em class="fa fa-home"></em>
             </a></li>
-        <li class="active">Audit Trail</li>
+        <li class="active">User Logs</li>
     </ol>
 </div><!--/.row breadcrumb-->
-
-<div class="row">
-    <div class = "col-xs-12">
-        <h1><?= $cms->audit_trail_title?></h1>
-        <h5><?= $cms->audit_trail_text?></h5>
+<div class = "row">
+    <div class = "col-md-12">
+        <h1><?=$cms->user_logs_title?></h1>
+        <h5><?=$cms->user_logs_text?></h5>
         <div class="table-responsive">
             <table class="table table-hover datatable">
                 <thead>
@@ -22,13 +21,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if ($audits): ?>
-                        <?php foreach ($audits as $audit): ?>
+                    <?php if ($logs): ?>
+                        <?php foreach ($logs as $log): ?>
                             <tr>
-                                <td><span class = "hidden"><?= $audit->log_added_at?></span><?= date('[ m/d/Y ] - H:i:s',$audit->log_added_at)?></td>
-                                <td><?= $audit->user_id?></td>
-                                <td><?= $audit->log_type?></td>
-                                <td><?= $audit->log_desc?></td>
+                                <td><span class = "hidden"><?= $log->log_added_at?></span><?= date('[ m/d/Y ] - H:i:s',$log->log_added_at)?></td>
+                                <td><?= $log->user_id?></td>
+                                <td><?= $log->log_type?></td>
+                                <td><?= $log->log_desc?></td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -37,4 +36,3 @@
         </div>
     </div>
 </div>
-

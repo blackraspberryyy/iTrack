@@ -24,7 +24,8 @@ class AdminIncidentReport extends CI_Controller {
             'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
             'major_violations'  => $this->AdminIncidentReport_model->getMajorViolations(),
             'minor_violations'  => $this->AdminIncidentReport_model->getMinorViolations(),
-            'incident_reports'  => $this->AdminIncidentReport_model->getIncidentReport()
+            'incident_reports'  => $this->AdminIncidentReport_model->getIncidentReport(),
+            'cms'               => $this->AdminCMS_model->getCMS()[0]
         );
         
         $this->load->view("admin_includes/nav_header", $data);

@@ -16,7 +16,7 @@ class Logger extends CI_Model {
     }
 
     function saveToLogs($user_id, $type){
-        $desc = $type = 'in' ? 'Logged in' : 'Logged out';
+        $desc = $type == 'in' ? 'Logged in' : 'Logged out';
 
         $data = array(
             "user_id" => $user_id,

@@ -19,13 +19,10 @@ class AdminAuditTrail extends CI_Controller {
     }
     
     public function index() {
-        $where = array(
-            "admin_id" => $this->session->userdata("userid")
-        );
-        
         $data = array(
             'title'         => "Audit Trail",
-            'currentadmin'  => $this->AdminDashboard_model->getAdmin($where)[0],
+            'currentadmin'  => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
+            'cms'        => $this->AdminCMS_model->getCMS()[0],
             'audits'        => $this->AuditTrail_model->getAuditTrails()
         );
         $this->load->view("admin_includes/nav_header", $data);

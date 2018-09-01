@@ -24,7 +24,8 @@ class Sms extends CI_Controller {
         );
         $data = array(
             'title' => "Admin SMS",
-            'currentadmin' => $this->AdminDashboard_model->getAdmin($where)[0]
+            'currentadmin' => $this->AdminDashboard_model->getAdmin($where)[0],
+            'cms'   => $this->AdminCMS_model->getCMS()[0]
         );
         $this->load->view("admin_includes/nav_header", $data);
         $this->load->view("admin_sms/sms");

@@ -144,7 +144,8 @@
 
 <div class = "row">
     <div class = "col-md-12">
-        <h1>Incident Report</h1>
+        <h1><?= $cms->incident_report_title?></h1>
+        <h5><?= $cms->incident_report_text?></h5>
         <div class ="table-responsive">
             <table class="table table-striped datatable" style="width:100%">
                 <thead>

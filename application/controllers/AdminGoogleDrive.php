@@ -25,7 +25,8 @@ class AdminGoogleDrive extends CI_Controller {
 
         $data = array(
             "title" => "Google Drive",
-            'currentadmin' => $this->AdminDashboard_model->getAdmin($where)[0]
+            'currentadmin' => $this->AdminDashboard_model->getAdmin($where)[0],
+            'cms'   => $this->AdminCMS_model->getCMS()[0]
         );
 
         $this->load->view("admin_includes/nav_header", $data);

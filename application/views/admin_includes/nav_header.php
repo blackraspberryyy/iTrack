@@ -50,6 +50,27 @@
                 background: linear-gradient(135deg, rgb(244,211,12) 50%, rgba(0,114,54,1) 50%);
             }
 
+            /* - SCROLLBAR -*/
+            /* width */
+            ::-webkit-scrollbar {
+                width: 5px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1; 
+            }
+            
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                background: rgb(244,211,12); 
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: rgb(183, 158, 9); 
+            }
+            
         </style>
 
         <script src="<?= base_url() ?>assets/lumino_template/js/jquery-1.11.1.min.js"></script>
@@ -114,26 +135,11 @@
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminincidentreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Reports</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admingoogledrive") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admingoogledrive"><em class="fab fa-google-drive">&nbsp;</em> Google Drive</a></li>
                 <li  class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminnotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminnotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li>
-                <li class="parent">
-                    <a data-toggle="collapse" href="#dussap">
-                        <em class="fa fa-calendar-alt">&nbsp;</em> DUSSAP <span data-toggle="collapse" href="#dussap" class="icon pull-right"><em class="fa fa-plus"></em></span>
-                    </a>
-                    <ul class="children collapse" id="dussap">
-                        <li>
-                            <a class="" href="#">
-                                <span class="fa fa-arrow-right">&nbsp;</span> Attendance
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <span class="fa fa-arrow-right">&nbsp;</span> Forms
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                <li  class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admindussap") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admindussap"><em class="fa fa-calendar-alt">&nbsp;</em> DUSSAP</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "sms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>sms"><em class="fa fa-paper-plane">&nbsp;</em> SMS</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admincms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admincms"><em class="fa fa-cog">&nbsp;</em> CMS</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminaudittrail") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminaudittrail"><em class="fa fa-search">&nbsp;</em> Audit Trail</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminuserlogs") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminuserlogs"><em class="fa fa-key">&nbsp;</em> User Logs</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "studenthandbook") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>studenthandbook"><em class="fa fa-book-open">&nbsp;</em> Student Handbook</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admincallslip") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admincallslip"><em class="fa fa-copy">&nbsp;</em> Call Slip</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminmonthlyreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminmonthlyreport"><em class="fa fa-chart-bar">&nbsp;</em> Monthly Report</a></li>
