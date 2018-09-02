@@ -17,63 +17,70 @@
 </style>
 <?php if (!empty($this->session->flashdata("err_login"))): ?>
     <div class="err_login alert alert-danger alert-dismissible show" role="alert">
-        <strong><i class = "fa fa-exclamation"></i></strong> <?= $this->session->flashdata("err_login"); ?>
         <button style = "color:white;" type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
+        <strong><i class = "fa fa-exclamation"></i></strong> <?= $this->session->flashdata("err_login"); ?>
     </div>
 <?php endif; ?>
 
 <?php if (!empty($this->session->flashdata("err_sms"))): ?>
     <div class="err_login alert alert-danger alert-dismissible show" role="alert">
-        <strong><i class = "fa fa-exclamation"></i></strong> <?= $this->session->flashdata("err_sms"); ?>
         <button style = "color:white;" type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
+        <strong><i class = "fa fa-exclamation"></i></strong> <?= $this->session->flashdata("err_sms"); ?>
     </div>
 <?php endif; ?>
 
 <?php if (!empty($this->session->flashdata("success_sms"))): ?>
     <div class="alert alert-success alert-dismissible show" role="alert">
-        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("success_sms"); ?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
+        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("success_sms"); ?>
     </div>
 <?php endif; ?>
 
 <?php if (!empty($this->session->flashdata("uploading_error"))): ?>
     <div class="alert alert-danger alert-dismissible show" role="alert">
-        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("uploading_error"); ?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
+        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("uploading_error"); ?>
     </div>
 <?php endif; ?>
 
 <?php if (!empty($this->session->flashdata("uploading_success"))): ?>
     <div class="alert alert-success alert-dismissible show" role="alert">
-        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("uploading_success"); ?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
+        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("uploading_success"); ?>
     </div>
 <?php endif; ?>
 
 <?php if (!empty($this->session->flashdata("err_profile"))): ?>
     <div class="alert alert-danger alert-dismissible show" role="alert">
-        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("err_profile"); ?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
+        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("err_profile"); ?>
     </div>
 <?php endif; ?>
 
 <?php if (!empty($this->session->flashdata("success_profile"))): ?>
     <div class="alert alert-success alert-dismissible show" role="alert">
-        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("success_profile"); ?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
+        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("success_profile"); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (!empty($this->session->flashdata("cms_error"))): ?>
+    <div class="alert alert-danger alert-dismissible show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <?= $this->session->flashdata("cms_error"); ?>
     </div>
 <?php endif; ?>

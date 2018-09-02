@@ -4,11 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?= $title ?></title>
+
+        <!-- Template Custom CSS and FontAwesome CSS -->
         <link href="<?= base_url() ?>assets/lumino_template/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         <link href="<?= base_url() ?>assets/lumino_template/css/datepicker3.css" rel="stylesheet">
         <link href="<?= base_url() ?>assets/lumino_template/css/styles.css" rel="stylesheet">
-
+        
         <!-- FAVICON COMPATIBILITY -->
         <link rel="apple-touch-icon" sizes="57x57" href="<?= base_url() ?>images/favicon/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="<?= base_url() ?>images/favicon/apple-icon-60x60.png">
@@ -35,9 +37,27 @@
         <script src="js/respond.min.js"></script>
         <![endif]-->
 
+        <!-- JQuery and Bootsrap JS -->
+        <script src="<?= base_url() ?>assets/lumino_template/js/jquery-1.11.1.min.js"></script>
+        <script src="<?= base_url() ?>assets/lumino_template/js/bootstrap.min.js"></script>
 
-        <!-- Datetime picker-->
+        <!-- Datetime picker -->
         <link rel="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+
+        <!-- Gijgo WYSIWYG Editor -->
+        <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.10/combined/css/gijgo.min.css"/>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.10/combined/js/gijgo.min.js "></script>
+        
+        <!-- Data Table -->
+        <link rel = "stylesheet" href = "https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+        <script src = "https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src = "https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.datatable').DataTable({ "order": [[ 0, "desc" ]] });
+            });
+        </script>
+
 
         <style>
             /* - CUSTOM STYLE - */
@@ -72,21 +92,6 @@
             }
             
         </style>
-
-        <script src="<?= base_url() ?>assets/lumino_template/js/jquery-1.11.1.min.js"></script>
-        <script src="<?= base_url() ?>assets/lumino_template/js/bootstrap.min.js"></script>
-
-
-
-        <!-- Data Table -->
-        <link rel = "stylesheet" href = "https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
-        <script src = "https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-        <script src = "https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('.datatable').DataTable({ "order": [[ 0, "desc" ]] });
-            });
-        </script>
     </head>
     <body>
 
@@ -148,5 +153,6 @@
         </div><!--/.sidebar-->
 
         <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
+
         <!-- Start of content -->
         <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">

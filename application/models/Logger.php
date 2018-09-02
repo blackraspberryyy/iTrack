@@ -2,12 +2,12 @@
 class Logger extends CI_Model {
     function saveToAudit($user_id, $desc){
         if($user_id == "admin"){
-            $user_id = "";
+            $user_id = NULL;
         }
 
         $data = array(
             "user_id" => $user_id,
-            'log_type' => 'log',
+            'log_type' => 'audit',
             "log_desc" => $desc,
             'log_added_at' => time()
         );
