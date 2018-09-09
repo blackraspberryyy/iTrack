@@ -73,14 +73,13 @@ class AdminIncidentReport extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             //ERROR
-            $where = array(
-                "admin_id" => $this->session->userdata("userid")
-            );
-
             $data = array(
-                "title" => "Incident Report",
-                'currentadmin' => $this->AdminDashboard_model->getAdmin($where)[0],
-                'violations' => $this->AdminIncidentReport_model->getViolations()
+                "title"             => "Incident Report",
+                'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
+                'major_violations'  => $this->AdminIncidentReport_model->getMajorViolations(),
+                'minor_violations'  => $this->AdminIncidentReport_model->getMinorViolations(),
+                'incident_reports'  => $this->AdminIncidentReport_model->getIncidentReport(),
+                'cms'               => $this->AdminCMS_model->getCMS()[0]
             );
 
             $this->load->view("admin_includes/nav_header", $data);
@@ -102,7 +101,7 @@ class AdminIncidentReport extends CI_Controller {
             }
             
             $incident_report = array(
-                "admin_reported_by" => $currentAdmin->admin_id,
+                "user_reported_by" => NULL, //NULL if the ADMIN is the one to report
                 "user_id" => $this->AdminIncidentReport_model->get_user_id($this->input->post("user_number"))[0]->user_id,
                 "violation_id" => $violation_id,
                 "incident_report_datetime" => strtotime($this->input->post("date_time")),

@@ -7,81 +7,6 @@
     }
 </style>
 
-<script type="text/javascript">
-    window.onload = function () {
-
-        $(document).on("focus keyup", "#user_number.autocomplete", function () {
-            $.ajax({
-                "method": "POST",
-                "url": '<?= base_url() ?>' + "adminincidentreport/search_user_number",
-                "dataType": "JSON",
-                "data": {
-                    'id': $(".autocomplete").val()
-                },
-                success: function (res) {
-                    $("#user_number_menu").empty();
-                    if (res.length == 0) {
-                        $("#user_number_menu").append("<li class = 'no-matches'><a>No match found</a></li>");
-                    } else {
-                        for (var i = 0; i < res.length; i++) {
-                            $("#user_number_menu").append("<li title = '" + res[i].user_firstname + " " + res[i].user_lastname + "' data-firstname = '" + res[i].user_firstname + "' data-lastname = '" + res[i].user_lastname + "' data-middlename = '" + res[i].user_middlename + "' data-course = '" + res[i].user_course + "' data-access = '" + res[i].user_access + "'><a>" + res[i].user_number + "</a></li>");
-                        }
-                    }
-                },
-                error: function (res) {
-                    console.log(res);
-                }
-            });
-            // Cache useful selectors
-            var $input = $(this);
-            var $dropdown = $input.next("ul.dropdown-menu");
-
-            // Create the no matches entry if it does not exists yet
-            if (!$dropdown.data("containsNoMatchesEntry")) {
-                $("input.autocomplete + ul.dropdown-menu").append(
-                        '<li class="no-matches hidden"><a>No matches</a></li>'
-                        );
-                $dropdown.data("containsNoMatchesEntry", true);
-            }
-
-            // Show only matching values
-            $dropdown.find("li:not(.no-matches)").each(function (key, li) {
-                var $li = $(li);
-                $li[new RegExp($input.val(), "i").exec($li.text()) ? "removeClass" : "addClass"]("hidden");
-            });
-
-            // Show a specific entry if we have no matches
-            $dropdown.find("li.no-matches")[$dropdown.find("li:not(.no-matches):not(.hidden)").length > 0 ? "addClass" : "removeClass"]("hidden");
-
-        });
-
-        $(document).on("click", "input.autocomplete + ul.dropdown-menu li", function (e) {
-            // Prevent any action on the window location
-            e.preventDefault();
-
-            // Cache useful selectors
-            $li = $(this);
-            $input = $li.parent("ul").prev("input");
-            $firstname = $("#user_firstname");
-            $lastname = $("#user_lastname");
-            $middlename = $("#user_middlename");
-            $course = $("#user_course");
-            $access = $("#user_access");
-
-            // Update input text with selected entry
-            if (!$li.is(".no-matches")) {
-                $input.val($li.text());
-                $firstname.val($li.data('firstname'));
-                $lastname.val($li.data('lastname'));
-                $middlename.val($li.data('middlename'));
-                $course.val($li.data('course'));
-                $access.val($li.data('access'));
-            }
-        });
-
-    }
-
-</script>
 
 <script>
     $(function () { /* DOM ready */
@@ -197,7 +122,12 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    DETAILS HERE
+                                                    <center>
+                                                        <img src="<?= base_url().$report->user_picture?>" class="img-responsive img-circle" width="150">
+                                                        <h4><?= $report->user_firstname.' '.($report->user_middlename!='' ? $report->user_middlename:'').' '.$report->user_lastname?></h4>
+                                                        <h5><?= ucfirst($report->user_access)?></h4>
+                                                        
+                                                    </center>
                                                 </div>
                                             </div>
                                         </div>
@@ -381,4 +311,80 @@
             return false;
         }
     }
+</script>
+
+<script type="text/javascript">
+    window.onload = function () {
+
+        $(document).on("focusin keyup", "#user_number.autocomplete", function () {
+            $.ajax({
+                "method": "POST",
+                "url": '<?= base_url() ?>' + "adminincidentreport/search_user_number",
+                "dataType": "JSON",
+                "data": {
+                    'id': $(".autocomplete").val()
+                },
+                success: function (res) {
+                    $("#user_number_menu").empty();
+                    if (res.length == 0) {
+                        $("#user_number_menu").append("<li class = 'no-matches'><a>No match found</a></li>");
+                    } else {
+                        for (var i = 0; i < res.length; i++) {
+                            $("#user_number_menu").append("<li title = '" + res[i].user_firstname + " " + res[i].user_lastname + "' data-firstname = '" + res[i].user_firstname + "' data-lastname = '" + res[i].user_lastname + "' data-middlename = '" + res[i].user_middlename + "' data-course = '" + res[i].user_course + "' data-access = '" + res[i].user_access + "'><a>" + res[i].user_number + "</a></li>");
+                        }
+                    }
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            });
+            // Cache useful selectors
+            var $input = $(this);
+            var $dropdown = $input.next("ul.dropdown-menu");
+
+            // Create the no matches entry if it does not exists yet
+            if (!$dropdown.data("containsNoMatchesEntry")) {
+                $("input.autocomplete + ul.dropdown-menu").append(
+                    '<li class="no-matches hidden"><a>No matches</a></li>'
+                );
+                $dropdown.data("containsNoMatchesEntry", true);
+            }
+
+            // Show only matching values
+            $dropdown.find("li:not(.no-matches)").each(function (key, li) {
+                var $li = $(li);
+                $li[new RegExp($input.val(), "i").exec($li.text()) ? "removeClass" : "addClass"]("hidden");
+            });
+
+            // Show a specific entry if we have no matches
+            $dropdown.find("li.no-matches")[$dropdown.find("li:not(.no-matches):not(.hidden)").length > 0 ? "addClass" : "removeClass"]("hidden");
+
+        });
+
+        $(document).on("focus click", "input.autocomplete + ul.dropdown-menu li", function (e) {
+            // Prevent any action on the window location
+            e.preventDefault();
+
+            // Cache useful selectors
+            $li = $(this);
+            $input = $li.parent("ul").prev("input");
+            $firstname = $("#user_firstname");
+            $lastname = $("#user_lastname");
+            $middlename = $("#user_middlename");
+            $course = $("#user_course");
+            $access = $("#user_access");
+
+            // Update input text with selected entry
+            if (!$li.is(".no-matches")) {
+                $input.val($li.text());
+                $firstname.val($li.data('firstname'));
+                $lastname.val($li.data('lastname'));
+                $middlename.val($li.data('middlename'));
+                $course.val($li.data('course'));
+                $access.val($li.data('access'));
+            }
+        });
+
+    }
+
 </script>

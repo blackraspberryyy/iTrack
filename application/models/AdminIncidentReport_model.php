@@ -33,6 +33,12 @@ class AdminIncidentReport_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0) ? $query->result() : false;
     }
+
+    function getViolations() {
+        $table = "violation";
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0) ? $query->result() : false;
+    }
     
     function insert_violation($violation){
         $this->db->insert("violation", $violation);
