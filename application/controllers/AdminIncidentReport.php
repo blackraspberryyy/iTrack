@@ -33,6 +33,7 @@ class AdminIncidentReport extends CI_Controller {
         $this->load->view("admin_includes/footer");
     }
 
+
     public function search_user_number() {
         $keyword = strval($this->input->post('id'));
 

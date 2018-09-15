@@ -6,8 +6,6 @@
 
 
 
-<script src="<?= base_url() ?>assets/lumino_template/js/chart.min.js"></script>
-<script src="<?= base_url() ?>assets/lumino_template/js/chart-data.js"></script>
 <script src="<?= base_url() ?>assets/lumino_template/js/easypiechart.js"></script>
 <script src="<?= base_url() ?>assets/lumino_template/js/easypiechart-data.js"></script>
 <script src="<?= base_url() ?>assets/lumino_template/js/bootstrap-datepicker.js"></script>

@@ -55,9 +55,13 @@
         <script>
             $(document).ready(function () {
                 $('.datatable').DataTable({ "order": [[ 0, "desc" ]] });
+
             });
         </script>
 
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+        <script src="<?= base_url() ?>assets/lumino_template/js/chart-data.js"></script>
 
         <style>
             /* - CUSTOM STYLE - */
@@ -94,7 +98,16 @@
         </style>
     </head>
     <body>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $('.preloader-background').delay(800).fadeOut('slow');
+            $('.preloader-wrapper').delay(800).fadeOut();
+            $('[data-toggle="tooltip"]').tooltip({
+                container: 'body'
+            });
+        });
+    </script>
+    <?php include 'preloader.php' ?>
         <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -126,12 +139,12 @@
                     </a>
                     <ul class="children collapse" id="violations" >
                         <li>
-                            <a class="" href="#">
+                            <a class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminviolations/student_violations") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>adminviolations/student_violations">
                                 <span class="fa fa-arrow-right">&nbsp;</span> Student Violations
                             </a>
                         </li>
                         <li>
-                            <a class="" href="#">
+                        <a class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminviolations/student_profile") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>adminviolations/student_profile">
                                 <span class="fa fa-arrow-right">&nbsp;</span> Student Profile
                             </a>
                         </li>
@@ -139,8 +152,8 @@
                 </li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminincidentreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Reports</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admingoogledrive") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admingoogledrive"><em class="fab fa-google-drive">&nbsp;</em> Google Drive</a></li>
-                <li  class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminnotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminnotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li>
-                <li  class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admindussap") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admindussap"><em class="fa fa-calendar-alt">&nbsp;</em> DUSSAP</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminnotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminnotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admindussap") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admindussap"><em class="fa fa-calendar-alt">&nbsp;</em> DUSSAP</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "sms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>sms"><em class="fa fa-paper-plane">&nbsp;</em> SMS</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admincms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admincms"><em class="fa fa-cog">&nbsp;</em> CMS</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminaudittrail") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminaudittrail"><em class="fa fa-search">&nbsp;</em> Audit Trail</a></li>

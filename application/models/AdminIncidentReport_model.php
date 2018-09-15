@@ -34,8 +34,11 @@ class AdminIncidentReport_model extends CI_Model {
         return ($query->num_rows() > 0) ? $query->result() : false;
     }
 
-    function getViolations() {
+    function getViolations($where = NULL) {
         $table = "violation";
+        if ($where !== NULL) {
+            $this->db->where($where);
+        }
         $query = $this->db->get($table);
         return ($query->num_rows() > 0) ? $query->result() : false;
     }
@@ -63,7 +66,10 @@ class AdminIncidentReport_model extends CI_Model {
         return ($query->num_rows() > 0) ? $query->result() : false;
     }
     
-    function getIncidentReport(){
+    function getIncidentReport($where = NULL){
+        if($where !== NULL){
+            $this->db->where($where);
+        }
         $this->db->select('ir.*, u.*,'
             .'u2.user_id AS reportedby_id,'
             .'u2.user_number AS reportedby_number,'
