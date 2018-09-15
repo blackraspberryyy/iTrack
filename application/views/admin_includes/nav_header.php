@@ -133,7 +133,7 @@
             <div class="divider"></div>
             <ul class="nav menu">
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admindashboard") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admindashboard"><em class="fa fa-home">&nbsp;</em> Home</a></li>
-                <li class="parent ">
+                <li class="parent <?= strpos(base_url(uri_string()), $this->config->base_url() . "adminviolations/") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>adminviolations">
                     <a data-toggle="collapse" href="#violations">
                         <em class="fa fa-ban">&nbsp;</em> Violations <span data-toggle="collapse" href="#violations" class="icon pull-right"><em class="fa fa-plus"></em></span>
                     </a>

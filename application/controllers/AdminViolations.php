@@ -28,12 +28,13 @@ class AdminViolations extends CI_Controller {
     $data = array(
       "title"             => "Incident Report",
       'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
+      'students'          => $this->AdminViolations_model->getStudents(array("user_isActive" => 1)),
       'incident_reports'  => $this->AdminIncidentReport_model->getIncidentReport(),
       'cms'               => $this->AdminCMS_model->getCMS()[0]
     );
   
     $this->load->view("admin_includes/nav_header", $data);
-    $this->load->view("admin_incident_report/main");
+    $this->load->view("admin_violations/student_profile");
     $this->load->view("admin_includes/footer");
   }
 }

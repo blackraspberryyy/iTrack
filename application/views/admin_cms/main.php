@@ -165,6 +165,18 @@
                 </div>
             </div>
         </div>
+        <!-- WYSIWYG for Student Profile -->
+        <div class = "col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading dark-overlay" title="Edit title">
+                    <i class = "fa fa-pencil-alt add_on"></i>
+                    <input type = "text" value = "<?= $cms->student_profile_title?>" name = "student_profile_title" required/>
+                </div>
+                <div class="panel-body">
+                    <textarea id = "editor_student_profile" name = "student_profile_text"><?= $cms->student_profile_text?></textarea>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row" style = "margin-bottom:30px;">
         <div class="col-xs-12 text-right">
@@ -184,6 +196,7 @@
         $("#editor_user_logs").editor();
         $("#editor_student_handbook").editor();
         $("#editor_monthly_report").editor();
+        $("#editor_student_profile").editor();
     });
 </script>
 

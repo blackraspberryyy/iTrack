@@ -144,5 +144,6 @@ $autoload['model'] = array(
     "AuditTrail_model",
     "Logger",
     "AdminCMS_model",
-    "AdminUserLogs_model"
+    "AdminUserLogs_model",
+    "AdminViolations_model"
 );
