@@ -37,4 +37,33 @@ class AdminViolations extends CI_Controller {
     $this->load->view("admin_violations/student_profile");
     $this->load->view("admin_includes/footer");
   }
+
+  public function search_student() {
+    $word = $this->input->post("search_word");
+    $matched_students = $this->AdminViolations_model->searchStudents($word);
+    if ($word == "") {
+        $all_students = $this->AdminViolations_model->getStudents();
+        $data = array(
+            "success" => 1,
+            "result" => "",
+            "students" => $all_students
+        );
+    } else {
+        if (empty($matched_students)) {
+            $data = array(
+                "success" => 2,
+                "result" => "No Matches Found",
+                "students" => $matched_students
+            );
+        } else {
+            $data = array(
+                "success" => 3,
+                "result" => count($matched_students) . " results found",
+                "students" => $matched_students
+            );
+        }
+    }
+
+    echo json_encode($data);
+  }
 }

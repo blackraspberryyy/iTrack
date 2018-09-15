@@ -74,94 +74,106 @@ function get_data($id){
         <h5><?= $cms->student_profile_text?></h5>
         <br/>
     </div>
+    <div class="col-sm-10 col-sm-offset-1"  style="margin-bottom:32px;">
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="fa fa-search"></i>
+            </span>
+            <input onkeypress = 'return keypresshandler(event)' maxlength="9" type="text" class="form-control" name = "user_number" id = "user_number" placeholder="Search by Student Number" >
+        </div>
+    </div>
+    <div id="result_bank">
     <?php foreach($students as $student):?>
-        <a href="" data-toggle="modal" data-target="#modal_<?= $student->user_id?>">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <div class="panel panel-primary elevate">
-                    <div class="panel-body panel-padding">
-                        <?= $student->user_number?>
-                        <div>
-                            <?=$student->user_firstname . " " . ($student->user_middlename == "" ? "" : substr($student->user_middlename, 0, 1).". "). $student->user_lastname?>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <img class="panel-img" src="<?= base_url().$student->user_picture?>"/>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <!-- Modal -->
-        <div class="modal fade" id="modal_<?= $student->user_id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel"><i class = "far fa-user-circle"></i> Profile</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <center>
-                                    <img src="<?= base_url().$student->user_picture?>" class="img-responsive img-circle elevate" width="150">
-                                </center>
+        <div class="student-panel">
+            <span class ="d-none student_id" value = "<?= $student->user_id ?>"></span>
+            <a href="" data-toggle="modal" data-target="#modal_<?= $student->user_id?>">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <div class="panel panel-primary elevate">
+                        <div class="panel-body panel-padding">
+                            <?= $student->user_number?>
+                            <div>
+                                <?=$student->user_firstname . " " . ($student->user_middlename == "" ? "" : substr($student->user_middlename, 0, 1).". "). $student->user_lastname?>
                             </div>
                         </div>
-                        <table class="custom-table">
-                            <tbody>
-                                <tr>
-                                    <td><strong>Student Number</strong></td>
-                                    <td><?=$student->user_number?></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Student Name</strong></td>
-                                    <td><?=$student->user_firstname . " " . ($student->user_middlename == "" ? "" : $student->user_middlename)." ". $student->user_lastname?></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Program</strong></td>
-                                    <td><?=$student->user_course?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div style="max-height:300px; margin-top:24px;">
-                            <canvas id="violationChart_<?= $student->user_id?>"></canvas>
+                        <div class="panel-body">
+                            <img class="panel-img" src="<?= base_url().$student->user_picture?>"/>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </a>
+            <!-- Modal -->
+            <div class="modal fade" id="modal_<?= $student->user_id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel"><i class = "far fa-user-circle"></i> Profile</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <center>
+                                        <img src="<?= base_url().$student->user_picture?>" class="img-responsive img-circle elevate" width="150">
+                                    </center>
+                                </div>
+                            </div>
+                            <table class="custom-table">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Student Number</strong></td>
+                                        <td><?=$student->user_number?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Student Name</strong></td>
+                                        <td><?=$student->user_firstname . " " . ($student->user_middlename == "" ? "" : $student->user_middlename)." ". $student->user_lastname?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Program</strong></td>
+                                        <td><?=$student->user_course?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="max-height:300px; margin-top:24px;">
+                                <canvas id="violationChart_<?= $student->user_id?>"></canvas>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <script>
-            var month_label = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            var ctx = document.getElementById('violationChart_<?= $student->user_id?>').getContext('2d');
-            var steps = 3;
-            var chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: month_label,
-                    datasets: [{
-                        label: "Incident Report/s Count",
-                        backgroundColor: 'rgba(0, 114, 54, 0.5)',
-                        borderColor: 'rgba(0, 114, 54, 1)',
-                        data: [<?= get_data($student->user_id)?>],
-                    }]
-                },
-                options:{
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                suggestedMax: 5,
-                                min: 0,
-                                stepSize: 1
-                            }
+            <script>
+                var month_label = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                var ctx = document.getElementById('violationChart_<?= $student->user_id?>').getContext('2d');
+                var steps = 3;
+                var chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: month_label,
+                        datasets: [{
+                            label: "Incident Report/s Count",
+                            backgroundColor: 'rgba(0, 114, 54, 0.5)',
+                            borderColor: 'rgba(0, 114, 54, 1)',
+                            data: [<?= get_data($student->user_id)?>],
                         }]
+                    },
+                    options:{
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    suggestedMax: 5,
+                                    min: 0,
+                                    stepSize: 1
+                                }
+                            }]
+                        }
                     }
-                }
-            });    
-        </script>
+                });    
+            </script>
+        </div>
     <?php endforeach;?>
-    
+    </div>
 </div>
 
 <style>
@@ -194,7 +206,68 @@ function get_data($id){
         border-right:2px solid #ddd;
         text-align:right;
     }
-    table.custom-table td:last-child{
-
-    }
 </style>
+
+
+<script>
+function keypresshandler(event) {
+    var charCode = event.keyCode;
+    //Non-numeric character range
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+}
+</script>
+<script>
+$(document).ready(function(){
+    $("#user_number").bind("keyup", function(e) {
+        var search_word = $(this).val();
+        $.ajax({
+            "method": "POST",
+            "url": '<?= base_url() ?>' + "adminviolations/search_student",
+            "dataType": "JSON",
+            "data": {
+                'search_word': search_word
+            },
+            success: function (res) {
+                /*
+                    * ========= res.success CODES =========*
+                    * 1 - NO STRINGS.......SHOW ALL STUDENTS
+                    * 2 - NO MATCH FOUND...SHOW NONE
+                    * 3 - MATCH FOUND......SHOW RESULTS
+                    * ====================================*
+                    */
+                console.log(res);
+                switch(res.success){
+                    case 1:{
+                        $(".student-panel").show();
+                        break;
+                    }
+                    case 2:{
+                        $(".student-panel").hide();
+                        break;
+                    }
+                    case 3:{
+                        var student_ids = [];
+                        $.each(res.students, function( index, value ) {
+                            student_ids.push(value.user_id);
+                        });
+                        $(".student-panel").hide();
+                        $(".student-panel").filter(function(){
+                            return student_ids.includes($(".student_id", this).attr("value"));
+                        }).show();
+                        break;
+                    }
+                    default:{
+                        $(".student-panel").show();
+                        break;
+                    }
+                }
+            },
+            error: function(res){
+                console.error("Reload Your Browser");
+            }
+        });
+    });
+});
+</script>
