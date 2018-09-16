@@ -6,8 +6,14 @@
         vertical-align: middle;
     }
 </style>
-
-
+<?php
+function determineStatus($status){
+    if($status == 0){
+        echo '<span class = "badge badge-secondary">Inactive</span>';
+    }else{
+        echo '<span class = "badge badge-danger" style = "background:#ff3232;">Active</span>';
+    }
+}?>
 <script>
     $(function () { /* DOM ready */
         if ($(this).find(":selected").attr("data-type") == "other") {
@@ -128,34 +134,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <script>
-                                    var month_label = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                                    var ctx = document.getElementById('violationChart_<?= $report->user_id?>').getContext('2d');
-                                    var steps = 3;
-                                    var chart = new Chart(ctx, {
-                                        type: 'line',
-                                        data: {
-                                            labels: month_label,
-                                            datasets: [{
-                                                label: "Incident Reports",
-                                                backgroundColor: 'rgba(0, 114, 54, 0.5)',
-                                                borderColor: 'rgba(0, 114, 54, 1)',
-                                                data: [<?= get_data($report->user_id)?>],
-                                            }]
-                                        },
-                                        options:{
-                                            scales: {
-                                                yAxes: [{
-                                                    ticks: {
-                                                        suggestedMax: 5,
-                                                        min: 0,
-                                                        stepSize: 1
-                                                    }
-                                                }]
-                                            }
-                                        }
-                                    });    
-                                </script>
                             </div> <!--END DETAILS MODAL-->
 
                             <!-- EDIT MODAL -->
