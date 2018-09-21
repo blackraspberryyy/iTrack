@@ -38,7 +38,8 @@
         <![endif]-->
 
         <!-- CUSTOM STYLE -->
-        <link rel="stylesheet" href="<?= base_url()?>assets/custom/css/custom.css"
+        <link rel="stylesheet" href="<?= base_url()?>assets/custom/css/custom.css"/>
+        <link rel="stylesheet" href="<?= base_url()?>assets/custom/css/spacing.min.css"/>
 
         <!-- JQuery and Bootsrap JS -->
         <script src="<?= base_url() ?>assets/lumino_template/js/jquery-1.11.1.min.js"></script>

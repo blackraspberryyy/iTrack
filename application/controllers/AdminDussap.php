@@ -5,7 +5,7 @@
             if ($this->session->has_userdata('isloggedin') == FALSE) {
                 //user is not yet logged in
                 $this->session->set_flashdata("err_login", "Login First!");
-                redirect(base_url() . 'login/');
+                redirect(base_url() . 'adminlogin/');
             } else {
                 if($this->session->userdata("useraccess") == "student" || $this->session->userdata("useraccess") == "teacher"){
                     $this->session->set_flashdata("err_login", "Restricted Subpage");
@@ -19,15 +19,26 @@
             $data = array(
                 'title'         => "DUSSAP",
                 'currentadmin'  => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
-                'cms'           => $this->AdminCMS_model->getCMS()[0],
-                'attendance'    => $this->AdminDussap_model->getAttendance(),
-                'active_incident_reports' => $this->AdminDussap_model->getActiveIncidentReport()
+                'cms'           => $this->AdminCMS_model->getCMS()[0]
+            );
+            redirect(base_url().'adminincidentreport');
+        }
+        function view_exec(){
+            $this->session->set_userdata('incident_report_id', $this->uri->segment(3));
+            redirect(base_url().'admindussap/view');
+        }
+        function view(){
+            $data = array(
+                'title'             => "DUSSAP",
+                'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
+                'cms'               => $this->AdminCMS_model->getCMS()[0],
+                'incident_report'   => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
+                'attendance'        => $this->AdminDussap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
+                'total_hours'       => $this->AdminDussap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
             );
             $this->load->view("admin_includes/nav_header", $data);
             $this->load->view("admin_dussap/main");
             $this->load->view("admin_includes/footer");
         }
-        function view(){
-            echo $this->uri->segment(3);
-        }
+        
     }

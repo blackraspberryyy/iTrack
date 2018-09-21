@@ -1,6 +1,9 @@
 <?php
     class AdminDussap_model extends CI_Model{
-        function getAttendance(){
+        function getAttendance($where = NULL){
+            if($where !== NULL){
+                $this->db->where($where);
+            }
             $this->db->select('att.*, ir.*, u.*,'
                 .'u2.user_id AS reportedby_id,'
                 .'u2.user_number AS reportedby_number,'
@@ -21,10 +24,20 @@
             $this->db->join('user AS u', 'ir.user_id = u.user_id','LEFT OUTER');
             $this->db->join('user AS u2', 'ir.user_reported_by = u2.user_id','LEFT OUTER');
             $this->db->join('violation AS v', 'ir.violation_id = v.violation_id','LEFT OUTER');
+            $this->db->order_by("att.attendance_created_at", "asc");
             $query = $this->db->get();
             return ($query->num_rows() > 0) ? $query->result() : false;
         }
-
+        function getAttendanceTotalHours($where = NULL){
+            if($where !== NULL){
+                $this->db->where($where);
+            }
+            $this->db->select('SUM(attendance_hours_rendered) AS hours_rendered');
+            $this->db->from('attendance');
+            $this->db->order_by("attendance_created_at", "asc");
+            $query = $this->db->get();
+            return ($query->num_rows() > 0) ? $query->result() : false;
+        }
         function getActiveIncidentReport(){
             $this->db->select('ir.*, u.*,'
             .'u2.user_id AS reportedby_id,'
@@ -50,4 +63,5 @@
         $query = $this->db->get();
         return ($query->num_rows() > 0) ? $query->result() : false;
         }
+
     }

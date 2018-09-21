@@ -5,7 +5,44 @@ function determineStatus($status){
     }else{
         echo '<span class = "badge badge-danger" style = "background:#ff3232;">Active</span>';
     }
-}?>
+}
+
+function get_labels($attendance){
+    $labels = array();
+    foreach($attendance as $att){
+        array_push($labels, date('F d, Y', $att->attendance_created_at));
+    }
+
+    $loop = 0;
+    foreach($labels as $l){
+        if($loop == (count($labels) - 1)){
+            //LAST ITERATION
+            echo '"'.$l.'"';
+        }else{
+            echo '"'.$l.'"'.', ';
+        }
+        $loop += 1;
+    }
+}
+
+function get_data($attendance){
+    $data = array();
+    foreach($attendance as $att){
+        array_push($data, $att->attendance_hours_rendered);
+    }
+
+    $loop = 0;
+    foreach($data as $d){
+        if($loop == (count($data) - 1)){
+            //LAST ITERATION
+            echo $d;
+        }else{
+            echo $d.', ';
+        }
+        $loop += 1;
+    }
+}
+?>
 <div class="row">
     <ol class="breadcrumb">
         <li>
@@ -25,73 +62,81 @@ function determineStatus($status){
         <h5><?=$cms->dussap_text?></h5>
     </div>
 </div>
-<div class="row">
-    <div class="col-xs-12">
-        <div class ="table-responsive">
-            <table class="table table-striped datatable" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Date &amp; Time</th>
-                        <th>Status</th>
-                        <th>Student</th>
-                        <th>Reported By</th>
-                        <th>Violation</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if($active_incident_reports):?>
-                        <?php foreach ($active_incident_reports as $report): ?>
-                            <tr>
-                                <td><span class = "hidden"><?= $report->incident_report_datetime ?></span><?= date('F d, Y \a\t h:m A', $report->incident_report_datetime) ?></td>
-                                <td><?= determineStatus($report->incident_report_status);?></td>
-                                <td><?= $report->user_firstname . " " . ($report->user_middlename == "" ? "" : substr($report->user_middlename, 0, 1) .". ").$report->user_lastname; ?></td>
-                                <td>
-                                    <?php
-                                    if ($report->reportedby_id != "") {
-                                        //if REPORTED_BY teacher, get user's name 
-                                        echo $report->reportedby_firstname . " " . ($report->reportedby_middlename == "" ? "" : substr($report->reportedby_middlename, 0, 1).". "). $report->reportedby_lastname;
-                                        echo " <small class = 'text-muted'><b>(".$report->reportedby_access.")</b></small>";
-                                    } else {
-                                        //if REPORTED_BY admin, get admin's name
-                                        echo "Admin";
-                                    }
-                                    ?>
-                                </td>
-                                
-                                <td><?= ucfirst($report->violation_name) ?></td>
-                                <td>
-                                    <div class="btn-group-vertical" role="group">
-                                        <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id)?>">View Attendance</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+<div class="row margin-top-lg">
+    <div class="col-xs-12 col-sm-4 text-center">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Attendance Progress</div>
+            <div class="panel panel-body">
+                <div class="second circle">
+                    <strong></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-8 text-center">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Student Profile</div>
+            <div class="panel panel-body">
+                <center>
+                    <img src="<?= base_url().$incident_report->user_picture?>" class="img-responsive img-circle" width="150">
+                    <h4><?= $incident_report->user_firstname.' '.($incident_report->user_middlename!='' ? $incident_report->user_middlename:'').' '.$incident_report->user_lastname?></h4>
+                    <h5><?= ucfirst($incident_report->user_access)?></h5>
+                    <h6><?= determineStatus($incident_report->incident_report_status)?></h6>
+                </center>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 text-center">
+        <div class="panel panel-secondary">
+            <div class="panel panel-heading chart-header">Attendance Chart</div>
+            <div class="panel panel-body chart-body">
+                
+                <canvas id="attendanceChart"></canvas>
+            </div>
         </div>
     </div>
 </div>
     
+<script>
 
-
-
-
-<!-- <div class="second circle" >
-    <strong></strong>
-</div> -->
-    <script>
 window.onload = function () {
+    //Circle Progress Bar
     $('.second.circle').circleProgress({
-        value: 1,
+        size:200,
+        value: <?= $total_hours->hours_rendered/$incident_report->violation_hours?>,
         animation:{
-            duration:4000,
+            duration:3000,
             easing: "circleProgressEasing"
         },
         fill: { color: ["#037236"] }
     }).on('circle-animation-progress', function(event, progress) {
-        $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
+        $(this).find('strong').html((<?= $total_hours->hours_rendered?> * progress).toFixed(2).replace(/[.,]00$/, "") + '<i>&nbsp;/&nbsp;</i>' + <?= $incident_report->violation_hours?> + '<br/>hrs');
+    });
+    //Bar Chart
+    var labels = [<?php get_labels($attendance)?>];
+    var ctx = document.getElementById('attendanceChart').getContext('2d');
+    var myBarChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Hours Rendered",
+                backgroundColor: 'rgba(0, 114, 54, 0.5)',
+                borderColor: 'rgba(0, 114, 54, 1)',
+                data: [<?php get_data($attendance)?>]
+            }],
+            options:{
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            suggestedMax: 5,
+                            min: 0,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        }
     });
 }
 </script>
