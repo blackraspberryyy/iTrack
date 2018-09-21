@@ -20,8 +20,8 @@
     });
 </script>
 
-<!-- AUTOCOMPLETE -->
-
+<!-- Jquery circle progress bar -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-circle-progress/1.2.2/circle-progress.min.js"></script>
 
 </body>
 </html>

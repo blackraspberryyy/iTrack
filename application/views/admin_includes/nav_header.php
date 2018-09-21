@@ -37,6 +37,9 @@
         <script src="js/respond.min.js"></script>
         <![endif]-->
 
+        <!-- CUSTOM STYLE -->
+        <link rel="stylesheet" href="<?= base_url()?>assets/custom/css/custom.css"
+
         <!-- JQuery and Bootsrap JS -->
         <script src="<?= base_url() ?>assets/lumino_template/js/jquery-1.11.1.min.js"></script>
         <script src="<?= base_url() ?>assets/lumino_template/js/bootstrap.min.js"></script>
@@ -153,7 +156,6 @@
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminincidentreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Reports</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admingoogledrive") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admingoogledrive"><em class="fab fa-google-drive">&nbsp;</em> Google Drive</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminnotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminnotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admindussap") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admindussap"><em class="fa fa-calendar-alt">&nbsp;</em> DUSSAP</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "sms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>sms"><em class="fa fa-paper-plane">&nbsp;</em> SMS</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admincms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admincms"><em class="fa fa-cog">&nbsp;</em> CMS</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminaudittrail") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminaudittrail"><em class="fa fa-search">&nbsp;</em> Audit Trail</a></li>

@@ -90,7 +90,7 @@ $autoload['drivers'] = array();
   |
   |	$autoload['helper'] = array('url', 'file');
  */
-$autoload['helper'] = array('url', 'form', 'security', 'file');
+$autoload['helper'] = array('url', 'form', 'security', 'file', 'print_helper');
 
 /*
   | -------------------------------------------------------------------
@@ -145,5 +145,6 @@ $autoload['model'] = array(
     "Logger",
     "AdminCMS_model",
     "AdminUserLogs_model",
-    "AdminViolations_model"
+    "AdminViolations_model",
+    "AdminDussap_model"
 );

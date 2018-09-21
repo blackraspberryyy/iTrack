@@ -9,7 +9,7 @@
 <?php
 function determineStatus($status){
     if($status == 0){
-        echo '<span class = "badge badge-secondary">Inactive</span>';
+        echo '<span class = "badge badge-secondary">Finished</span>';
     }else{
         echo '<span class = "badge badge-danger" style = "background:#ff3232;">Active</span>';
     }
@@ -121,10 +121,9 @@ function determineStatus($status){
                                                     <center>
                                                         <img src="<?= base_url().$report->user_picture?>" class="img-responsive img-circle" width="150">
                                                         <h4><?= $report->user_firstname.' '.($report->user_middlename!='' ? $report->user_middlename:'').' '.$report->user_lastname?></h4>
-                                                        <h5><?= ucfirst($report->user_access)?></h4>
-                                                        <div style="max-height:300px;">
-                                                            <canvas id="violationChart_<?= $report->user_id?>"></canvas>
-                                                        </div>
+                                                        <h5><?= ucfirst($report->user_access)?></h5>
+                                                        <h6><?= determineStatus($report->incident_report_status)?></h6>
+                                                        <a href="<?= base_url().'admindussap/view/'.$report->incident_report_id?>" class="btn btn-primary <?= $report->incident_report_status == 0 ? 'disabled': ''?>"><i class="fa fa-search"></i> See DUSSAP Attendance</a>
                                                     </center>
                                                 </div>
                                             </div>
@@ -185,14 +184,6 @@ function determineStatus($status){
                                 <option disabled="disabled" style = "background:#ddd;">-- Major --</option>
                                 <?php
                                 foreach ($major_violations as $violation) {
-                                    ?>
-                                    <option value = "<?= $violation->violation_id ?>" data-type = "<?= $violation->violation_type ?>" title = "<?= ucfirst($violation->violation_name) ?>" <?= set_select('classification', $violation->violation_id); ?>><?= ucfirst($violation->violation_name) ?></option>    
-                                    <?php
-                                }
-                                ?>
-                                <option disabled="disabled" style = "background:#ddd;">-- Minor --</option>
-                                <?php
-                                foreach ($minor_violations as $violation) {
                                     ?>
                                     <option value = "<?= $violation->violation_id ?>" data-type = "<?= $violation->violation_type ?>" title = "<?= ucfirst($violation->violation_name) ?>" <?= set_select('classification', $violation->violation_id); ?>><?= ucfirst($violation->violation_name) ?></option>    
                                     <?php
