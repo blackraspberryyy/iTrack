@@ -118,13 +118,47 @@ function determineStatus($status){
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    <center>
-                                                        <img src="<?= base_url().$report->user_picture?>" class="img-responsive img-circle" width="150">
-                                                        <h4><?= $report->user_firstname.' '.($report->user_middlename!='' ? $report->user_middlename:'').' '.$report->user_lastname?></h4>
-                                                        <h5><?= ucfirst($report->user_access)?></h5>
-                                                        <h6><?= determineStatus($report->incident_report_status)?></h6>
-                                                        <a href="<?= base_url().'admindussap/view_exec/'.$report->incident_report_id?>" class="btn btn-primary <?= $report->incident_report_status == 0 ? 'disabled': ''?>"><i class="fa fa-search"></i> See DUSSAP Attendance</a>
-                                                    </center>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <center>
+                                                                <img src="<?= base_url().$report->user_picture?>" class="img-responsive img-circle" width="150">
+                                                                <h4><?= $report->user_firstname.' '.($report->user_middlename!='' ? $report->user_middlename:'').' '.$report->user_lastname?></h4>
+                                                                <h5><?= ucfirst($report->user_access)?></h5>
+                                                                <h6><?= determineStatus($report->incident_report_status)?></h6>
+                                                                <a href="<?= base_url().'admindussap/view_exec/'.$report->incident_report_id?>" class="btn btn-primary <?= $report->incident_report_status == 0 ? 'disabled': ''?>"><i class="fa fa-search"></i> See DUSSAP Attendance</a>
+                                                            </center>
+                                                        </div>
+                                                        <div class="col-xs-6 margin-top-lg text-center">
+                                                            <h5><strong>Reported By:</strong></h5>
+                                                            <span><?php
+                                                                if ($report->reportedby_id != "") {
+                                                                    //if REPORTED_BY teacher, get user's name 
+                                                                    echo $report->reportedby_firstname . " " . ($report->reportedby_middlename == "" ? "" : substr($report->reportedby_middlename, 0, 1).". "). $report->reportedby_lastname;
+                                                                    echo " <small class = 'text-muted'><b>(".$report->reportedby_access.")</b></small>";
+                                                                } else {
+                                                                    //if REPORTED_BY admin, get admin's name
+                                                                    echo "Admin";
+                                                                }
+                                                            ?></span>
+                                                            <br/>
+                                                            <br/>
+                                                            <h5><strong>Place</strong></h5>
+                                                            <span><?= $report->incident_report_place?></span>
+                                                        </div>
+                                                        <div class="col-xs-6  margin-top-lg  text-center">
+                                                            <h5><strong>Violation</strong></h5>
+                                                            <span><?= ucfirst($report->violation_name)?></span>
+                                                            <br/>
+                                                            <br/>
+                                                            <h5><strong>Time</strong></h5>
+                                                            <span><?= date('F d, Y \a\t h:i A', $report->incident_report_datetime)?></span>
+                                                        </div>
+                                                        <div class="col-xs-12 text-center">
+                                                            <br/>
+                                                            <h5><strong>Message</strong></h5>
+                                                            <p><?= $report->incident_report_message?></p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
