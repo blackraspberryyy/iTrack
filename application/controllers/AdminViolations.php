@@ -26,7 +26,7 @@ class AdminViolations extends CI_Controller {
   }
   public function student_profile(){
     $data = array(
-      "title"             => "Incident Report",
+      "title"             => "Student Profile",
       'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
       'students'          => $this->AdminViolations_model->getStudents(array("user_isActive" => 1)),
       'incident_reports'  => $this->AdminIncidentReport_model->getIncidentReport(),

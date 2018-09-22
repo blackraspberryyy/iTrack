@@ -1,7 +1,7 @@
 <!-- DO NOT REMOVE THIS FOOTER -->
-<footer style = "position:fixed; bottom:-15px; right:5px; background:#fff; text-align: right;">
+<!-- <footer style = "position:fixed; bottom:-15px; right:5px; background:#fff; text-align: right;">
     <p class="back-link">Lumino Theme by <a href="https://www.medialoot.com">Medialoot</a></p>
-</footer>    
+</footer>     -->
 </div><!--/.main-->
 
 

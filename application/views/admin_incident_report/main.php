@@ -102,8 +102,10 @@ function determineStatus($status){
                                 <td><?= ucfirst($report->violation_name) ?></td>
                                 <td>
                                     <div class="btn-group-vertical" role="group">
-                                        <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id)?>">Details</a>
-                                        <button type = "button" class="btn btn-warning" data-toggle="modal" data-target="#edit_<?= sha1($report->incident_report_id)?>">Edit</a>
+                                        <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id)?>">Details</button>
+                                        <?php if ($report->incident_report_status == 0):?>
+                                            <a href="<?=base_url()?>adminincidentreport/edit_exec/<?=$report->incident_report_id?>" class="btn btn-warning">Edit</a>
+                                        <?php endif;?>
                                     </div>
                                 </td>
                             </tr>
@@ -168,25 +170,6 @@ function determineStatus($status){
                                     </div>
                                 </div>
                             </div> <!--END DETAILS MODAL-->
-
-                            <!-- EDIT MODAL -->
-                            <div class="modal fade text-left" id="edit_<?= sha1($report->incident_report_id)?>" tabindex="-1" role="dialog" aria-labelledby="editTitle" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h3 class="modal-title" id="editTitle">Edit</h3>
-                                        </div>
-                                        <div class="modal-body">
-                                            EDIT Here
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </tbody>
