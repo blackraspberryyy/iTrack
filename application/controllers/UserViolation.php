@@ -19,14 +19,14 @@ class UserViolation extends CI_Controller {
     }
 
     public function index() {
-        $validations = $this->UserValidation_model->get_validation(array('incident_report.user_id' => $this->session->userdata("userid")));
+        $violations = $this->UserValidation_model->get_validation(array('incident_report.user_id' => $this->session->userdata("userid")));
         $where = array(
             "user_id" => $this->session->userdata("userid")
         );
         $data = array(
             "title" => ucfirst($this->session->userdata("useraccess")) . "'s Violation",
             'currentuser' => $this->UserDashboard_model->getUser($where)[0],
-            'validations' => $validations,
+            '$violations' => $violations,
         );
         $this->load->view("user_includes/nav_header", $data);
         $this->load->view("user_violation/main");

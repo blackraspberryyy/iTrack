@@ -76,13 +76,13 @@
                         <th>Time</th>
                     </tr>
                 </thead>
-                <?php foreach ($validations as $validation): ?>
+                <?php foreach ($violations as $violation): ?>
                     <tbody>
                         <tr>
-                            <td><?= $validation->violation_id ?></td>
-                            <td><?= $validation->violation_name ?></td>
-                            <td><?= date('M j, Y', $validation->incident_report_datetime) ?></td>
-                            <td><?= date('h: i A', $validation->incident_report_datetime) ?></td>
+                            <td><?= $violation->violation_id ?></td>
+                            <td><?= $violation->violation_name ?></td>
+                            <td><?= date('M j, Y', $violation->incident_report_datetime) ?></td>
+                            <td><?= date('h: i A', $violation->incident_report_datetime) ?></td>
                         </tr>
                     </tbody>
                 <?php endforeach; ?>
