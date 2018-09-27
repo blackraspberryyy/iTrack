@@ -67,11 +67,12 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="table-responsive">
-            <table class="table table-bordered datatable-class" width="100%" cellspacing="0">
+            <table class="table table-bordered datatable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Violation Code</th>
                         <th>Violation</th>
+                        <th>Violation Type</th>
                         <th>Date</th>
                         <th>Time</th>
                     </tr>
@@ -81,6 +82,7 @@
                         <tr>
                             <td><?= $violation->violation_id ?></td>
                             <td><?= $violation->violation_name ?></td>
+                            <td><?= $violation->violation_type ?></td>
                             <td><?= date('M j, Y', $violation->incident_report_datetime) ?></td>
                             <td><?= date('h: i A', $violation->incident_report_datetime) ?></td>
                         </tr>

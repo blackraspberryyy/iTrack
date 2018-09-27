@@ -8,8 +8,6 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         <link href="<?= base_url() ?>assets/lumino_template/css/datepicker3.css" rel="stylesheet">
         <link href="<?= base_url() ?>assets/lumino_template/css/styles.css" rel="stylesheet">
-        <!-- Page level plugin CSS-->
-        <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
         <!-- FAVICON COMPATIBILITY -->
         <link rel="apple-touch-icon" sizes="57x57" href="<?= base_url() ?>images/favicon/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="<?= base_url() ?>images/favicon/apple-icon-60x60.png">
@@ -37,7 +35,17 @@
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->
+        
+        <!-- Data Table -->
+        <link rel = "stylesheet" href = "https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+        <script src = "https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src = "https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.datatable').DataTable({"order": [[0, "desc"]]});
 
+            });
+        </script>
         <style>
             /* - CUSTOM STYLE - */
             .navbar-header img {
@@ -58,7 +66,7 @@
             ::-webkit-scrollbar-track {
                 background: #f1f1f1; 
             }
-            
+
             /* Handle */
             ::-webkit-scrollbar-thumb {
                 background: rgb(244,211,12); 
@@ -71,7 +79,16 @@
         </style>
     </head>
     <body>
-
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                $('.preloader-background').delay(800).fadeOut('slow');
+                $('.preloader-wrapper').delay(800).fadeOut();
+                $('[data-toggle="tooltip"]').tooltip({
+                    container: 'body'
+                });
+            });
+        </script>
+        <?php include 'preloader.php' ?>
         <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">

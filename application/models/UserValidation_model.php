@@ -14,6 +14,7 @@ class UserValidation_model extends CI_Model {
             $this->db->where($where);
         }
         $this->db->order_by("incident_report_added_at", "DESC");
+        $this->db->where(array("violation_type" => "major", "violation_category" => "default"));
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
