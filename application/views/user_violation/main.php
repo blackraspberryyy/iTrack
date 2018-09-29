@@ -41,6 +41,16 @@
         width: 100%;
     }
 </style>
+<?php
+
+function determineStatus($status) {
+    if ($status == 0) {
+        echo '<span class = "badge badge-secondary">Finished</span>';
+    } else {
+        echo '<span class = "badge badge-danger" style = "background:#ff3232;">Active</span>';
+    }
+}
+?>
 <div class="row">
     <ol class="breadcrumb">
         <li>
@@ -70,24 +80,36 @@
             <table class="table table-bordered datatable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Violation Code</th>
+                        <th>Date &amp; Time</th>
+                        <th>Status</th>
+                        <th>Reported By</th>
                         <th>Violation</th>
-                        <th>Violation Type</th>
-                        <th>Date</th>
-                        <th>Time</th>
                     </tr>
                 </thead>
-                <?php foreach ($violations as $violation): ?>
-                    <tbody>
-                        <tr>
-                            <td><?= $violation->violation_id ?></td>
-                            <td><?= $violation->violation_name ?></td>
-                            <td><?= $violation->violation_type ?></td>
-                            <td><?= date('M j, Y', $violation->incident_report_datetime) ?></td>
-                            <td><?= date('h: i A', $violation->incident_report_datetime) ?></td>
-                        </tr>
-                    </tbody>
-                <?php endforeach; ?>
+                <?php if ($violations): ?>
+                    <?php foreach ($violations as $violation): ?>
+                        <tbody>
+                            <tr>
+                                <td><span class = "hidden"><?= $violation->incident_report_datetime ?></span><?= date('F d, Y \a\t h:m A', $violation->incident_report_datetime) ?></td>
+                                <td><?= determineStatus($violation->incident_report_status); ?></td>
+                                <td>
+                                    <?php
+                                    if ($violation->reportedby_id != "") {
+                                        //if REPORTED_BY teacher, get user's name 
+                                        echo $violation->reportedby_firstname . " " . ($violation->reportedby_middlename == "" ? "" : substr($violation->reportedby_middlename, 0, 1) . ". ") . $violation->reportedby_lastname;
+                                        echo " <small class = 'text-muted'><b>(" . $violation->reportedby_access . ")</b></small>";
+                                    } else {
+                                        //if REPORTED_BY admin, get admin's name
+                                        echo "Admin";
+                                    }
+                                    ?>
+                                </td>
+
+                                <td><?= ucfirst($violation->violation_name) ?></td>
+                            </tr>
+                        </tbody>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </table>
         </div>
     </div>

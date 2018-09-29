@@ -140,7 +140,7 @@ $autoload['model'] = array(
     "UserDashboard_model",
     "AdminIncidentReport_model",
     "UserProfile_model",
-    "UserValidation_model",
+    "UserViolation_model",
     "UserIncidentReport_model",
     "AuditTrail_model",
     "Logger",

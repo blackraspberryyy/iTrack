@@ -98,15 +98,16 @@ function determineStatus($status) {
 
                                 <td><?= ucfirst($report->violation_name) ?></td>
                                 <td>
-                                    <div class="btn-group-vertical" role="group">
-                                        <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id) ?>">Details</button>
-                                        <?php if ($report->incident_report_status == 0): ?>
-                                            <a href="<?= base_url() ?>adminincidentreport/edit_exec/<?= $report->incident_report_id ?>" class="btn btn-warning">Edit</a>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
-                            </tr>
-                            <!-- DETAILS MODAL -->
+                        <center>
+
+                            <div class="btn-group-vertical" role="group">
+                                <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id) ?>">Details</button>
+
+                            </div>
+                        </center>
+                        </td>
+                        </tr>
+                        <!-- DETAILS MODAL -->
                         <div class="modal fade text-left" id="details_<?= sha1($report->incident_report_id) ?>" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">

@@ -1,6 +1,6 @@
 <?php
 
-class UserViolation extends CI_Controller {
+class UserOffenseReport extends CI_Controller {
 
     function __construct() {
         parent::__construct();
@@ -24,12 +24,12 @@ class UserViolation extends CI_Controller {
             "user_id" => $this->session->userdata("userid")
         );
         $data = array(
-            "title" => ucfirst($this->session->userdata("useraccess")) . "'s Violation",
+            "title" => ucfirst($this->session->userdata("useraccess")) . "'s Offense Report",
             'currentuser' => $this->UserDashboard_model->getUser($where)[0],
             'violations' => $violations,
         );
         $this->load->view("user_includes/nav_header", $data);
-        $this->load->view("user_violation/main");
+        $this->load->view("user_offense_report/main");
         $this->load->view("user_includes/footer");
     }
 
