@@ -26,3 +26,9 @@ if (!function_exists('api_respond')) {
     exit;
   }   
 }
+
+if (!function_exists('api_params')) {
+  function api_params($controller) {
+    return json_decode($controller->input->raw_input_stream, TRUE);
+  }
+}
