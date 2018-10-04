@@ -2,12 +2,12 @@
 class Logger extends CI_Model {
     function saveToAudit($user_id, $desc){
         if($user_id == "admin"){
-            $user_id = NULL;
+            $user_id = "Admin";
         }
 
         $data = array(
             "user_id" => $user_id,
-            'log_type' => 'audit',
+            'log_type' => 'trail',
             "log_desc" => $desc,
             'log_added_at' => time()
         );
@@ -17,7 +17,9 @@ class Logger extends CI_Model {
 
     function saveToLogs($user_id, $type){
         $desc = $type == 'in' ? 'Logged in' : 'Logged out';
-
+        if($user_id == "admin"){
+            $user_id = "Admin";
+        }
         $data = array(
             "user_id" => $user_id,
             'log_type' => 'log',

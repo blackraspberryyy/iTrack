@@ -53,7 +53,7 @@ function get_data($attendance){
         <li>
             <a href="<?= base_url() ?>adminincidentreport">Incident Report</a>
         </li>
-        <li class="active">DUSSAP</li>
+        <li class="active">DUSAP</li>
     </ol>
 </div><!--/.row breadcrumb-->
 <div class = "row">
@@ -63,19 +63,24 @@ function get_data($attendance){
     </div>
 </div>
 <div class="row margin-top-lg">
-    <div class="col-xs-12 col-sm-4 text-center">
-        <div class="panel panel-primary">
-            <div class="panel panel-heading">Attendance Progress</div>
-            <div class="panel panel-body">
-                <div class="second circle">
-                    <strong></strong>
-                </div>
-            </div>
+    <div class="col-xs-12">
+        <div class ="table-responsive">
+            <table class="table table-striped datatable" style="width:100%">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-8 text-center">
+</div>
+<div class="row margin-top-lg">
+    <div class="col-xs-12 col-sm-5 col-md-4 text-center">
         <div class="panel panel-primary">
-            <div class="panel panel-heading">Student Profile</div>
+            <div class="panel panel-heading">Incident Report Information</div>
             <div class="panel panel-body">
                 <div class="row">
                     <div class="col-xs-12 text-center">
@@ -120,10 +125,15 @@ function get_data($attendance){
             </div>
         </div>
     </div>
-    <div class="col-xs-12 text-center">
-        <div class="panel panel-secondary">
-            <div class="panel panel-heading chart-header">Attendance Chart</div>
-            <div class="panel panel-body chart-body">
+
+    <div class="col-xs-12 col-sm-7 col-md-8 text-center">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Attendance Progress</div>
+            <div class="panel panel-body">
+                <div class="second circle">
+                    <strong></strong>
+                </div>
+                <br/><br/>
                 <canvas id="attendanceChart"></canvas>
             </div>
         </div>
@@ -135,7 +145,7 @@ function get_data($attendance){
 window.onload = function () {
     //Circle Progress Bar
     $('.second.circle').circleProgress({
-        size:200,
+        size:160,
         value: <?= $total_hours->hours_rendered/$incident_report->violation_hours?>,
         animation:{
             duration:3000,

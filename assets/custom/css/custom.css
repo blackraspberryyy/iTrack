@@ -16,12 +16,12 @@
 }
 .circle strong {
     position: absolute;
-    top: 70px;
+    top: 50px;
     left: 0;
     width: 100%;
     text-align: center;
     line-height: 40px;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 

@@ -17,7 +17,7 @@
         }
         function index(){
             $data = array(
-                'title'         => "DUSSAP",
+                'title'         => "DUSAP",
                 'currentadmin'  => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                 'cms'           => $this->AdminCMS_model->getCMS()[0]
             );
@@ -29,7 +29,7 @@
         }
         function view(){
             $data = array(
-                'title'             => "DUSSAP",
+                'title'             => "DUSAP",
                 'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                 'cms'               => $this->AdminCMS_model->getCMS()[0],
                 'incident_report'   => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],

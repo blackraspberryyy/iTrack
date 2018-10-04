@@ -103,7 +103,7 @@ function determineStatus($status){
                                 <td>
                                     <div class="btn-group-vertical" role="group">
                                         <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id)?>">Details</button>
-                                        <?php if ($report->incident_report_status == 0):?>
+                                        <?php if ($report->incident_report_status != 0):?>
                                             <a href="<?=base_url()?>adminincidentreport/edit_exec/<?=$report->incident_report_id?>" class="btn btn-warning">Edit</a>
                                         <?php endif;?>
                                     </div>
@@ -127,7 +127,12 @@ function determineStatus($status){
                                                                 <h4><?= $report->user_firstname.' '.($report->user_middlename!='' ? $report->user_middlename:'').' '.$report->user_lastname?></h4>
                                                                 <h5><?= ucfirst($report->user_access)?></h5>
                                                                 <h6><?= determineStatus($report->incident_report_status)?></h6>
-                                                                <a href="<?= base_url().'admindussap/view_exec/'.$report->incident_report_id?>" class="btn btn-primary <?= $report->incident_report_status == 0 ? 'disabled': ''?>"><i class="fa fa-search"></i> See DUSSAP Attendance</a>
+                                                                
+                                                                <?php if($report->incident_report_status == 1):?>
+                                                                    <a href="<?= base_url().'admindussap/view_exec/'.$report->incident_report_id?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
+                                                                <?php else:?>
+                                                                    <a href="<?= base_url().'adminoffensereport/view_exec/'.$report->incident_report_id?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
+                                                                <?php endif;?>
                                                             </center>
                                                         </div>
                                                         <div class="col-xs-6 margin-top-lg text-center">

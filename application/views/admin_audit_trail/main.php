@@ -26,7 +26,7 @@
                         <?php foreach ($audits as $audit): ?>
                             <tr>
                                 <td><span class = "hidden"><?= $audit->log_added_at?></span><?= date('[ m/d/Y ] - H:i:s',$audit->log_added_at)?></td>
-                                <td><?= $audit->user_number?></td>
+                                <td><?= $audit->user_id == '' ? 'Admin' : $audit->user_firstname." ".($audit->user_middlename == "" ? "" : substr($audit->user_middlename, 0, 1).". ")." ".$audit->user_lastname?></td>
                                 <td><?= $audit->log_type?></td>
                                 <td><?= $audit->log_desc?></td>
                             </tr>
