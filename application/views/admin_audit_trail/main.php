@@ -17,7 +17,6 @@
                     <tr>
                         <th>Date &amp; Time<br><small class = "text-muted">[MM/DD/YYYY] - HH:mm:ss</small></th>
                         <th>User Number</th>
-                        <th>Type</th>
                         <th>Desc</th>
                     </tr>
                 </thead>
@@ -27,7 +26,6 @@
                             <tr>
                                 <td><span class = "hidden"><?= $audit->log_added_at?></span><?= date('[ m/d/Y ] - H:i:s',$audit->log_added_at)?></td>
                                 <td><?= $audit->user_id == '' ? 'Admin' : $audit->user_firstname." ".($audit->user_middlename == "" ? "" : substr($audit->user_middlename, 0, 1).". ")." ".$audit->user_lastname?></td>
-                                <td><?= $audit->log_type?></td>
                                 <td><?= $audit->log_desc?></td>
                             </tr>
                         <?php endforeach; ?>

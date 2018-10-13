@@ -10,7 +10,7 @@ function determineStatus($status){
 function get_labels($attendance){
     $labels = array();
     foreach($attendance as $att){
-        array_push($labels, date('F d, Y', $att->attendance_created_at));
+        array_push($labels, date('F d, Y', $att->attendance_starttime));
     }
 
     $loop = 0;
@@ -64,17 +64,42 @@ function get_data($attendance){
 </div>
 <div class="row margin-top-lg">
     <div class="col-xs-12">
-        <div class ="table-responsive">
-            <table class="table table-striped datatable" style="width:100%">
-                <thead>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </thead>
-            </table>
+        <div class="panel panel-primary">
+            <div class="panel panel-heading text-center">Attendance Record</div>
+            <div class="panel panel-body">
+                <a href="#" class="btn btn-primary"><i class="fa fa-plus"></i> Add Attendance Record</a>
+                <br/><br/><br/>
+                <div class ="table-responsive">
+                    <table class="table table-striped datatable" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Start Date &amp; Time</th>
+                                <th>End Date &amp; Time</th>
+                                <th>Hours Rendered</th>
+                                <th>Department</th>
+                                <th>Supervisor</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($attendance as $a):?>
+                            <tr>
+                                <td><span class = "hidden"><?= $a->attendance_starttime ?></span><?= date('m/d/Y - h:mA', $a->attendance_starttime) ?></td>
+                                <td><span class = "hidden"><?= $a->attendance_endtime ?></span><?= date('m/d/Y - h:mA', $a->attendance_endtime) ?></td>
+                                <td><?= $a->attendance_hours_rendered ?></td>
+                                <td><?= $a->attendance_dept ?></td>
+                                <td><?= $a->attendance_supervisor ?></td>
+                                <td>
+                                    <a href="#" class="btn btn-warning">Edit</a>
+                                </td>
+                            </tr>
+                            <?php endforeach;?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+        
     </div>
 </div>
 <div class="row margin-top-lg">
