@@ -105,7 +105,7 @@ function get_data($attendance){
                             </tr>
                             <!-- EDIT ATTENDANCE MODAL -->
                             <div class="modal fade text-left" id="edit_<?= sha1($a->attendance_id)?>" tabindex="-1" role="dialog" aria-labelledby="editTitle" aria-hidden="true">
-                                <form action="<?= base_url()?>/admindussap/edit_attendance_exec/<?= $a->attendance_id?>" method="POST">
+                                <form action="<?= base_url()?>admindussap/edit_attendance_exec/<?= $a->attendance_id?>" method="POST">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
