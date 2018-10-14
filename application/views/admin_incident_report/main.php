@@ -1,3 +1,12 @@
+<script>
+    $(document).ready(function () {
+        <?php if(validation_errors()):?>
+            $('#add_incident_report').modal({
+                show: 'true'
+            })
+        <?php endif;?>  
+    });
+</script>
 <style>
     .dropdown-menu li{
         cursor: pointer;
@@ -83,7 +92,7 @@ function determineStatus($status){
                     <?php if($incident_reports):?>
                         <?php foreach ($incident_reports as $report): ?>
                             <tr>
-                                <td><span class = "hidden"><?= $report->incident_report_datetime ?></span><?= date('F d, Y \a\t h:m A', $report->incident_report_datetime) ?></td>
+                                <td><span class = "hidden"><?= $report->incident_report_datetime ?></span><?= date('F d, Y \a\t h:i A', $report->incident_report_datetime) ?></td>
                                 <td><?= determineStatus($report->incident_report_status);?></td>
                                 <td><?= $report->user_firstname . " " . ($report->user_middlename == "" ? "" : substr($report->user_middlename, 0, 1) .". ").$report->user_lastname; ?></td>
                                 <td>

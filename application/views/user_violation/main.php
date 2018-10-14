@@ -90,7 +90,7 @@ function determineStatus($status) {
                     <?php foreach ($violations as $violation): ?>
                         <tbody>
                             <tr>
-                                <td><span class = "hidden"><?= $violation->incident_report_datetime ?></span><?= date('F d, Y \a\t h:m A', $violation->incident_report_datetime) ?></td>
+                                <td><span class = "hidden"><?= $violation->incident_report_datetime ?></span><?= date('F d, Y \a\t h:i A', $violation->incident_report_datetime) ?></td>
                                 <td><?= determineStatus($violation->incident_report_status); ?></td>
                                 <td>
                                     <?php

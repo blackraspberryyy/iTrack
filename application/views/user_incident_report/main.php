@@ -81,7 +81,7 @@ function determineStatus($status) {
                     <?php if ($majorViolations): ?>
                         <?php foreach ($majorViolations as $report): ?>
                             <tr>
-                                <td><span class = "hidden"><?= $report->incident_report_datetime ?></span><?= date('F d, Y \a\t h:m A', $report->incident_report_datetime) ?></td>
+                                <td><span class = "hidden"><?= $report->incident_report_datetime ?></span><?= date('F d, Y \a\t h:i A', $report->incident_report_datetime) ?></td>
                                 <td><?= determineStatus($report->incident_report_status); ?></td>
                                 <td>
                                     <?php
