@@ -1,3 +1,8 @@
+<style>
+  .dropdown-menu li{
+      cursor: pointer;
+  }
+</style>
 <script>
 $(function () { /* DOM ready */
   if ($(this).find(":selected").attr("data-type") == "other") {
@@ -86,7 +91,7 @@ $(function () { /* DOM ready */
       <div class = "row">
         <div class = "col-sm-6 <?= !empty(form_error("date_time")) ? "has-error" : ""; ?>">
           <span class="control-label" id="date_time">Date &AMP; Time</span>
-          <input type="text" class="form-control datetimepicker" name = "date_time" placeholder="Type Here" aria-describedby="date_time" value = "<?= set_value("date_time") ?>">
+          <input type="text" class="form-control datetimepicker" name = "date_time" placeholder="Type Here" aria-describedby="date_time" value = "<?= set_value("date_time", date('m/d/Y h:i A', $incident_report->incident_report_datetime)) ?>">
           <small><?= form_error("date_time") ?></small>
         </div>
         <div class = "col-sm-6 <?= !empty(form_error("place")) ? "has-error" : ""; ?>">
@@ -99,7 +104,7 @@ $(function () { /* DOM ready */
       <div class ="row">
         <div class = "col-sm-8 col-sm-offset-2 <?= !empty(form_error("user_number")) ? "has-error" : ""; ?>" >
           <span class="control-label">User Number</span><br/>
-          <input onkeypress = 'return keypresshandler(event)' maxlength="9" type="text" class="form-control autocomplete" name = "user_number" id = "user_number" placeholder="Type Here" data-toggle="dropdown" value = "<?= set_value("user_number") ?>" >
+          <input onkeypress = 'return keypresshandler(event)' maxlength="9" type="text" class="form-control autocomplete" name = "user_number" id = "user_number" placeholder="Type Here" data-toggle="dropdown" value = "<?= set_value("user_number", $incident_report->user_number) ?>" >
           <ul class="dropdown-menu " role="menu" id = "user_number_menu" style="width:100%;"></ul>          
           <small><?= form_error("user_number") ?></small>
         </div>
@@ -110,31 +115,31 @@ $(function () { /* DOM ready */
           <br/>
           <div class = "<?= !empty(form_error("user_lastname")) ? "has-error" : ""; ?>">
             <span class="control-label">Lastname</span><br/>
-            <input type="text" class="form-control" name = "user_lastname" id = "user_lastname" placeholder="Lastname" readonly="" value = "<?= set_value("user_lastname") ?>">
+            <input type="text" class="form-control" name = "user_lastname" id = "user_lastname" placeholder="Lastname" readonly="" value = "<?= set_value("user_lastname", $incident_report->user_lastname) ?>">
             <small><?= form_error("user_lastname") ?></small>
             <br/>
           </div>
           <div class = "<?= !empty(form_error("user_firstname")) ? "has-error" : ""; ?>">
             <span class="control-label">Firstname</span><br/>
-            <input type="text" class="form-control" name = "user_firstname" id = "user_firstname" placeholder="Firstname" readonly="" value = "<?= set_value("user_firstname") ?>">
+            <input type="text" class="form-control" name = "user_firstname" id = "user_firstname" placeholder="Firstname" readonly="" value = "<?= set_value("user_firstname", $incident_report->user_firstname) ?>">
             <small><?= form_error("user_firstname") ?></small>
             <br/>
           </div>
           <span class="control-label">Middlename</span><br/>
-          <input type="text" class="form-control" name = "user_middlename" id = "user_middlename" placeholder="Middlename" readonly="">
+          <input type="text" class="form-control" name = "user_middlename" id = "user_middlename" placeholder="Middlename" readonly="" value = "<?= set_value("user_middlename", $incident_report->user_middlename) ?>">
         </div>
       </div>
       <div class = "row">
         <div class = "col-xs-4 col-xs-offset-2 <?= !empty(form_error("user_course")) ? "has-error" : ""; ?>">
           <br/>
           <span class="control-label">Course</span><br/>
-          <input type="text" class="form-control" name = "user_course" id = "user_course" placeholder="Course" readonly="" value = "<?= set_value("user_course") ?>">
+          <input type="text" class="form-control" name = "user_course" id = "user_course" placeholder="Course" readonly="" value = "<?= set_value("user_course", $incident_report->user_course) ?>">
           <small><?= form_error("user_course") ?></small>
         </div>
         <div class = "col-xs-4 <?= !empty(form_error("user_access")) ? "has-error" : ""; ?>">
           <br/>
           <span class="control-label">User Access</span><br/>
-          <input type="text" class="form-control" name = "user_access" id = "user_access" placeholder="User Access" readonly="" value = "<?= set_value("user_access") ?>">
+          <input type="text" class="form-control" name = "user_access" id = "user_access" placeholder="User Access" readonly="" value = "<?= set_value("user_access", $incident_report->user_access) ?>">
           <small><?= form_error("user_access") ?></small>
         </div>
       </div>
@@ -143,13 +148,13 @@ $(function () { /* DOM ready */
         <div class = "col-xs-3 col-xs-offset-2 <?= !empty(form_error("user_age")) ? "has-error" : ""; ?>">
           <br/>
           <span class="control-label">Age</span><br/>
-          <input type="text" maxlength="3" onkeypress = 'return keypresshandler(event)' class="form-control" name = "user_age" id = "user_age" placeholder="Age" value = "<?= set_value("user_age") ?>">
+          <input type="text" maxlength="3" onkeypress = 'return keypresshandler(event)' class="form-control" name = "user_age" id = "user_age" placeholder="Age" value = "<?= set_value("user_age", $incident_report->incident_report_age) ?>">
           <small><?= form_error("user_age") ?></small>
         </div>
         <div class = "col-xs-5 <?= !empty(form_error("user_section_year")) ? "has-error" : ""; ?>">
           <br/>
           <span class="control-label">Section/Year</span><br/>
-          <input type="text" class="form-control" name = "user_section_year" id = "user_section_year" placeholder="Type Here" value = "<?= set_value("user_section_year") ?>">
+          <input type="text" class="form-control" name = "user_section_year" id = "user_section_year" placeholder="Type Here" value = "<?= set_value("user_section_year", $incident_report->incident_report_section_year) ?>">
           <small><?= form_error("user_section_year") ?></small>
         </div>
       </div>
@@ -157,7 +162,7 @@ $(function () { /* DOM ready */
         <div class = "col-xs-8 col-xs-offset-2 <?= !empty(form_error("message")) ? "has-error" : ""; ?>">
           <br/>
           <span class="control-label">Message</span><br/>
-          <textarea class="form-control" rows ="5" name = "message" style = "resize: none;" placeholder="Write a message. . ."><?= set_value("message") ?></textarea>
+          <textarea class="form-control" rows ="5" name = "message" style = "resize: none;" placeholder="Write a message. . ."><?= set_value("message", $incident_report->incident_report_message) ?></textarea>
           <small><?= form_error("message") ?></small>
           <div class="row margin-top-lg margin-bottom-lg">
             <div class="col-xs-12">

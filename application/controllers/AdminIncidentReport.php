@@ -134,7 +134,8 @@ class AdminIncidentReport extends CI_Controller {
             'major_violations'  => $this->AdminIncidentReport_model->getMajorViolations(),
             'minor_violations'  => $this->AdminIncidentReport_model->getMinorViolations()
         );
-        
+        /* prettyPrint($data['incident_report']);
+        exit; */
         $this->load->view("admin_includes/nav_header", $data);
         $this->load->view("admin_incident_report/edit");
         $this->load->view("admin_includes/footer");
