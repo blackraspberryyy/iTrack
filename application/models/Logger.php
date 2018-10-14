@@ -1,8 +1,10 @@
 <?php
 class Logger extends CI_Model {
     function saveToAudit($user_id, $desc){
+        // DO NOT REMOVE NULL!
+        // IF USER ID IS NULL, IT MEANS THAT THE USER IS ADMIN
         if($user_id == "admin"){
-            $user_id = "Admin";
+            $user_id = NULL;
         }
 
         $data = array(
@@ -17,8 +19,12 @@ class Logger extends CI_Model {
 
     function saveToLogs($user_id, $type){
         $desc = $type == 'in' ? 'Logged in' : 'Logged out';
+        
+        // DO NOT REMOVE NULL!
+        // IF USER ID IS NULL, IT MEANS THAT THE USER IS ADMIN
+
         if($user_id == "admin"){
-            $user_id = "Admin";
+            $user_id = NULL;
         }
         $data = array(
             "user_id" => $user_id,
