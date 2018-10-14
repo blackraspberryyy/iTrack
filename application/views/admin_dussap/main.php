@@ -1,3 +1,4 @@
+
 <?php
 function determineStatus($status){
     if($status == 0){
@@ -83,16 +84,65 @@ function get_data($attendance){
                         </thead>
                         <tbody>
                             <?php foreach($attendance as $a):?>
+                            <script>
+                                $(document).ready(function () {
+                                    <?php if(validation_errors()):?>
+                                        $('#edit_<?= sha1($a->attendance_id)?>').modal({
+                                            show: 'true'
+                                        })
+                                    <?php endif;?>  
+                                });
+                            </script>
                             <tr>
-                                <td><span class = "hidden"><?= $a->attendance_starttime ?></span><?= date('m/d/Y - h:mA', $a->attendance_starttime) ?></td>
-                                <td><span class = "hidden"><?= $a->attendance_endtime ?></span><?= date('m/d/Y - h:mA', $a->attendance_endtime) ?></td>
+                                <td><span class = "hidden"><?= $a->attendance_starttime ?></span><?= date('m/d/Y h:iA', $a->attendance_starttime) ?></td>
+                                <td><span class = "hidden"><?= $a->attendance_endtime ?></span><?= date('m/d/Y h:iA', $a->attendance_endtime) ?></td>
                                 <td><?= $a->attendance_hours_rendered ?></td>
                                 <td><?= $a->attendance_dept ?></td>
                                 <td><?= $a->attendance_supervisor ?></td>
                                 <td>
-                                    <a href="#" class="btn btn-warning">Edit</a>
+                                    <button data-toggle="modal" data-target="#edit_<?= sha1($a->attendance_id)?>" type="button" class="btn btn-warning">Edit</button>
                                 </td>
                             </tr>
+                            <!-- EDIT ATTENDANCE MODAL -->
+                            <div class="modal fade text-left" id="edit_<?= sha1($a->attendance_id)?>" tabindex="-1" role="dialog" aria-labelledby="editTitle" aria-hidden="true">
+                                <form action="<?= base_url()?>/admindussap/edit_attendance_exec/<?= $a->attendance_id?>" method="POST">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="editTitle">Edit Attendance</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class = "col-sm-6 <?= !empty(form_error("starttime")) ? "has-error" : ""; ?>">
+                                                        <span class="control-label" id="starttime">Start Date &AMP; Time</span>
+                                                        <input type="text" class="form-control datetimepicker" name = "starttime" placeholder="Type Here" aria-describedby="starttime" value = "<?= set_value("starttime", date('m/d/Y h:i A', $a->attendance_starttime))?>">
+                                                        <small><?= form_error("starttime") ?></small>
+                                                    </div>
+                                                    <div class = "col-sm-6 <?= !empty(form_error("endtime")) ? "has-error" : ""; ?>">
+                                                        <span class="control-label" id="endtime">End Date &AMP; Time</span>
+                                                        <input type="text" class="form-control datetimepicker" name = "endtime" placeholder="Type Here" aria-describedby="endtime" value = "<?= set_value("endtime", date('m/d/Y h:i A', $a->attendance_endtime)) ?>">
+                                                        <small><?= form_error("endtime") ?></small>
+                                                    </div>
+                                                    <div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("department")) ? "has-error" : ""; ?>">
+                                                        <span class="control-label" id="department">Department</span>
+                                                        <input type="text" class="form-control" name = "department" placeholder="(e.g. Admissions)" aria-describedby="department" value = "<?= set_value("department", $a->attendance_dept) ?>">
+                                                        <small><?= form_error("department") ?></small>
+                                                    </div>
+                                                    <div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("supervisor")) ? "has-error" : ""; ?>">
+                                                        <span class="control-label" id="supervisor">Supervisor</span>
+                                                        <input type="text" class="form-control" name = "supervisor" placeholder="(e.g. John Doe)" aria-describedby="supervisor" value = "<?= set_value("supervisor", $a->attendance_supervisor) ?>">
+                                                        <small><?= form_error("supervisor") ?></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div> <!--END DETAILS MODAL-->
                             <?php endforeach;?>
                         </tbody>
                     </table>
