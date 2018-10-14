@@ -68,7 +68,7 @@ function get_data($attendance){
         <div class="panel panel-primary">
             <div class="panel panel-heading text-center">Attendance Record</div>
             <div class="panel panel-body">
-                <a href="#" class="btn btn-primary"><i class="fa fa-plus"></i> Add Attendance Record</a>
+                <button type = "button"  data-toggle="modal" data-target="#add_attendance" class="btn btn-primary"><i class="fa fa-plus"></i> Add Attendance Record</button>
                 <br/><br/><br/>
                 <div class ="table-responsive">
                     <table class="table table-striped datatable" style="width:100%">
@@ -86,11 +86,15 @@ function get_data($attendance){
                             <?php foreach($attendance as $a):?>
                             <script>
                                 $(document).ready(function () {
-                                    <?php if(validation_errors()):?>
+                                    <?php if(validation_errors() && $_SESSION['error_modal'] == 'edit'):?>
                                         $('#edit_<?= sha1($a->attendance_id)?>').modal({
                                             show: 'true'
                                         })
-                                    <?php endif;?>  
+                                    <?php elseif(validation_errors() && $_SESSION['error_modal'] == 'add'):?>
+                                        $('#add_attendance').modal({
+                                            show: 'true'
+                                        })
+                                    <?php endif;?>
                                 });
                             </script>
                             <tr>
@@ -113,6 +117,7 @@ function get_data($attendance){
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row">
+                                                    <input type="hidden" name ="modal_type" value="edit"/>
                                                     <div class = "col-sm-6 <?= !empty(form_error("starttime")) ? "has-error" : ""; ?>">
                                                         <span class="control-label" id="starttime">Start Date &AMP; Time</span>
                                                         <input type="text" class="form-control datetimepicker" name = "starttime" placeholder="Type Here" aria-describedby="starttime" value = "<?= set_value("starttime", date('m/d/Y h:i A', $a->attendance_starttime))?>">
@@ -214,7 +219,47 @@ function get_data($attendance){
         </div>
     </div>
 </div>
-    
+<!-- DETAILS MODAL -->
+<div class="modal fade text-left" id="add_attendance" tabindex="-1" role="dialog" aria-labelledby="addAttendanceTitle" aria-hidden="true">
+    <form action="<?= base_url()?>admindussap/add_attendance_exec" method="POST">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="addAttendanceTitle">Add Attendance Record</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" name ="modal_type" value="add"/>
+                        <div class = "col-sm-6 <?= !empty(form_error("starttime")) ? "has-error" : ""; ?>">
+                            <span class="control-label" id="starttime">Start Date &AMP; Time</span>
+                            <input type="text" class="form-control datetimepicker" name = "starttime" placeholder="Type Here" aria-describedby="starttime" value = "<?= set_value("starttime")?>">
+                            <small><?= form_error("starttime") ?></small>
+                        </div>
+                        <div class = "col-sm-6 <?= !empty(form_error("endtime")) ? "has-error" : ""; ?>">
+                            <span class="control-label" id="endtime">End Date &AMP; Time</span>
+                            <input type="text" class="form-control datetimepicker" name = "endtime" placeholder="Type Here" aria-describedby="endtime" value = "<?= set_value("endtime") ?>">
+                            <small><?= form_error("endtime") ?></small>
+                        </div>
+                        <div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("department")) ? "has-error" : ""; ?>">
+                            <span class="control-label" id="department">Department</span>
+                            <input type="text" class="form-control" name = "department" placeholder="(e.g. Admissions)" aria-describedby="department" value = "<?= set_value("department") ?>">
+                            <small><?= form_error("department") ?></small>
+                        </div>
+                        <div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("supervisor")) ? "has-error" : ""; ?>">
+                            <span class="control-label" id="supervisor">Supervisor</span>
+                            <input type="text" class="form-control" name = "supervisor" placeholder="(e.g. John Doe)" aria-describedby="supervisor" value = "<?= set_value("supervisor") ?>">
+                            <small><?= form_error("supervisor") ?></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Record</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 <script>
 
 window.onload = function () {
