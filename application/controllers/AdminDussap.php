@@ -42,10 +42,10 @@
         }
         
         public function valid_endtime($endtime){
-            $starttime = $this->input->post('starttime');
-            $endtime = $this->input->post('endtime');
+            $starttime = strtotime($this->input->post('starttime'));
+            $endtime = strtotime($this->input->post('endtime'));
             
-            if ($starttime > $endtime){
+            if ($starttime >= $endtime){
                 $this->form_validation->set_message('valid_endtime', '{field} must be more recent than Start Date and Time');
                 return FALSE;
             }
@@ -54,11 +54,17 @@
             }
         }
 
+        function get_timestamp_diff_in_hours($num1, $num2){
+            return floor((abs($num1-$num2))/360/10);
+        }
+
         function edit_attendance_exec(){
+            $attendance_id = $this->uri->segment(3);
             $this->form_validation->set_rules('starttime', 'Start Date and Time', 'required');
             $this->form_validation->set_rules('endtime', 'End Date and Time', 'required|callback_valid_endtime');
             $this->form_validation->set_rules('department', 'Department', 'required');
             $this->form_validation->set_rules('supervisor', 'Supervisor', 'required');
+
             if ($this->form_validation->run() == FALSE) {
                 $data = array(
                     'title'             => "DUSAP",
@@ -68,21 +74,40 @@
                     'attendance'        => $this->AdminDussap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
                     'total_hours'       => $this->AdminDussap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
                 );
+
+                /* prettyPrint($this->input->post());
+                echo '-----------'.'<br/>';
+                echo strtotime($this->input->post('starttime')).'<br/>';
+                echo strtotime($this->input->post('endtime'));
+                exit; */
+
                 $this->load->view("admin_includes/nav_header", $data);
                 $this->load->view("admin_dussap/main");
                 $this->load->view("admin_includes/footer");
             }else{
+                $starttime = strtotime($this->input->post('starttime'));
+                $endtime = strtotime($this->input->post('endtime'));
+
                 $attendance = array(
-                    'attendance_starttime'  => strtotime($this->input->post('starttime')),
-                    'attendance_endtime'    => strtotime($this->input->post('endtime')),
-                    'attendance_department' => $this->input->post('department'),
-                    'attendance_supervisor' => $this->input->post('supervisor')
+                    'incident_report_id'        => $this->session->userdata('incident_report_id'),
+                    'attendance_dept'           => $this->input->post('department'),
+                    'attendance_supervisor'     => $this->input->post('supervisor'),
+                    'attendance_hours_rendered' => $this->get_timestamp_diff_in_hours($starttime, $endtime),
+                    'attendance_status'         => 1,
+                    'attendance_starttime'      => $starttime,
+                    'attendance_endtime'        => $endtime,
+                    'attendance_created_at'     => time()
                 );
-                prettyPrint($attendance);
-                exit;
+
+               /*  prettyPrint($attendance);
+                exit; */
+                $this->AdminIncidentReport_model->edit_attendance($attendance, $attendance_id);
+                $this->session->set_flashdata("success_incident_report", "Incident Report successfully recorded.");
+
+                //-- AUDIT TRAIL
+                $this->Logger->saveToAudit("admin", "Edited attendance in DUSAP");
+                redirect(base_url().'admindussap/view');
             }
-            /* $this->session->set_userdata('attendance_id', $this->uri->segment(3));
-            redirect(base_url().'admindussap/edit_attendance'); */
         }
         
     }
