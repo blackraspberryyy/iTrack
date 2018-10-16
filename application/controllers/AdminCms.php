@@ -36,7 +36,7 @@ class AdminCms extends CI_Controller {
         $this->form_validation->set_rules('incident_report_title', 'Incident Report Title', 'required');
         $this->form_validation->set_rules('google_drive_title', 'Google Drive Title', 'required');
         $this->form_validation->set_rules('dussap_title', 'DUSSAP Title', 'required');
-        $this->form_validation->set_rules('sms_title', 'SMS Title', 'required');
+        $this->form_validation->set_rules('email_title', 'Email Title', 'required');
         $this->form_validation->set_rules('cms_title', 'CMS Title', 'required');
         $this->form_validation->set_rules('audit_trail_title', 'Audit Trail Title', 'required');
         $this->form_validation->set_rules('user_logs_title', 'User Logs Title', 'required');
@@ -77,8 +77,9 @@ class AdminCms extends CI_Controller {
         $cms_id = $this->session->userdata("cms_id");
         $this->AdminCMS_model->editCMS($cms_id, $this->session->flashdata('cms_post_data'));
         
+        $this->session->set_flashdata('success_cms', 'Successfully made changes to the CMS');
         //--AUDTI TRAIL
-        $this->Logger->saveToAudit("admin", "Made changes to the CMS");
+        $this->Logger->saveToAudit("admin", "Admin made changes to the CMS");
 
         redirect(base_url()."admincms/");
     }
