@@ -100,3 +100,12 @@
         <?= $this->session->flashdata("error_incident_report"); ?>
     </div>
 <?php endif; ?>
+
+<?php if (!empty($this->session->flashdata("success_cms"))): ?>
+    <div class="alert alert-success alert-dismissible show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("success_cms"); ?>
+    </div>
+<?php endif; ?>
