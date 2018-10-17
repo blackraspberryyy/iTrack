@@ -12,14 +12,15 @@
   </div>
 </div>
 <div class="row margin-top-lg">
-  <div class = "col-xs-8 col-xs-offset-2">
-    <form action ="<?= base_url() ?>sms/send_sms_exec" method="POST">
+  <div class = "col-xs-12 col-sm-8 col-sm-offset-2">
+    <form action ="<?= base_url() ?>adminemail/send_email_exec" method="POST">
       <small style = "text-align: left;">Email Address</small>
-      <div class="input-group">
+      <div class="input-group margin-bottom-sm">
         <span class="input-group-addon"><i class = "fa fa-envelope" id="basic-addon1"></i></span>
-        <input type="text" class="form-control" id="mobile" name = "mobile" placeholder="(e.g. johndoe@somemail.com)" aria-describedby="basic-addon1" autocomplete="off">
+        <input type="text" class="form-control" id="email" name = "email" placeholder="(e.g. johndoe@somemail.com)" autocomplete="off">
       </div>
-      <br/>
+      <small style = "text-align: left;">Subject</small>
+      <input type="text" class="form-control" id="subject" name = "subject" placeholder="Subject" autocomplete="off">
       <br/>
       <textarea name = "message" id = "message" rows="5" class = "form-control" placeholder = "Message" style = "resize: none;"></textarea>
       <br/>
