@@ -40,6 +40,7 @@
     #logo{
       padding:24px 0;
       text-align:center;
+      background:#E0E0E0;
     }
     .body{
       padding:16px 24px;
@@ -61,6 +62,11 @@
         <span>Regards, <br/> iTrack Administrator</span>
       </p>
     </div>
+  </div>
+  <div>
+    <center>
+      <small>Powered by Systematix</small>
+    </center>
   </div>
 </body>
 </html>

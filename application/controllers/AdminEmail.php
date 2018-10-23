@@ -30,7 +30,7 @@ class AdminEmail extends CI_Controller{
   }
 
   public function sendemail($email, $subject, $message) {
-    $this->email->from("itracksolutions.123@gmail.com", 'Systematix Team');
+    $this->email->from("itracksolutions.123@gmail.com", 'iTrack Administrator');
     $this->email->to($email);
     $this->email->subject($subject);
     /* 
@@ -40,12 +40,14 @@ class AdminEmail extends CI_Controller{
     $data = array(
       "message" => $message
     );
-    $this->email->message($this->load->view('admin_email/email_message'), $data, true);
+
+    $this->email->message($this->load->view('admin_email/email_message', $data, true));
 
     if (!$this->email->send()) {
       echo $this->email->print_debugger();
     } else {
-      //VERIFY YOUR EMAIL
+      $this->session->set_flashdata('success_email', "Email has been sent to ".$this->input->post($email) );
+      redirect(base_url().'adminemail');
     }
   }
   function send_email_exec(){
@@ -67,8 +69,10 @@ class AdminEmail extends CI_Controller{
 
       $this->session->set_flashdata('error_email', "Please check the fields before submitting an email.");
     }else{
+      $email = $this->input->post('email');
+      $subject = $this->input->post('subject');
+      $message = $this->input->post('message');
       $this->sendemail($email, $subject, $message);
-      $this->session->set_flashdata('success_email', "Email has been sent to ".$this->input->post($email) );
     }
   }
 }
