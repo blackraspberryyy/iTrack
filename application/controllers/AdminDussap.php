@@ -162,4 +162,9 @@
             }
         }
         
+        function finish_attendance_exec(){
+            echo "Finish the attendance process";
+            die;
+        }
+        
     }

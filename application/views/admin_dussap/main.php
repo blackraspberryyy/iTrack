@@ -68,7 +68,10 @@ function get_data($attendance){
         <div class="panel panel-primary">
             <div class="panel panel-heading text-center">Attendance Record</div>
             <div class="panel panel-body">
-                <button type = "button"  data-toggle="modal" data-target="#add_attendance" class="btn btn-primary"><i class="fa fa-plus"></i> Add Attendance Record</button>
+                <div class="text-right">
+                    <button type = "button"  data-toggle="modal" data-target="#add_attendance" class="btn btn-primary margin-right-md"><i class="fa fa-plus"></i> Add Attendance Record</button>
+                    <button type = "button"  data-toggle="modal" data-target="#finish_attendance" class="btn btn-secondary"><i class="fa fa-check"></i> Finish DUSAP Attendance</button>
+                </div>
                 <br/><br/><br/>
                 <div class ="table-responsive">
                     <table class="table table-striped datatable" style="width:100%">
@@ -219,7 +222,7 @@ function get_data($attendance){
         </div>
     </div>
 </div>
-<!-- DETAILS MODAL -->
+<!-- ADD MODAL -->
 <div class="modal fade text-left" id="add_attendance" tabindex="-1" role="dialog" aria-labelledby="addAttendanceTitle" aria-hidden="true">
     <form action="<?= base_url()?>admindussap/add_attendance_exec" method="POST">
         <div class="modal-dialog" role="document">
@@ -259,6 +262,23 @@ function get_data($attendance){
             </div>
         </div>
     </form>
+</div>
+
+<div class="modal fade text-left" id="finish_attendance" tabindex="-1" role="dialog" aria-labelledby="finishAttendanceTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="finishAttendanceTitle">Are you sure you want to do this?</h3>
+            </div>
+            <div class="modal-body">
+                <span>Finishing the attendance will stop the attendance process of the student?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="finish_attendance_exec" class="btn btn-primary">Proceed</a>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 
