@@ -99,6 +99,11 @@ class AdminIncidentReport_model extends CI_Model {
         $this->db->where(array('attendance_id' => $id) );
         return $this->db->affected_rows();
     }
+    function edit_incident_report($incident_report, $id){
+        $this->db->where(array('incident_report_id' => $id));
+        $this->db->update("incident_report", $incident_report);
+        return $this->db->affected_rows();
+    }
     function add_attendance($attendance){
         $this->db->insert("attendance", $attendance);
         return $this->db->affected_rows();

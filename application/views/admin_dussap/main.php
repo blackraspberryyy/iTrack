@@ -10,8 +10,14 @@ function determineStatus($status){
 
 function get_labels($attendance){
     $labels = array();
-    foreach($attendance as $att){
-        array_push($labels, date('F d, Y', $att->attendance_starttime));
+    if($attendance){
+        foreach($attendance as $att){
+            if($att->attendance_starttime == 0){
+                array_push($labels, date('F d, Y', $att->attendance_created_at));
+            }else{
+                array_push($labels, date('F d, Y', $att->attendance_starttime));
+            }
+        }
     }
 
     $loop = 0;
@@ -28,8 +34,10 @@ function get_labels($attendance){
 
 function get_data($attendance){
     $data = array();
-    foreach($attendance as $att){
-        array_push($data, $att->attendance_hours_rendered);
+    if($attendance){
+        foreach($attendance as $att){
+            array_push($data, $att->attendance_hours_rendered);
+        }
     }
 
     $loop = 0;
@@ -69,11 +77,16 @@ function get_data($attendance){
             <div class="panel panel-heading text-center">Attendance Record</div>
             <div class="panel panel-body">
                 <div class="text-right">
-                    <button type = "button"  data-toggle="modal" data-target="#add_attendance" class="btn btn-primary margin-right-md"><i class="fa fa-plus"></i> Add Attendance Record</button>
-                    <button type = "button"  data-toggle="modal" data-target="#finish_attendance" class="btn btn-secondary"><i class="fa fa-check"></i> Finish DUSAP Attendance</button>
+                    <?php if(!($total_hours->hours_rendered >= $incident_report->violation_hours)):?>
+                        <button type = "button"  data-toggle="modal" data-target="#add_attendance" class="btn btn-primary margin-right-md"><i class="fa fa-plus"></i> Add Attendance Record</button>
+                        <button type = "button"  data-toggle="modal" data-target="#finish_attendance" class="btn btn-secondary"><i class="fa fa-check"></i> Finish DUSAP Attendance</button>
+                    <?php else:?>
+                        <a href="<?=base_url().'adminoffensereport/view_exec/'.$incident_report->incident_report_id?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> See Offense Report</a>
+                    <?php endif;?>
                 </div>
                 <br/><br/><br/>
                 <div class ="table-responsive">
+                    <?php if($attendance):?>    
                     <table class="table table-striped datatable" style="width:100%">
                         <thead>
                             <tr>
@@ -82,7 +95,9 @@ function get_data($attendance){
                                 <th>Hours Rendered</th>
                                 <th>Department</th>
                                 <th>Supervisor</th>
-                                <th>Action</th>
+                                <?php if(!($total_hours->hours_rendered >= $incident_report->violation_hours)):?>
+                                    <th>Action</th>
+                                <?php endif;?>
                             </tr>
                         </thead>
                         <tbody>
@@ -101,14 +116,28 @@ function get_data($attendance){
                                 });
                             </script>
                             <tr>
-                                <td><span class = "hidden"><?= $a->attendance_starttime ?></span><?= date('m/d/Y h:iA', $a->attendance_starttime) ?></td>
-                                <td><span class = "hidden"><?= $a->attendance_endtime ?></span><?= date('m/d/Y h:iA', $a->attendance_endtime) ?></td>
+                                <td class="text-center">
+                                    <?php if($a->attendance_starttime == 0):?>
+                                        <span>-</span>
+                                    <?php else:?>
+                                        <span class = "hidden"><?= $a->attendance_starttime ?></span><?= date('m/d/Y h:iA', $a->attendance_starttime) ?>
+                                    <?php endif;?>
+                                </td>
+                                <td class="text-center">
+                                    <?php if($a->attendance_endtime == 0):?>
+                                        <span>-</span>
+                                    <?php else:?>
+                                        <span class = "hidden"><?= $a->attendance_endtime ?></span><?= date('m/d/Y h:iA', $a->attendance_endtime) ?>
+                                    <?php endif;?>
+                                </td>
                                 <td><?= $a->attendance_hours_rendered ?></td>
                                 <td><?= $a->attendance_dept ?></td>
                                 <td><?= $a->attendance_supervisor ?></td>
-                                <td>
-                                    <button data-toggle="modal" data-target="#edit_<?= sha1($a->attendance_id)?>" type="button" class="btn btn-warning">Edit</button>
-                                </td>
+                                <?php if(!($total_hours->hours_rendered >= $incident_report->violation_hours)):?>
+                                    <td>
+                                        <button data-toggle="modal" data-target="#edit_<?= sha1($a->attendance_id)?>" type="button" class="btn btn-warning">Edit</button>
+                                    </td>
+                                <?php endif;?>
                             </tr>
                             <!-- EDIT ATTENDANCE MODAL -->
                             <div class="modal fade text-left" id="edit_<?= sha1($a->attendance_id)?>" tabindex="-1" role="dialog" aria-labelledby="editTitle" aria-hidden="true">
@@ -154,6 +183,13 @@ function get_data($attendance){
                             <?php endforeach;?>
                         </tbody>
                     </table>
+                    <?php else:?>
+                    <div class="margin-bottom-lg">
+                        <center>
+                            <h3>No attendance record yet</h3>
+                        </center>
+                    </div>
+                    <?php endif;?>  
                 </div>
             </div>
         </div>
@@ -212,6 +248,7 @@ function get_data($attendance){
     <div class="col-xs-12 col-sm-7 col-md-8 text-center">
         <div class="panel panel-primary">
             <div class="panel panel-heading">Attendance Progress</div>
+            <?php if($attendance):?>
             <div class="panel panel-body">
                 <div class="second circle">
                     <strong></strong>
@@ -219,6 +256,13 @@ function get_data($attendance){
                 <br/><br/>
                 <canvas id="attendanceChart"></canvas>
             </div>
+            <?php else:?>
+                <div class="margin-bottom-lg">
+                    <center>
+                        <h3>No attendance record yet</h3>
+                    </center>
+                </div>
+            <?php endif;?>
         </div>
     </div>
 </div>
@@ -265,20 +309,24 @@ function get_data($attendance){
 </div>
 
 <div class="modal fade text-left" id="finish_attendance" tabindex="-1" role="dialog" aria-labelledby="finishAttendanceTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="finishAttendanceTitle">Are you sure you want to do this?</h3>
-            </div>
-            <div class="modal-body">
-                <span>Finishing the attendance will stop the attendance process of the student?</span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <a href="finish_attendance_exec" class="btn btn-primary">Proceed</a>
+    <form action="<?= base_url().'admindussap/finish_attendance_exec'?>" method="POST">
+        <input type="hidden" value="<?=$total_hours->hours_rendered?>" name="hours_rendered"/>
+        <input type="hidden" value="<?=$incident_report->violation_hours?>" name="violation_hours"/>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="finishAttendanceTitle">Are you sure you want to do this?</h3>
+                </div>
+                <div class="modal-body">
+                    <span>Finishing the attendance will stop the attendance process of the student?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Proceed</a>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <script>
 
@@ -293,7 +341,7 @@ window.onload = function () {
         },
         fill: { color: ["#037236"] }
     }).on('circle-animation-progress', function(event, progress) {
-        $(this).find('strong').html((<?= $total_hours->hours_rendered?> * progress).toFixed(2).replace(/[.,]00$/, "") + '<i>&nbsp;/&nbsp;</i>' + <?= $incident_report->violation_hours?> + '<br/>hrs');
+        $(this).find('strong').html((<?= $total_hours->hours_rendered ? $total_hours->hours_rendered : 0?> * progress).toFixed(2).replace(/[.,]00$/, "") + '<i>&nbsp;/&nbsp;</i>' + <?= $incident_report->violation_hours?> + '<br/>hrs');
     });
     //Bar Chart
     var labels = [' ', <?php get_labels($attendance)?>];

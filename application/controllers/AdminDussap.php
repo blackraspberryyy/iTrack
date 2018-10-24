@@ -54,8 +54,8 @@
             }
         }
 
-        function get_timestamp_diff_in_hours($num1, $num2){
-            return floor((abs($num1-$num2))/360/10);
+        function get_timestamp_diff_in_hours($unix1, $unix2){
+            return floor((abs($unix1-$unix2))/360/10);
         }
 
         function edit_attendance_exec(){
@@ -154,7 +154,7 @@
                /*  prettyPrint($attendance);
                 exit; */
                 $this->AdminIncidentReport_model->add_attendance($attendance);
-                $this->session->set_flashdata("success_incident_report", "Incident Report successfully recorded.");
+                $this->session->set_flashdata("success_incident_report", "Attendance successfully recorded.");
 
                 //-- AUDIT TRAIL
                 $this->Logger->saveToAudit("admin", "Add attendance in DUSAP");
@@ -163,8 +163,34 @@
         }
         
         function finish_attendance_exec(){
-            echo "Finish the attendance process";
-            die;
+            $incident_report_id = $this->session->userdata('incident_report_id');
+            $hours_rendered = $this->input->post('hours_rendered');
+            $violation_hours = $this->input->post('violation_hours');
+            if($hours_rendered >= $violation_hours){
+                // do not add attendance
+            }else{
+                // add attendance
+                $attendance = array(
+                    'incident_report_id'        => $incident_report_id,
+                    'attendance_dept'           => '-',
+                    'attendance_supervisor'     => '-',
+                    'attendance_hours_rendered' => $violation_hours - $hours_rendered,
+                    'attendance_status'         => 1,
+                    'attendance_starttime'      => 0,
+                    'attendance_endtime'        => 0,
+                    'attendance_created_at'     => time()
+                );
+
+                $incident_report = array( 'incident_report_status' => 0);
+            }
+            $this->AdminIncidentReport_model->add_attendance($attendance);
+            $this->AdminIncidentReport_model->edit_incident_report($incident_report, $incident_report_id);
+            
+            $this->session->set_flashdata("success_incident_report", "Finished attendance");
+
+            //-- AUDIT TRAIL
+            $this->Logger->saveToAudit("admin", "Finish attendance in DUSAP");
+            redirect(base_url().'admindussap/view');
         }
         
     }
