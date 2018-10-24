@@ -1,5 +1,5 @@
 <?php
-    class AdminDussap_model extends CI_Model{
+    class AdminDusap_model extends CI_Model{
         function getAttendance($where = NULL){
             if($where !== NULL){
                 $this->db->where($where);

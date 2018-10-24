@@ -138,7 +138,7 @@ function determineStatus($status){
                                                                 <h6><?= determineStatus($report->incident_report_status)?></h6>
                                                                 
                                                                 <?php if($report->incident_report_status == 1):?>
-                                                                    <a href="<?= base_url().'admindussap/view_exec/'.$report->incident_report_id?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
+                                                                    <a href="<?= base_url().'admindusap/view_exec/'.$report->incident_report_id?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
                                                                 <?php else:?>
                                                                     <a href="<?= base_url().'adminoffensereport/view_exec/'.$report->incident_report_id?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
                                                                 <?php endif;?>

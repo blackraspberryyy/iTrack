@@ -81,15 +81,15 @@
                 </div>
             </div>
         </div>
-        <!-- WYSIWYG for DUSSAP -->
+        <!-- WYSIWYG for DUSAP -->
         <div class = "col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading dark-overlay" title="Edit title">
                     <i class = "fa fa-pencil-alt add_on"></i>
-                    <input type = "text" value = "<?= $cms->dussap_title?>" name = "dussap_title" required/>
+                    <input type = "text" value = "<?= $cms->dusap_title?>" name = "dusap_title" required/>
                 </div>
                 <div class="panel-body">
-                    <textarea id = "editor_dussap" name = "dussap_text"><?= $cms->dussap_text?></textarea>
+                    <textarea id = "editor_dusap" name = "dusap_text"><?= $cms->dusap_text?></textarea>
                 </div>
             </div>
         </div>
@@ -202,7 +202,7 @@
     $(document).ready(function () {
         $("#editor_incident_report").editor();
         $("#editor_google_drive").editor();
-        $("#editor_dussap").editor();
+        $("#editor_dusap").editor();
         $("#editor_email").editor();
         $("#editor_cms").editor();
         $("#editor_audit_trail").editor();

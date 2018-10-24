@@ -1,5 +1,5 @@
 <?php
-    class AdminDussap extends CI_Controller{
+    class AdminDusap extends CI_Controller{
         function __construct() {
             parent::__construct();
             if ($this->session->has_userdata('isloggedin') == FALSE) {
@@ -25,7 +25,7 @@
         }
         function view_exec(){
             $this->session->set_userdata('incident_report_id', $this->uri->segment(3));
-            redirect(base_url().'admindussap/view');
+            redirect(base_url().'admindusap/view');
         }
         function view(){
             $data = array(
@@ -33,11 +33,11 @@
                 'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                 'cms'               => $this->AdminCMS_model->getCMS()[0],
                 'incident_report'   => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
-                'attendance'        => $this->AdminDussap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
-                'total_hours'       => $this->AdminDussap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
+                'attendance'        => $this->AdminDusap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
+                'total_hours'       => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
             );
             $this->load->view("admin_includes/nav_header", $data);
-            $this->load->view("admin_dussap/main");
+            $this->load->view("admin_dusap/main");
             $this->load->view("admin_includes/footer");
         }
         
@@ -72,8 +72,8 @@
                     'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                     'cms'               => $this->AdminCMS_model->getCMS()[0],
                     'incident_report'   => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
-                    'attendance'        => $this->AdminDussap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
-                    'total_hours'       => $this->AdminDussap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
+                    'attendance'        => $this->AdminDusap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
+                    'total_hours'       => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
                 );
 
                 /* prettyPrint($this->input->post());
@@ -83,7 +83,7 @@
                 exit; */
 
                 $this->load->view("admin_includes/nav_header", $data);
-                $this->load->view("admin_dussap/main");
+                $this->load->view("admin_dusap/main");
                 $this->load->view("admin_includes/footer");
             }else{
                 $starttime = strtotime($this->input->post('starttime'));
@@ -106,7 +106,7 @@
 
                 //-- AUDIT TRAIL
                 $this->Logger->saveToAudit("admin", "Edited attendance in DUSAP");
-                redirect(base_url().'admindussap/view');
+                redirect(base_url().'admindusap/view');
             }
         }
 
@@ -123,8 +123,8 @@
                     'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                     'cms'               => $this->AdminCMS_model->getCMS()[0],
                     'incident_report'   => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
-                    'attendance'        => $this->AdminDussap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
-                    'total_hours'       => $this->AdminDussap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
+                    'attendance'        => $this->AdminDusap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
+                    'total_hours'       => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
                 );
 
                 /* prettyPrint($this->input->post());
@@ -134,7 +134,7 @@
                 exit; */
 
                 $this->load->view("admin_includes/nav_header", $data);
-                $this->load->view("admin_dussap/main");
+                $this->load->view("admin_dusap/main");
                 $this->load->view("admin_includes/footer");
             }else{
                 $starttime = strtotime($this->input->post('starttime'));
@@ -158,7 +158,7 @@
 
                 //-- AUDIT TRAIL
                 $this->Logger->saveToAudit("admin", "Add attendance in DUSAP");
-                redirect(base_url().'admindussap/view');
+                redirect(base_url().'admindusap/view');
             }
         }
         
@@ -190,7 +190,7 @@
 
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit("admin", "Finish attendance in DUSAP");
-            redirect(base_url().'admindussap/view');
+            redirect(base_url().'admindusap/view');
         }
         
     }

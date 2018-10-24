@@ -35,7 +35,7 @@ class AdminCms extends CI_Controller {
     public function edit_cms_exec(){
         $this->form_validation->set_rules('incident_report_title', 'Incident Report Title', 'required');
         $this->form_validation->set_rules('google_drive_title', 'Google Drive Title', 'required');
-        $this->form_validation->set_rules('dussap_title', 'DUSSAP Title', 'required');
+        $this->form_validation->set_rules('dusap_title', 'DUSAP Title', 'required');
         $this->form_validation->set_rules('email_title', 'Email Title', 'required');
         $this->form_validation->set_rules('cms_title', 'CMS Title', 'required');
         $this->form_validation->set_rules('audit_trail_title', 'Audit Trail Title', 'required');

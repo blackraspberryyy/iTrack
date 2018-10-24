@@ -67,8 +67,8 @@ function get_data($attendance){
 </div><!--/.row breadcrumb-->
 <div class = "row">
     <div class = "col-md-12">
-        <h1><?=$cms->dussap_title?></h1>
-        <h5><?=$cms->dussap_text?></h5>
+        <h1><?=$cms->dusap_title?></h1>
+        <h5><?=$cms->dusap_text?></h5>
     </div>
 </div>
 <div class="row margin-top-lg">
@@ -141,7 +141,7 @@ function get_data($attendance){
                             </tr>
                             <!-- EDIT ATTENDANCE MODAL -->
                             <div class="modal fade text-left" id="edit_<?= sha1($a->attendance_id)?>" tabindex="-1" role="dialog" aria-labelledby="editTitle" aria-hidden="true">
-                                <form action="<?= base_url()?>admindussap/edit_attendance_exec/<?= $a->attendance_id?>" method="POST">
+                                <form action="<?= base_url()?>admindusap/edit_attendance_exec/<?= $a->attendance_id?>" method="POST">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -268,7 +268,7 @@ function get_data($attendance){
 </div>
 <!-- ADD MODAL -->
 <div class="modal fade text-left" id="add_attendance" tabindex="-1" role="dialog" aria-labelledby="addAttendanceTitle" aria-hidden="true">
-    <form action="<?= base_url()?>admindussap/add_attendance_exec" method="POST">
+    <form action="<?= base_url()?>admindusap/add_attendance_exec" method="POST">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -309,7 +309,7 @@ function get_data($attendance){
 </div>
 
 <div class="modal fade text-left" id="finish_attendance" tabindex="-1" role="dialog" aria-labelledby="finishAttendanceTitle" aria-hidden="true">
-    <form action="<?= base_url().'admindussap/finish_attendance_exec'?>" method="POST">
+    <form action="<?= base_url().'admindusap/finish_attendance_exec'?>" method="POST">
         <input type="hidden" value="<?=$total_hours->hours_rendered?>" name="hours_rendered"/>
         <input type="hidden" value="<?=$incident_report->violation_hours?>" name="violation_hours"/>
         <div class="modal-dialog" role="document">
