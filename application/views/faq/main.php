@@ -7,8 +7,9 @@
     </ol>
 </div><!--/.row breadcrumb-->
 
-<div class="row">
-    <div class = "col-xs-10 col-xs-offset-1">
-        <h1 class = "text-center">Frequently Asked Questions</h1>
+<div class = "row">
+    <div class = "col-md-12">
+        <h1><?=$cms->faq_title?></h1>
+        <h5><?=$cms->faq_text?></h5>
     </div>
-</div><!--/.row breadcrumb-->
+</div>

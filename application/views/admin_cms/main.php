@@ -177,6 +177,19 @@
                 </div>
             </div>
         </div>
+        <!-- WYSIWYG for FAQ -->
+        <div class = "col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading dark-overlay" title="Edit title">
+                    <i class = "fa fa-pencil-alt add_on"></i>
+                    <input type = "text" value = "<?= $cms->faq_title?>" name = "faq_title" required/>
+                </div>
+                <div class="panel-body">
+                    <textarea id = "editor_faq" name = "faq_text"><?= $cms->faq_text?></textarea>
+                </div>
+            </div>
+        </div>
+        
     </div>
     <div class="row" style = "margin-bottom:30px;">
         <div class="col-xs-12 text-right">
@@ -197,6 +210,7 @@
         $("#editor_student_handbook").editor();
         $("#editor_monthly_report").editor();
         $("#editor_student_profile").editor();
+        $("#editor_faq").editor();
     });
 </script>
 
