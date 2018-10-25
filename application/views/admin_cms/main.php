@@ -189,6 +189,18 @@
                 </div>
             </div>
         </div>
+        <!-- WYSIWYG for Offense Report -->
+        <div class = "col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading dark-overlay" title="Edit title">
+                    <i class = "fa fa-pencil-alt add_on"></i>
+                    <input type = "text" value = "<?= $cms->offense_report_title?>" name = "offense_report_title" required/>
+                </div>
+                <div class="panel-body">
+                    <textarea id = "editor_offense_report" name = "offense_report_text"><?= $cms->offense_report_text?></textarea>
+                </div>
+            </div>
+        </div>
         
     </div>
     <div class="row" style = "margin-bottom:30px;">
@@ -211,6 +223,7 @@
         $("#editor_monthly_report").editor();
         $("#editor_student_profile").editor();
         $("#editor_faq").editor();
+        $("#editor_offense_report").editor();
     });
 </script>
 

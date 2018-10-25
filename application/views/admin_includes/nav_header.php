@@ -153,7 +153,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="<?= (strpos(base_url(uri_string()), $this->config->base_url() . "adminincidentreport") !== FALSE) || (strpos(base_url(uri_string()), $this->config->base_url() . "admindusap") !== FALSE)? "active" : ""; ?>"><a href="<?= base_url() ?>adminincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Reports</a></li>
+                <li class="<?= (strpos(base_url(uri_string()), $this->config->base_url() . "adminincidentreport") !== FALSE) || (strpos(base_url(uri_string()), $this->config->base_url() . "admindusap") !== FALSE) || (strpos(base_url(uri_string()), $this->config->base_url() . "adminoffensereport") !== FALSE)? "active" : ""; ?>"><a href="<?= base_url() ?>adminincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Reports</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admingoogledrive") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admingoogledrive"><em class="fab fa-google-drive">&nbsp;</em> Google Drive</a></li>
                 <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminnotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminnotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li> -->
                 <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "sms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>sms"><em class="fa fa-paper-plane">&nbsp;</em> SMS</a></li> -->
