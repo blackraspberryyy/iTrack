@@ -201,6 +201,18 @@
                 </div>
             </div>
         </div>
+        <!-- WYSIWYG for Announcement -->
+        <div class = "col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading dark-overlay" title="Edit title">
+                    <i class = "fa fa-pencil-alt add_on"></i>
+                    <input type = "text" value = "<?= $cms->announcement_title?>" name = "announcement_title" required/>
+                </div>
+                <div class="panel-body">
+                    <textarea id = "editor_announcement" name = "announcement_text"><?= $cms->announcement_text?></textarea>
+                </div>
+            </div>
+        </div>
         
     </div>
     <div class="row" style = "margin-bottom:30px;">
@@ -224,6 +236,7 @@
         $("#editor_student_profile").editor();
         $("#editor_faq").editor();
         $("#editor_offense_report").editor();
+        $("#editor_announcement").editor();
     });
 </script>
 

@@ -163,7 +163,7 @@
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminuserlogs") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminuserlogs"><em class="fa fa-key">&nbsp;</em> User Logs</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "studenthandbook") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>studenthandbook"><em class="fa fa-book-open">&nbsp;</em> Student Handbook</a></li>
                 <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admincallslip") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admincallslip"><em class="fa fa-copy">&nbsp;</em> Call Slip</a></li> -->
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminmonthlyreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminmonthlyreport"><em class="fa fa-chart-bar">&nbsp;</em> Monthly Report</a></li>
+                <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminmonthlyreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminmonthlyreport"><em class="fa fa-chart-bar">&nbsp;</em> Monthly Report</a></li> -->
                 <li><a href="<?= base_url() ?>logout"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
