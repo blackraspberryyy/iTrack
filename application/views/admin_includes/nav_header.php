@@ -138,12 +138,12 @@
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admindashboard") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admindashboard"><em class="fa fa-home">&nbsp;</em> Home</a></li>
                 <li class="parent <?= strpos(base_url(uri_string()), $this->config->base_url() . "adminviolations/") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>adminviolations">
                     <a data-toggle="collapse" href="#violations">
-                        <em class="fa fa-ban">&nbsp;</em> Violations <span data-toggle="collapse" href="#violations" class="icon pull-right"><em class="fa fa-plus"></em></span>
+                        <em class="fa fa-ban">&nbsp;</em> Users <span data-toggle="collapse" href="#violations" class="icon pull-right"><em class="fa fa-plus"></em></span>
                     </a>
                     <ul class="children collapse" id="violations" >
                         <li>
-                            <a class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminviolations/student_violations") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>adminviolations/student_violations">
-                                <span class="fa fa-arrow-right">&nbsp;</span> Student Violations
+                            <a class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminviolations/teacher_profile") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>adminviolations/teacher_profile">
+                                <span class="fa fa-arrow-right">&nbsp;</span> Teacher Profile
                             </a>
                         </li>
                         <li>

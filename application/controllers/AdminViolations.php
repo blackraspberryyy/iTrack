@@ -24,46 +24,63 @@ class AdminViolations extends CI_Controller {
   public function student_violations(){
 
   }
+
   public function student_profile(){
     $data = array(
-      "title"             => "Student Profile",
+      "title"             => "Student Profile",   //Do not edit this title
       'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
-      'students'          => $this->AdminViolations_model->getStudents(array("user_isActive" => 1)),
+      'users'             => $this->AdminViolations_model->getUsers(array("user_isActive" => 1, "user_access" => "student")),
       'incident_reports'  => $this->AdminIncidentReport_model->getIncidentReport(),
       'cms'               => $this->AdminCMS_model->getCMS()[0]
     );
   
     $this->load->view("admin_includes/nav_header", $data);
-    $this->load->view("admin_violations/student_profile");
+    $this->load->view("admin_violations/user_profile");
     $this->load->view("admin_includes/footer");
   }
 
-  public function search_student() {
+  public function search_user() {
+    $user_access = strtolower(str_replace('%20Profile', '', $this->uri->segment(3)));
+    
     $word = $this->input->post("search_word");
-    $matched_students = $this->AdminViolations_model->searchStudents($word);
+    $matched_users = $this->AdminViolations_model->searchUsers($word, array("user_access" => $user_access));
     if ($word == "") {
-        $all_students = $this->AdminViolations_model->getStudents();
-        $data = array(
-            "success" => 1,
-            "result" => "",
-            "students" => $all_students
-        );
+      $all_users = $this->AdminViolations_model->getUsers();
+      $data = array(
+        "success" => 1,
+        "result" => "",
+        "users" => $all_users
+      );
     } else {
-        if (empty($matched_students)) {
-            $data = array(
-                "success" => 2,
-                "result" => "No Matches Found",
-                "students" => $matched_students
-            );
-        } else {
-            $data = array(
-                "success" => 3,
-                "result" => count($matched_students) . " results found",
-                "students" => $matched_students
-            );
-        }
+      if (empty($matched_users)) {
+        $data = array(
+          "success" => 2,
+          "result" => "No Matches Found",
+          "users" => $matched_users
+        );
+      } else {
+        $data = array(
+          "success" => 3,
+          "result" => count($matched_users) . " results found",
+          "users" => $matched_users
+        );
+      }
     }
-
     echo json_encode($data);
   }
+
+  public function teacher_profile(){
+    $data = array(
+      "title"             => "Teacher Profile",   //Do not edit this title
+      'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
+      'users'             => $this->AdminViolations_model->getUsers(array("user_isActive" => 1, "user_access" => "teacher")),
+      'incident_reports'  => $this->AdminIncidentReport_model->getIncidentReport(),
+      'cms'               => $this->AdminCMS_model->getCMS()[0]
+    );
+  
+    $this->load->view("admin_includes/nav_header", $data);
+    $this->load->view("admin_violations/user_profile");
+    $this->load->view("admin_includes/footer");
+  }
+
 }

@@ -170,10 +170,10 @@
             <div class="panel panel-primary">
                 <div class="panel-heading dark-overlay" title="Edit title">
                     <i class = "fa fa-pencil-alt add_on"></i>
-                    <input type = "text" value = "<?= $cms->student_profile_title?>" name = "student_profile_title" required/>
+                    <input type = "text" value = "<?= $cms->user_title?>" name = "user_title" required/>
                 </div>
                 <div class="panel-body">
-                    <textarea id = "editor_student_profile" name = "student_profile_text"><?= $cms->student_profile_text?></textarea>
+                    <textarea id = "editor_user" name = "user_text"><?= $cms->user_text?></textarea>
                 </div>
             </div>
         </div>
@@ -233,7 +233,7 @@
         $("#editor_user_logs").editor();
         $("#editor_student_handbook").editor();
         $("#editor_monthly_report").editor();
-        $("#editor_student_profile").editor();
+        $("#editor_user").editor();
         $("#editor_faq").editor();
         $("#editor_offense_report").editor();
         $("#editor_announcement").editor();

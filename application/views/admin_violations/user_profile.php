@@ -65,13 +65,13 @@ function get_data($id){
         <li><a href="<?= base_url() ?>admindashboard">
                 <em class="fa fa-home"></em>
             </a></li>
-        <li class="active">Student Profile</li>
+        <li class="active">User Profile</li>
     </ol>
 </div><!--/.row breadcrumb-->
 <div class="row">
     <div class="col-xs-12">
-        <h1><?= $cms->student_profile_title?></h1>
-        <h5><?= $cms->student_profile_text?></h5>
+        <h1><?= $cms->user_title?></h1>
+        <h5><?= $cms->user_text?></h5>
         <br/>
     </div>
     <div class="col-sm-10 col-sm-offset-1"  style="margin-bottom:32px;">
@@ -79,11 +79,11 @@ function get_data($id){
             <span class="input-group-addon">
                 <i class="fa fa-search"></i>
             </span>
-            <input onkeypress = 'return keypresshandler(event)' maxlength="9" type="text" class="form-control" name = "user_number" id = "user_number" placeholder="Search by Student Number" >
+            <input onkeypress = 'return keypresshandler(event)' maxlength="9" type="text" class="form-control" name = "user_number" id = "user_number" placeholder="Search by User Number" >
         </div>
     </div>
     <div id="result_bank">
-    <?php foreach($students as $student):?>
+    <?php foreach($users as $student):?>
         <div class="student-panel">
             <span class ="d-none student_id" value = "<?= $student->user_id ?>"></span>
             <a href="" data-toggle="modal" data-target="#modal_<?= $student->user_id?>">
@@ -224,7 +224,7 @@ $(document).ready(function(){
         var search_word = $(this).val();
         $.ajax({
             "method": "POST",
-            "url": '<?= base_url() ?>' + "adminviolations/search_student",
+            "url": '<?= base_url() ?>' + "adminviolations/search_user/<?= $title?>",
             "dataType": "JSON",
             "data": {
                 'search_word': search_word
@@ -232,7 +232,7 @@ $(document).ready(function(){
             success: function (res) {
                 /*
                     * ========= res.success CODES =========*
-                    * 1 - NO STRINGS.......SHOW ALL STUDENTS
+                    * 1 - NO STRINGS.......SHOW ALL users
                     * 2 - NO MATCH FOUND...SHOW NONE
                     * 3 - MATCH FOUND......SHOW RESULTS
                     * ====================================*
@@ -249,7 +249,7 @@ $(document).ready(function(){
                     }
                     case 3:{
                         var student_ids = [];
-                        $.each(res.students, function( index, value ) {
+                        $.each(res.users, function( index, value ) {
                             student_ids.push(value.user_id);
                         });
                         $(".student-panel").hide();
