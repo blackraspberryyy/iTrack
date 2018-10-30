@@ -26,6 +26,7 @@ class AdminDashboard extends CI_Controller {
         $data = array(
             'title'             => "Home",
             'currentadmin'      => $this->AdminDashboard_model->getAdmin($where)[0],
+            'cms'               => $this->AdminCMS_model->getCMS()[0],
             'users'             => $this->AdminDashboard_model->getUsers(),
             'students_count'    => count($this->AdminDashboard_model->getUsers(array("user_access" => "student"))),
             'teacher_count'    => count($this->AdminDashboard_model->getUsers(array("user_access" => "teacher"))),

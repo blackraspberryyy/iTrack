@@ -1,5 +1,5 @@
 <style>
-    .dashboard.item .panel{
+    .box-shadow{
         box-shadow:2px 2px 4px rgba(0,0,0,0.2);
     }
     .dashboard.item .panel:hover{
@@ -19,9 +19,9 @@
 </div><!--/.row breadcrumb-->
 
 <div class = "row margin-top-lg">
-    <div class = "col-sm-3 dashboard item">
+    <div class = "col-sm-3 dashboard item ">
         <a href="<?= base_url().'adminviolations/student_profile'?>">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary box-shadow">
                 <div class="panel panel-body text-center">
                     <h1><?= $students_count?></h1>
                     <h4>Students<br/>&nbsp;</h4>
@@ -31,7 +31,7 @@
     </div>
     <div class = "col-sm-3  dashboard item">
         <a href="<?= base_url().'adminviolations/student_profile'?>">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary box-shadow">
                 <div class="panel panel-body text-center">
                     <h1><?= $teacher_count?></h1>
                     <h4>Teacher<br/>&nbsp;</h4>
@@ -41,7 +41,7 @@
     </div>
     <div class = "col-sm-3  dashboard item">
         <a href="<?= base_url().'adminincidentreport'?>">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary box-shadow">
                 <div class="panel panel-body text-center">
                     <h1><?= $ongoing_incident_reports_count?></h1>
                     <h4>Ongoing Incident Reports</h4>
@@ -51,7 +51,7 @@
     </div>
     <div class = "col-sm-3 dashboard item">
         <a href="<?= base_url().'adminincidentreport'?>">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary box-shadow">
                 <div class="panel panel-body text-center">
                     <h1><?= $finished_incident_reports_count?></h1>
                     <h4>Finished Incident Reports</h4>
@@ -62,8 +62,18 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-12">
-        <canvas id="incident_reports"></canvas>
+    <div class="col-xs-8">
+        <div class="panel panel-primary box-shadow" style="padding:24px;">
+            <canvas id="incident_reports"></canvas>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="panel panel-primary box-shadow" style="padding: 4px 24px 16px 24px;">
+            <div class="panel pane-body">
+                <h2><?= $cms->announcement_title?></h2>
+                <?= $cms->announcement_text?>
+            </div>
+        </div>
     </div>
 </div>
 
