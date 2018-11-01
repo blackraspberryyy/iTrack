@@ -11,4 +11,15 @@ class Api_model extends CI_Model {
     $query = $this->db->get();
     return query_result($query, 'array');
   }
+
+  public function getViolationsList($type = NULL) {
+    $this->db->from('violation');
+
+    if ($type) {
+      $this->db->where('violation_type', $type);
+    }
+
+    $query = $this->db->get();
+    return query_result($query, 'array');
+  }
 }
