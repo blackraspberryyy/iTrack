@@ -22,4 +22,18 @@ class Api_model extends CI_Model {
     $query = $this->db->get();
     return query_result($query, 'array');
   }
+
+  public function addMinorReport($serial, $report) {
+    // get uid via serial
+    if ($users = $this->getUserViaSerial($serial)) {
+      $user = $users[0];
+    } else {
+      return FALSE;
+    }
+
+    // attach uid to $report
+    $report['user_id'] = $user['user_id'];
+
+    return $this->db->insert('minor_reports', $report);
+  }
 }
