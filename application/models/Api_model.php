@@ -36,4 +36,32 @@ class Api_model extends CI_Model {
 
     return $this->db->insert('minor_reports', $report);
   }
+
+  public function addMinorReports($reports) {
+    foreach ($reports as $key => $report) {
+      // get user via serial
+      $serial = $report['serial'];
+      if ($users = $this->getUserViaSerial($serial)) {
+        $user = $users[0];
+      } else {
+        // if no user, do not insert
+        return FALSE;
+      }
+
+      // build report
+      $mReport = array(
+        'user_id' => $user['user_id'],
+        'violation_id' => $report['violation_id'],
+        'location' => $report['location'],
+        'message' => $report['message'],
+        'tapped_at' => $report['timestamp'],
+        'created_at' => time()
+      );
+
+      // set to $reports
+      $reports[$key] = $mReport;
+    }
+
+    return $this->db->insert_batch('minor_reports', $reports);
+  }
 }
