@@ -6,6 +6,7 @@ class ApiMinorViolation extends CI_Controller {
     // post
     $params = api_params($this);
     $serial = $params['serial'];
+    $reporter_id = $params['reporter_id'];
     $violation_id = $params['violation_id'];
     $location = $params['location'];
     $message = $params['message'];
@@ -13,6 +14,7 @@ class ApiMinorViolation extends CI_Controller {
 
     // build report
     $report = array(
+      'reporter_id' => $reporter_id,
       'violation_id' => $violation_id,
       'location' => $location,
       'message' => $message,

@@ -51,6 +51,7 @@ class Api_model extends CI_Model {
       // build report
       $mReport = array(
         'user_id' => $user['user_id'],
+        'reporter_id' => $report['reporter_id'],
         'violation_id' => $report['violation_id'],
         'location' => $report['location'],
         'message' => $report['message'],
