@@ -23,7 +23,8 @@ class ApiMinorViolation extends CI_Controller {
     );
 
     if ($this->Api_model->addMinorReport($serial, $report)) {
-      // TODO: check 15 minor offenses to group them
+      // check 15 minor offenses to group them
+      $this->Api_model->groupViolations();
       api_respond(TRUE, 'Minor report added.');
     } else {
       api_respond(FALSE, 'Unable to add violation report.');
@@ -35,7 +36,8 @@ class ApiMinorViolation extends CI_Controller {
     $reports = $params['minorReports'];
 
     if ($res = $this->Api_model->addMinorReports($reports)) {
-      // TODO: check 15 minor offenses to group them
+      // check 15 minor offenses to group them
+      $this->Api_model->groupViolations();
       api_respond(TRUE, 'Minor report batch added.');
     } else {
       api_respond(FALSE, 'Unable to add batch violation reports.');
