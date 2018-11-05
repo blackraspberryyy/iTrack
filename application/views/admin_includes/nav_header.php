@@ -138,7 +138,7 @@
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admindashboard") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admindashboard"><em class="fa fa-home">&nbsp;</em> Home</a></li>
                 <li class="parent <?= strpos(base_url(uri_string()), $this->config->base_url() . "adminviolations/") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>adminviolations">
                     <a data-toggle="collapse" href="#violations">
-                        <em class="fa fa-ban">&nbsp;</em> Users <span data-toggle="collapse" href="#violations" class="icon pull-right"><em class="fa fa-plus"></em></span>
+                        <em class="fa fa-users">&nbsp;</em> Users <span data-toggle="collapse" href="#violations" class="icon pull-right"><em class="fa fa-plus"></em></span>
                     </a>
                     <ul class="children collapse" id="violations" >
                         <li>
@@ -154,7 +154,7 @@
                     </ul>
                 </li>
                 <li class="<?= (strpos(base_url(uri_string()), $this->config->base_url() . "adminincidentreport") !== FALSE) || (strpos(base_url(uri_string()), $this->config->base_url() . "admindusap") !== FALSE) || (strpos(base_url(uri_string()), $this->config->base_url() . "adminoffensereport") !== FALSE)? "active" : ""; ?>"><a href="<?= base_url() ?>adminincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Reports</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admingoogledrive") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admingoogledrive"><em class="fab fa-google-drive">&nbsp;</em> Google Drive</a></li>
+                <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admingoogledrive") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admingoogledrive"><em class="fab fa-google-drive">&nbsp;</em> Google Drive</a></li> -->
                 <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminnotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminnotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li> -->
                 <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "sms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>sms"><em class="fa fa-paper-plane">&nbsp;</em> SMS</a></li> -->
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminemail") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminemail"><em class="fa fa-paper-plane">&nbsp;</em> Email</a></li>
