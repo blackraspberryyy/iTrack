@@ -17,14 +17,21 @@ class UserDashboard extends CI_Controller {
             }
         }
     }
-    
-    public function index(){
+
+    public function index() {
+        $incidentReport = $this->UserIncidentReport_model->getIncidentReport(array('u.user_id' => $this->session->userdata("userid")))[0];
+        $attendance = $this->UserDusap_model->getAttendance(array('att.incident_report_id' => $incidentReport->incident_report_id));
+
         $where = array(
             "user_id" => $this->session->userdata("userid")
         );
         $data = array(
             "title" => "Home",
-            'currentuser'  => $this->UserDashboard_model->getUser($where)[0]
+            'currentuser' => $this->UserDashboard_model->getUser($where)[0],
+            'cms' => $this->AdminCMS_model->getCMS()[0],
+            'total_hours' => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $incidentReport->incident_report_id))[0],
+            'attendance' => $attendance,
+            'incident_report' => $incidentReport,
         );
         $this->load->view("user_includes/nav_header", $data);
         $this->load->view("user_dashboard/main");

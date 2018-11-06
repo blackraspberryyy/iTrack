@@ -4,10 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?= $title ?></title>
+
+        <!-- Template Custom CSS and FontAwesome CSS -->
         <link href="<?= base_url() ?>assets/lumino_template/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         <link href="<?= base_url() ?>assets/lumino_template/css/datepicker3.css" rel="stylesheet">
         <link href="<?= base_url() ?>assets/lumino_template/css/styles.css" rel="stylesheet">
+        
         <!-- FAVICON COMPATIBILITY -->
         <link rel="apple-touch-icon" sizes="57x57" href="<?= base_url() ?>images/favicon/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="<?= base_url() ?>images/favicon/apple-icon-60x60.png">
@@ -27,14 +30,27 @@
         <meta name="msapplication-TileImage" content="<?= base_url() ?>images/favicon/ms-icon-144x144.png">
         <meta name="theme-color" content="#ffffff">
 
-        <script src="<?= base_url() ?>assets/lumino_template/js/jquery-1.11.1.min.js"></script>
-        <script src="<?= base_url() ?>assets/lumino_template/js/bootstrap.min.js"></script>
         <!--Custom Font-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->
+
+        <!-- CUSTOM STYLE -->
+        <link rel="stylesheet" href="<?= base_url()?>assets/custom/css/custom.css"/>
+        <link rel="stylesheet" href="<?= base_url()?>assets/custom/css/spacing.min.css"/>
+
+        <!-- JQuery and Bootsrap JS -->
+        <script src="<?= base_url() ?>assets/lumino_template/js/jquery-1.11.1.min.js"></script>
+        <script src="<?= base_url() ?>assets/lumino_template/js/bootstrap.min.js"></script>
+
+        <!-- Datetime picker -->
+        <link rel="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+
+        <!-- Gijgo WYSIWYG Editor -->
+        <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.10/combined/css/gijgo.min.css"/>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.10/combined/js/gijgo.min.js "></script>
         
         <!-- Data Table -->
         <link rel = "stylesheet" href = "https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
@@ -42,10 +58,14 @@
         <script src = "https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
         <script>
             $(document).ready(function () {
-                $('.datatable').DataTable({"order": [[0, "desc"]]});
-
+                $('.datatable').DataTable({ "order": [[ 0, "desc" ]] });
             });
         </script>
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+        <script src="<?= base_url() ?>assets/lumino_template/js/chart-data.js"></script>
+
         <style>
             /* - CUSTOM STYLE - */
             .navbar-header img {
@@ -56,6 +76,7 @@
                 background:rgb(244,211,12);
                 background: linear-gradient(135deg, rgb(244,211,12) 50%, rgba(0,114,54,1) 50%);
             }
+
             /* - SCROLLBAR -*/
             /* width */
             ::-webkit-scrollbar {
@@ -66,7 +87,7 @@
             ::-webkit-scrollbar-track {
                 background: #f1f1f1; 
             }
-
+            
             /* Handle */
             ::-webkit-scrollbar-thumb {
                 background: rgb(244,211,12); 
@@ -76,6 +97,7 @@
             ::-webkit-scrollbar-thumb:hover {
                 background: rgb(183, 158, 9); 
             }
+            
         </style>
     </head>
     <body>
@@ -117,10 +139,12 @@
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userprofile") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userprofile"><em class="fa fa-user">&nbsp;</em> <?= ucfirst($currentuser->user_access) ?> Profile</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userviolation") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userviolation"><em class="fa fa-exclamation-triangle">&nbsp;</em> <?= ucfirst($currentuser->user_access) ?> Violation</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userincidentreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Report</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userdusap") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userdusap"><em class="fa fa-clock">&nbsp;</em> DUSAP</a></li>
+                <?php if ($currentuser->user_access == "student"): ?>
+                    <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userdusap") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userdusap"><em class="fa fa-clock">&nbsp;</em> DUSAP</a></li>
+                <?php endif; ?>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "useroffensereport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>useroffensereport"><em class="fa fa-exclamation-circle">&nbsp;</em> Offense Report</a></li>
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "studenthandbook") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>studenthandbook"><em class="fa fa-book-open">&nbsp;</em> Student Handbook</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "usernotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>usernotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li>
+                <!--<li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "usernotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>usernotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li>-->
                 <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "faq") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>faq"><em class="fa fa-lightbulb">&nbsp;</em> FAQ</a></li>
                 <li><a href="<?= base_url() ?>logout"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>

@@ -20,6 +20,10 @@ class UserOffenseReport extends CI_Controller {
 
     public function index() {
         $violations = $this->UserViolation_model->get_violation(array('u.user_id' => $this->session->userdata("userid")));
+//        echo "<pre>";
+//        print_r($violations);
+//        echo "</pre>";
+//        die;
         $where = array(
             "user_id" => $this->session->userdata("userid")
         );

@@ -116,12 +116,12 @@ function determineStatus($status) {
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-xs-12">
-                                                <center>
-                                                    <img src="<?= base_url() . $violation->user_picture ?>" class="img-responsive img-circle" width="150">
-                                                    <h4><?= $violation->user_firstname . ' ' . ($violation->user_middlename != '' ? $violation->user_middlename : '') . ' ' . $violation->user_lastname ?></h4>
-                                                    <h5><?= ucfirst($violation->user_access) ?></h5>
-                                                    <h6><?= determineStatus($violation->incident_report_status) ?></h6>
-                                                </center>
+                                            <center>
+                                                <img src="<?= base_url() . $violation->user_picture ?>" class="img-responsive img-circle" width="150">
+                                                <h4><?= $violation->user_firstname . ' ' . ($violation->user_middlename != '' ? $violation->user_middlename : '') . ' ' . $violation->user_lastname ?></h4>
+                                                <h5><?= ucfirst($violation->user_access) ?></h5>
+                                                <h6><?= determineStatus($violation->incident_report_status) ?></h6>
+                                            </center>
                                             <div class="table-responsive">
 
                                                 <table class="table table-striped" width="100%" cellspacing="0">
@@ -144,7 +144,11 @@ function determineStatus($status) {
                                                         </tr>
                                                         <tr>
                                                             <th>Reported By</th>
-                                                            <td><?= $violation->reportedby_lastname ?>, <?= $violation->reportedby_firstname ?></td>
+                                                            <?php if (empty($violation->reportedby_id)): ?>
+                                                                <td>Admin</td>
+                                                            <?php else: ?>
+                                                                <td><?= $violation->reportedby_lastname ?>, <?= $violation->reportedby_firstname ?></td>
+                                                            <?php endif; ?>
                                                         </tr>
                                                         <tr>
                                                             <th>Course/Section/Year</th>

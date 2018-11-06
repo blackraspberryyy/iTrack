@@ -9,7 +9,7 @@
 
 <div class = "row">
     <div class = "col-md-12">
-        <h1><?=$cms->faq_title?></h1>
-        <h5><?=$cms->faq_text?></h5>
+        <h1><?= $cms->faq_title ?></h1>
+        <h5><?= $cms->faq_text ?></h5>
     </div>
 </div>
