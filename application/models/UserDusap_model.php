@@ -26,6 +26,7 @@ class UserDusap_model extends CI_Model {
         $this->db->join('user AS u', 'ir.user_id = u.user_id', 'LEFT OUTER');
         $this->db->join('user AS u2', 'ir.user_reported_by = u2.user_id', 'LEFT OUTER');
         $this->db->join('violation AS v', 'ir.violation_id = v.violation_id', 'LEFT OUTER');
+        $this->db->order_by("att.attendance_created_at", "desc");
         $query = $this->db->get();
         return ($query->num_rows() > 0) ? $query->result() : false;
     }
