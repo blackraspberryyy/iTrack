@@ -100,10 +100,12 @@ class AdminIncidentReport extends CI_Controller {
             }else{
                 $violation_id = $this->input->post("classification");
             }
+
+            $user = $this->AdminIncidentReport_model->get_user_id($this->input->post("user_number"))[0];
             
             $incident_report = array(
                 "user_reported_by" => NULL, //NULL if the ADMIN is the one to report
-                "user_id" => $this->AdminIncidentReport_model->get_user_id($this->input->post("user_number"))[0]->user_id,
+                "user_id" => $user->user_id,
                 "violation_id" => $violation_id,
                 "incident_report_datetime" => strtotime($this->input->post("date_time")),
                 "incident_report_place" => $this->input->post("place"),
@@ -118,9 +120,41 @@ class AdminIncidentReport extends CI_Controller {
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit("admin", "Filed an incident report");
 
+            //-- CallSlip
+            $this->sendCallSlip($user, "iTrack Call Slip", "Please See the Discipline Officer for some important matter");
+
             redirect(base_url()."adminincidentreport");
         }
     }
+
+    public function sendCallSlip($user, $subject, $message) {
+        $this->email->from("itracksolutions.123@gmail.com", 'iTrack Administrator');
+        $this->email->to($user->user_email);
+        $this->email->subject($subject);
+        $data = array(
+            "message" => $message,
+            "username"  => $user->user_firstname." ".$user->user_lastname,
+            "datetime"  => time()
+        );
+
+        $this->email->message($this->load->view('admin_email/email_callslip', $data, true));
+
+        if (!$this->email->send()) {
+            echo $this->email->print_debugger();
+        } else {
+            $this->session->set_flashdata('success_email', "Call Slip has been sent to ".$this->input->post($email) );
+            //redirect(base_url().'adminemail');
+        }
+    }
+
+    /* function sample(){
+        $data = array(
+            "message"   => "Please See the Discipline Officer for some important matter",
+            "username"  => "Juan Dela Cruz",
+            "datetime"  => 1541521453
+        );
+        $this->load->view('admin_email/email_callslip', $data);
+    } */
 
     function edit_exec(){
         $this->session->set_userdata("incident_report_id", $this->uri->segment(3));

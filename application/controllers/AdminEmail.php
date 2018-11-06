@@ -50,6 +50,7 @@ class AdminEmail extends CI_Controller{
       redirect(base_url().'adminemail');
     }
   }
+  
   function send_email_exec(){
     $this->form_validation->set_rules('email', 'Email Address', 'required|valid_email');
     $this->form_validation->set_rules('subject', 'Subject', 'required');
