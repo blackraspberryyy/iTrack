@@ -17,6 +17,7 @@
         </div>
     </div>
 </div>
+<?php if($currentuser->user_access == "student"):?>
 <div class="row">
     <div class="col-sm-12">
         <div class="text-center">
@@ -41,7 +42,7 @@
         </div>
     </div>
 </div>
-
+<?php endif;?>
 
 <?php
 
