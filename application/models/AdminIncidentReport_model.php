@@ -56,7 +56,6 @@ class AdminIncidentReport_model extends CI_Model {
     function get_user_id($user_number){
         $table = "user";
         $where = array(
-            "user_access" => "student",
             "user_number" => $user_number
         );
         if ($where !== NULL) {

@@ -371,7 +371,7 @@ function determineStatus($status) {
                                         <td>
                                             <div class="btn-group-vertical" role="group">
                                                 <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id) ?>">Details</button>
-                                                <button type = "button" class="btn btn-warning"><i class="fa fa-paper-plane"></i> Send Call Slip</button>
+                                                <a type = "button" class="btn btn-warning" href="<?= base_url() ?>adminincidentreport/sendCallSlip_exec/<?= $report->user_number ?>/<?= $report->incident_report_id ?>"><i class="fa fa-paper-plane"></i> Send Call Slip</a>
                                             </div>
                                         </td>
                                     </tr>

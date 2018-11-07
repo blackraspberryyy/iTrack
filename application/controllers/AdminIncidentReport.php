@@ -127,6 +127,23 @@ class AdminIncidentReport extends CI_Controller {
         }
     }
 
+    public function sendCallSlip_exec() {
+        $userId = $this->uri->segment(3);
+        $incidentReportId = $this->uri->segment(4);
+        $user = $this->AdminIncidentReport_model->get_user_id($userId)[0];
+        $data = array(
+            'incident_report_isAccepted' => 1,
+        );
+        //-- AUDIT TRAIL
+        $this->Logger->saveToAudit("admin", "Filed an incident report");
+
+        //-- CallSlip
+        $this->sendCallSlip($user, "iTrack Call Slip", "Please See the Discipline Officer for some important matter");
+        if ($this->AdminIncidentReport_model->edit_incident_report($data, $incidentReportId)) {
+            redirect(base_url() . "adminincidentreport");
+        }
+    }
+
     public function sendCallSlip($user, $subject, $message) {
         $this->email->from("itracksolutions.123@gmail.com", 'iTrack Administrator');
         $this->email->to($user->user_email);
@@ -142,7 +159,7 @@ class AdminIncidentReport extends CI_Controller {
         if (!$this->email->send()) {
             echo $this->email->print_debugger();
         } else {
-            $this->session->set_flashdata('success_email', "Call Slip has been sent to " . $this->input->post($email));
+            $this->session->set_flashdata('success_email', "Call Slip has been sent to " . $user->user_email);
             //redirect(base_url().'adminemail');
         }
     }

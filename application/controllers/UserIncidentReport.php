@@ -117,7 +117,7 @@ class UserIncidentReport extends CI_Controller {
             $this->session->set_flashdata("success_incident_report", "Incident Report successfully recorded.");
 
             //-- AUDIT TRAIL
-//            $this->Logger->saveToAudit("admin", "Filed an incident report");
+            $this->Logger->saveToAudit($this->session->userdata("userid"), "Filed an incident report");
 
             redirect(base_url() . "userincidentreport");
         }
