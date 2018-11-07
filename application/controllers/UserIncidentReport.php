@@ -38,12 +38,12 @@ class UserIncidentReport extends CI_Controller {
     }
 
     public function index() {
-        $majorViolations = $this->UserIncidentReport_model->getIncidentReport(array('u.user_id' => $this->session->userdata("userid")));
+        $majorViolations = $this->UserIncidentReport_model->getIncidentReport(array('u.user_id' => $this->session->userdata("userid"), 'incident_report_isAccepted' => 1));
 
-//       echo "<pre>";
-//       print_r($majorViolations);
-//       echo "</pre>";
-//       die;
+//        echo "<pre>";
+//        print_r($majorViolations);
+//        echo "</pre>";
+//        die;
         $where = array(
             "user_id" => $this->session->userdata("userid")
         );

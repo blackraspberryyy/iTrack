@@ -9,10 +9,10 @@ class AdminIncidentReport extends CI_Controller {
             $this->session->set_flashdata("err_login", "Login First!");
             redirect(base_url() . 'adminlogin/');
         } else {
-            if($this->session->userdata("useraccess") == "student" || $this->session->userdata("useraccess") == "teacher"){
+            if ($this->session->userdata("useraccess") == "student" || $this->session->userdata("useraccess") == "teacher") {
                 $this->session->set_flashdata("err_login", "Restricted Subpage");
                 redirect(base_url() . 'userdashboard/');
-            }else if($this->session->userdata("useraccess") == "admin"){
+            } else if ($this->session->userdata("useraccess") == "admin") {
                 //Do nothing
             }
         }
@@ -20,19 +20,19 @@ class AdminIncidentReport extends CI_Controller {
 
     public function index() {
         $data = array(
-            "title"             => "Incident Report",
-            'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
-            'major_violations'  => $this->AdminIncidentReport_model->getMajorViolations(),
-            'minor_violations'  => $this->AdminIncidentReport_model->getMinorViolations(),
-            'incident_reports'  => $this->AdminIncidentReport_model->getIncidentReport(),
-            'cms'               => $this->AdminCMS_model->getCMS()[0]
+            "title" => "Incident Report",
+            'currentadmin' => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
+            'major_violations' => $this->AdminIncidentReport_model->getMajorViolations(),
+            'minor_violations' => $this->AdminIncidentReport_model->getMinorViolations(),
+            'incident_reports' => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_isAccepted' => 1)),
+            'request_reports' => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_isAccepted' => 0)),
+            'cms' => $this->AdminCMS_model->getCMS()[0]
         );
-        
+
         $this->load->view("admin_includes/nav_header", $data);
         $this->load->view("admin_incident_report/main");
         $this->load->view("admin_includes/footer");
     }
-
 
     public function search_user_number() {
         $keyword = strval($this->input->post('id'));
@@ -57,12 +57,12 @@ class AdminIncidentReport extends CI_Controller {
         if ($this->input->post("classification") == "0") {
             $this->form_validation->set_rules('classification_other', 'Name of Violation', 'required');
         }
-        
-        if ($this->input->post("user_course") == "student"){
+
+        if ($this->input->post("user_course") == "student") {
             $this->form_validation->set_rules('user_course', 'Course', 'required');
             $this->form_validation->set_rules('user_section_year', 'Section/Year', 'required');
         }
-        
+
         $this->form_validation->set_rules('date_time', 'Date and Time', 'required');
         $this->form_validation->set_rules('place', 'Place', 'required');
         $this->form_validation->set_rules('user_number', 'User Number', 'required|integer');
@@ -75,12 +75,12 @@ class AdminIncidentReport extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             //ERROR
             $data = array(
-                "title"             => "Incident Report",
-                'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
-                'major_violations'  => $this->AdminIncidentReport_model->getMajorViolations(),
-                'minor_violations'  => $this->AdminIncidentReport_model->getMinorViolations(),
-                'incident_reports'  => $this->AdminIncidentReport_model->getIncidentReport(),
-                'cms'               => $this->AdminCMS_model->getCMS()[0]
+                "title" => "Incident Report",
+                'currentadmin' => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
+                'major_violations' => $this->AdminIncidentReport_model->getMajorViolations(),
+                'minor_violations' => $this->AdminIncidentReport_model->getMinorViolations(),
+                'incident_reports' => $this->AdminIncidentReport_model->getIncidentReport(),
+                'cms' => $this->AdminCMS_model->getCMS()[0]
             );
 
             $this->load->view("admin_includes/nav_header", $data);
@@ -90,19 +90,19 @@ class AdminIncidentReport extends CI_Controller {
             $currentAdmin = $this->AdminIncidentReport_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0];
             if ($this->input->post("classification") == "0") {
                 $violation = array(
-                    "violation_name"    => $this->input->post("classification_other"),
-                    "violation_type"    => $this->input->post("nature"),
-                    "violation_category"=> "other",
-                    "violation_added_at"=> time()
+                    "violation_name" => $this->input->post("classification_other"),
+                    "violation_type" => $this->input->post("nature"),
+                    "violation_category" => "other",
+                    "violation_added_at" => time()
                 );
                 $this->AdminIncidentReport_model->insert_violation($violation);
                 $violation_id = $this->db->insert_id();
-            }else{
+            } else {
                 $violation_id = $this->input->post("classification");
             }
 
             $user = $this->AdminIncidentReport_model->get_user_id($this->input->post("user_number"))[0];
-            
+
             $incident_report = array(
                 "user_reported_by" => NULL, //NULL if the ADMIN is the one to report
                 "user_id" => $user->user_id,
@@ -123,7 +123,7 @@ class AdminIncidentReport extends CI_Controller {
             //-- CallSlip
             $this->sendCallSlip($user, "iTrack Call Slip", "Please See the Discipline Officer for some important matter");
 
-            redirect(base_url()."adminincidentreport");
+            redirect(base_url() . "adminincidentreport");
         }
     }
 
@@ -133,8 +133,8 @@ class AdminIncidentReport extends CI_Controller {
         $this->email->subject($subject);
         $data = array(
             "message" => $message,
-            "username"  => $user->user_firstname." ".$user->user_lastname,
-            "datetime"  => time()
+            "username" => $user->user_firstname . " " . $user->user_lastname,
+            "datetime" => time()
         );
 
         $this->email->message($this->load->view('admin_email/email_callslip', $data, true));
@@ -142,50 +142,51 @@ class AdminIncidentReport extends CI_Controller {
         if (!$this->email->send()) {
             echo $this->email->print_debugger();
         } else {
-            $this->session->set_flashdata('success_email', "Call Slip has been sent to ".$this->input->post($email) );
+            $this->session->set_flashdata('success_email', "Call Slip has been sent to " . $this->input->post($email));
             //redirect(base_url().'adminemail');
         }
     }
 
     /* function sample(){
-        $data = array(
-            "message"   => "Please See the Discipline Officer for some important matter",
-            "username"  => "Juan Dela Cruz",
-            "datetime"  => 1541521453
-        );
-        $this->load->view('admin_email/email_callslip', $data);
-    } */
+      $data = array(
+      "message"   => "Please See the Discipline Officer for some important matter",
+      "username"  => "Juan Dela Cruz",
+      "datetime"  => 1541521453
+      );
+      $this->load->view('admin_email/email_callslip', $data);
+      } */
 
-    function edit_exec(){
+    function edit_exec() {
         $this->session->set_userdata("incident_report_id", $this->uri->segment(3));
-        redirect(base_url().'adminincidentreport/edit');
+        redirect(base_url() . 'adminincidentreport/edit');
     }
-    function edit(){
+
+    function edit() {
         $data = array(
-            "title"             => "Edit Incident Report",
-            'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
-            'incident_report'  => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
-            'major_violations'  => $this->AdminIncidentReport_model->getMajorViolations(),
-            'minor_violations'  => $this->AdminIncidentReport_model->getMinorViolations()
+            "title" => "Edit Incident Report",
+            'currentadmin' => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
+            'incident_report' => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
+            'major_violations' => $this->AdminIncidentReport_model->getMajorViolations(),
+            'minor_violations' => $this->AdminIncidentReport_model->getMinorViolations()
         );
         /* prettyPrint($data['incident_report']);
-        exit; */
+          exit; */
         $this->load->view("admin_includes/nav_header", $data);
         $this->load->view("admin_incident_report/edit");
         $this->load->view("admin_includes/footer");
     }
 
-    function edit_submit_exec(){
+    function edit_submit_exec() {
         $incident_report_id = $this->uri->segment(3);
         if ($this->input->post("classification") == "0") {
             $this->form_validation->set_rules('classification_other', 'Name of Violation', 'required');
         }
-        
-        if ($this->input->post("user_course") == "student"){
+
+        if ($this->input->post("user_course") == "student") {
             $this->form_validation->set_rules('user_course', 'Course', 'required');
             $this->form_validation->set_rules('user_section_year', 'Section/Year', 'required');
         }
-        
+
         $this->form_validation->set_rules('date_time', 'Date and Time', 'required');
         $this->form_validation->set_rules('place', 'Place', 'required');
         $this->form_validation->set_rules('user_number', 'User Number', 'required|integer');
@@ -196,32 +197,31 @@ class AdminIncidentReport extends CI_Controller {
         $this->form_validation->set_rules('message', 'Message', 'required');
         if ($this->form_validation->run() == FALSE) {
             $data = array(
-                "title"             => "Edit Incident Report",
-                'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
-                'incident_report'  => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
-                'major_violations'  => $this->AdminIncidentReport_model->getMajorViolations(),
-                'minor_violations'  => $this->AdminIncidentReport_model->getMinorViolations()
+                "title" => "Edit Incident Report",
+                'currentadmin' => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
+                'incident_report' => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
+                'major_violations' => $this->AdminIncidentReport_model->getMajorViolations(),
+                'minor_violations' => $this->AdminIncidentReport_model->getMinorViolations()
             );
-            
+
             $this->load->view("admin_includes/nav_header", $data);
             $this->load->view("admin_incident_report/edit");
             $this->load->view("admin_includes/footer");
-        }
-        else{
+        } else {
             $currentAdmin = $this->AdminIncidentReport_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0];
             if ($this->input->post("classification") == "0") {
                 $violation = array(
-                    "violation_name"    => $this->input->post("classification_other"),
-                    "violation_type"    => $this->input->post("nature"),
-                    "violation_category"=> "other",
-                    "violation_added_at"=> time()
+                    "violation_name" => $this->input->post("classification_other"),
+                    "violation_type" => $this->input->post("nature"),
+                    "violation_category" => "other",
+                    "violation_added_at" => time()
                 );
                 $this->AdminIncidentReport_model->insert_violation($violation);
                 $violation_id = $this->db->insert_id();
-            }else{
+            } else {
                 $violation_id = $this->input->post("classification");
             }
-            
+
             $incident_report = array(
                 "user_reported_by" => NULL, //NULL if the ADMIN is the one to report
                 "user_id" => $this->AdminIncidentReport_model->get_user_id($this->input->post("user_number"))[0]->user_id,
@@ -239,7 +239,8 @@ class AdminIncidentReport extends CI_Controller {
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit("admin", "Filed an incident report");
 
-            redirect(base_url()."adminincidentreport");
+            redirect(base_url() . "adminincidentreport");
         }
     }
+
 }

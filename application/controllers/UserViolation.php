@@ -19,7 +19,7 @@ class UserViolation extends CI_Controller {
     }
 
     public function index() {
-        $violations = $this->UserViolation_model->get_violation(array('u.user_id' => $this->session->userdata("userid")));
+        $violations = $this->UserViolation_model->get_violation(array('u.user_id' => $this->session->userdata("userid"), 'incident_report_isAccepted' => 1));
         $where = array(
             "user_id" => $this->session->userdata("userid")
         );

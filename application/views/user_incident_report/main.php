@@ -124,7 +124,6 @@ function determineStatus($status) {
                                                             <h4><?= $report->user_firstname . ' ' . ($report->user_middlename != '' ? $report->user_middlename : '') . ' ' . $report->user_lastname ?></h4>
                                                             <h5><?= ucfirst($report->user_access) ?></h5>
                                                             <h6><?= determineStatus($report->incident_report_status) ?></h6>
-                                                            <a href="<?= base_url() . 'admindusap/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary <?= $report->incident_report_status == 0 ? 'disabled' : '' ?>"><i class="fa fa-search"></i> See DUSAP Attendance</a>
                                                         </center>
                                                     </div>
                                                     <div class="col-xs-6 margin-top-lg text-center">
