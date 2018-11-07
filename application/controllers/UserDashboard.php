@@ -19,9 +19,13 @@ class UserDashboard extends CI_Controller {
     }
 
     public function index() {
-        $incidentReport = $this->UserIncidentReport_model->getIncidentReport(array('u.user_id' => $this->session->userdata("userid")))[0];
-        $attendance = $this->UserDusap_model->getAttendance(array('att.incident_report_id' => $incidentReport->incident_report_id));
-
+        $incidentReport = $this->UserIncidentReport_model->getIncidentReport(array('u.user_id' => $this->session->userdata("userid"), 'incident_report_status' => 1))[0];
+        $attendance = $this->UserDusap_model->getAttendance(array('att.incident_report_id' => $incidentReport->incident_report_id, 'incident_report_status' => 1));
+//        echo "<pre>";
+//
+//        print_r($attendance);
+//        echo "</pre>";
+//        die;
         $where = array(
             "user_id" => $this->session->userdata("userid")
         );
@@ -32,7 +36,8 @@ class UserDashboard extends CI_Controller {
             'total_hours' => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $incidentReport->incident_report_id))[0],
             'attendance' => $attendance,
             'incident_report' => $incidentReport,
-        );
+        ); 
+    
         $this->load->view("user_includes/nav_header", $data);
         $this->load->view("user_dashboard/main");
         $this->load->view("user_includes/footer");

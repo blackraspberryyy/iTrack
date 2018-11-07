@@ -47,15 +47,14 @@ class UserDusap extends CI_Controller {
     }
 
     public function index() {
-        $incidentReport = $this->UserIncidentReport_model->getIncidentReport(array('u.user_id' => $this->session->userdata("userid")))[0];
-        $attendance = $this->UserDusap_model->getAttendance(array('att.incident_report_id' => $incidentReport->incident_report_id));
+        $incidentReport = $this->UserIncidentReport_model->getIncidentReport(array('u.user_id' => $this->session->userdata("userid"), 'incident_report_status' => 1))[0];
+        $attendance = $this->UserDusap_model->getAttendance(array('att.incident_report_id' => $incidentReport->incident_report_id, 'incident_report_status' => 1));
         $currentMonthAttendances = $this->UserDusap_model->getAttendance(array('att.incident_report_id' => $incidentReport->incident_report_id, 'MONTH(from_unixtime(attendance_starttime))' => date('m')));
         $months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         $currentMonth = date('m');
         $where = array(
             "user_id" => $this->session->userdata("userid")
         );
-
         $data = array(
             "title" => "Home",
             'currentuser' => $this->UserDashboard_model->getUser($where)[0],
@@ -75,9 +74,8 @@ class UserDusap extends CI_Controller {
     public function change_month_exec() {
         $monthSelected = $this->input->post("month");
 //        echo $monthSelected;
-        $incidentReport = $this->UserIncidentReport_model->getIncidentReport(array('u.user_id' => $this->session->userdata("userid")))[0];
-        $attendance = $this->UserDusap_model->getAttendance(array('att.incident_report_id' => $incidentReport->incident_report_id));
-
+        $incidentReport = $this->UserIncidentReport_model->getIncidentReport(array('u.user_id' => $this->session->userdata("userid"), 'incident_report_status' => 1))[0];
+        $attendance = $this->UserDusap_model->getAttendance(array('att.incident_report_id' => $incidentReport->incident_report_id, 'incident_report_status' => 1));
         $currentMonthAttendances = $this->UserDusap_model->getAttendance(array('att.incident_report_id' => $incidentReport->incident_report_id, 'MONTH(from_unixtime(attendance_starttime))' => $monthSelected));
         $months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
