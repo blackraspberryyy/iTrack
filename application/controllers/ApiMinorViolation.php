@@ -47,8 +47,9 @@ class ApiMinorViolation extends CI_Controller {
   /* 
   public function test() {
     echo strtotime('today') . "\n";
+    echo strtotime('tomorrow +2 day') . "\n";
     echo time() . "\n";
-    $this->Api_model->groupViolations(3);
+    $this->Api_model->groupViolations(15);
   }
 
   public function test2() {

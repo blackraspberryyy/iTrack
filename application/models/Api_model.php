@@ -83,10 +83,6 @@ class Api_model extends CI_Model {
       return;
     }
 
-    // constant time
-    $TODAY = strtotime('today');
-    $TOMORROW = strtotime('tomorrow');
-
     foreach ($pair as $row) {
       $user_id = $row['user_id'];
       // assert that total is the same as $total
@@ -116,9 +112,7 @@ class Api_model extends CI_Model {
         );
         $where = array(
           'user_id' => $uId,
-          'group_id' => 0,
-          'tapped_at >=' => $TODAY,
-          'tapped_at <' => $TOMORROW,
+          'group_id' => 0
         );
 
         $this->db
@@ -144,16 +138,16 @@ class Api_model extends CI_Model {
       ")
       ->from("
         (
-          SELECT *
+          SELECT
+            user_id,
+            violation_id,
+            tapped_at,
+            DAY(FROM_UNIXTIME(tapped_at)) AS daily
           FROM minor_reports
           WHERE group_id = 0
-          GROUP BY user_id, violation_id
+          GROUP BY daily, user_id, violation_id
         ) AS mr_temp
-      ")
-      ->where(array(
-        'tapped_at >=' => strtotime('today'),
-        'tapped_at <' => strtotime('tomorrow')
-      ))
+      ", FALSE)
       ->group_by('user_id')
       ->having('total', $total)
       ->get();
@@ -163,19 +157,27 @@ class Api_model extends CI_Model {
 
   public function getGroupedUidVidPair($user_id = FALSE) {
     $this->db
-      ->select('user_id, violation_id')
+      ->select('
+        user_id,
+        violation_id,
+        DAY(FROM_UNIXTIME(tapped_at)) AS daily
+      ')
       ->from('minor_reports')
       ->where(array(
-        'group_id' => 0,
-        'tapped_at >=' => strtotime('today'),
-        'tapped_at <' => strtotime('tomorrow')
+        'group_id' => 0
       ));
 
     if ($user_id) {
       $this->db->where('user_id', $user_id);
     }
 
-    $this->db->group_by(array('user_id', 'violation_id'));
+    $this->db
+      ->group_by(array('daily', 'user_id', 'violation_id'))
+      ->order_by(array(
+        'user_id' => 'ASC',
+        'violation_id' => 'ASC',
+        'daily' => 'ASC'
+      ));
 
     $query = $this->db->get();
     $res = query_result($query, 'array');
@@ -226,12 +228,42 @@ class Api_model extends CI_Model {
 // *,
 // LEAST(2, COUNT(*)) as total
 // FROM (
+//   SELECT
+//   user_id,
+//   violation_id,
+//   tapped_at,
+//   FROM_UNIXTIME(tapped_at) AS formatted,
+//   DAY(FROM_UNIXTIME(tapped_at)) AS dayx
+//   FROM minor_reports
+//   WHERE group_id = 0
+//   GROUP BY dayx, user_id, violation_id
+//   ORDER BY user_id, violation_id, dayx
+// ) AS mr_temp
+// GROUP BY user_id
+// HAVING total = 2
+  
+// OLDDD
 // SELECT
 // *
 // FROM minor_reports
 // WHERE group_id = 0
 // GROUP BY user_id, violation_id
-// ) AS mr_temp
-// GROUP BY user_id
-// HAVING total = 2
 
+// HAHAHHAHAHA
+// SELECT 
+
+// mrq.id AS group_id,
+// u.user_firstname AS fname,
+// u.user_middlename AS mname,
+// u.user_lastname AS lname,
+// v.violation_name AS violation_name,
+// FROM_UNIXTIME(mr.tapped_at) AS tapped_at,
+// DAY(FROM_UNIXTIME(tapped_at)) AS daily
+
+// FROM minor_reports_quota mrq
+// JOIN minor_reports mr ON mr.group_id = mrq.id
+// JOIN user u ON u.user_id = mr.user_id
+// JOIN violation v ON v.violation_id = mr.violation_id
+
+// GROUP BY mr.user_id, mr.violation_id, daily
+// ORDER BY group_id
