@@ -71,19 +71,8 @@ class Api_model extends CI_Model {
     // check whole minor_reports table with 0 group_id
 
     // get only uids with 15+ offenses
-    $query = $this->db
-      ->select("
-        user_id,
-        LEAST($total, COUNT(*)) AS total
-      ")
-      ->from('minor_reports')
-      ->where('group_id', 0)
-      ->group_by('user_id')
-      ->having('total', $total)
-      ->get();
-
-    $pair = query_result($query, 'array');
-
+    $pair = $this->getGroupableUids($total);
+    
     // prettyPrint($pair);
     // echo count($pair);
     // echo $pair == 0;
@@ -93,6 +82,10 @@ class Api_model extends CI_Model {
       // count($pair) should be falsy
       return;
     }
+
+    // constant time
+    $TODAY = strtotime('today');
+    $TOMORROW = strtotime('tomorrow');
 
     foreach ($pair as $row) {
       $user_id = $row['user_id'];
@@ -105,22 +98,110 @@ class Api_model extends CI_Model {
       ));
       $group_id = $this->db->insert_id();
 
-      // update here
-      $set = array(
-        'group_id' => $group_id,
-        'grouped_at' => $TIME
-      );
-      $where = array(
-        'user_id' => $user_id,
-        'group_id' => 0
-      );
-      $this->db->update('minor_reports', $set, $where, $total);
+      // QUERY AGAAAAIINN
+      // use the subquery from last time
+      $UVPair = $this->getGroupedUidVidPair($user_id);
+
+      // if no pair, move to next iteration
+      if (!$UVPair || count($UVPair) == 0) {
+        continue;
+      }
+
+      // loop on pair
+      foreach ($UVPair as $uId => $vIds) {
+        // update here
+        $set = array(
+          'group_id' => $group_id,
+          'grouped_at' => $TIME
+        );
+        $where = array(
+          'user_id' => $uId,
+          'group_id' => 0,
+          'tapped_at >=' => $TODAY,
+          'tapped_at <' => $TOMORROW,
+        );
+
+        $this->db
+          ->set($set)
+          ->where($where)
+          ->where_in('violation_id', $vIds)
+          ->update('minor_reports');
+      }
+
     }
 
     // once updated, call this function again because
     // why not
     // jk, to group ungrouped rows
     $this->groupViolations($total);
+  }
+
+  private function getGroupableUids($total) {
+    $query = $this->db
+      ->select("
+        user_id,
+        LEAST($total, COUNT(*)) AS total
+      ")
+      ->from("
+        (
+          SELECT *
+          FROM minor_reports
+          WHERE group_id = 0
+          GROUP BY user_id, violation_id
+        ) AS mr_temp
+      ")
+      ->where(array(
+        'tapped_at >=' => strtotime('today'),
+        'tapped_at <' => strtotime('tomorrow')
+      ))
+      ->group_by('user_id')
+      ->having('total', $total)
+      ->get();
+
+    return query_result($query, 'array');
+  }
+
+  public function getGroupedUidVidPair($user_id = FALSE) {
+    $this->db
+      ->select('user_id, violation_id')
+      ->from('minor_reports')
+      ->where(array(
+        'group_id' => 0,
+        'tapped_at >=' => strtotime('today'),
+        'tapped_at <' => strtotime('tomorrow')
+      ));
+
+    if ($user_id) {
+      $this->db->where('user_id', $user_id);
+    }
+
+    $this->db->group_by(array('user_id', 'violation_id'));
+
+    $query = $this->db->get();
+    $res = query_result($query, 'array');
+
+    // transform to user_id => [violation_id, violation_id, ...]
+
+    // stop heree
+    if (!$res || count($res) == 0) {
+      return array();
+    }
+
+    $arr = array();
+    foreach ($res as $row) {
+      $uid = $row['user_id'];
+      $vid = $row['violation_id'];
+
+      // set array if not array yet :D
+      if (!array_key_exists($uid, $arr)) {
+        $arr[$uid] = array();
+      }
+
+      // then push those vIds in the $arr
+      array_push($arr[$uid], $vid);
+    }
+
+    return $arr;
   }
 }
 
@@ -138,3 +219,19 @@ class Api_model extends CI_Model {
 // SET group_id = 1
 // WHERE group_id = 0 AND user_id = 1
 // LIMIT 5
+
+// OMG
+
+// SELECT
+// *,
+// LEAST(2, COUNT(*)) as total
+// FROM (
+// SELECT
+// *
+// FROM minor_reports
+// WHERE group_id = 0
+// GROUP BY user_id, violation_id
+// ) AS mr_temp
+// GROUP BY user_id
+// HAVING total = 2
+

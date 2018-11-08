@@ -43,4 +43,25 @@ class ApiMinorViolation extends CI_Controller {
       api_respond(FALSE, 'Unable to add batch violation reports.');
     }
   }
+
+  /* 
+  public function test() {
+    echo strtotime('today') . "\n";
+    echo time() . "\n";
+    $this->Api_model->groupViolations(3);
+  }
+
+  public function test2() {
+    $res = $this->Api_model->getGroupedUidVidPair(1);
+    prettyPrint($res);
+  }
+
+  public function reset() {
+    $this->db->update('minor_reports', array(
+      'group_id' => 0,
+      'grouped_at' => 0
+    ));
+    $this->db->truncate('minor_reports_quota');
+  }
+  */
 }
