@@ -62,7 +62,7 @@ function get_data($id){
 ?>
 <div class="row">
     <ol class="breadcrumb">
-        <li><a href="<?= base_url() ?>admindashboard">
+        <li><a href="<?= base_url() ?>AdminDashboard">
                 <em class="fa fa-home"></em>
             </a></li>
         <li class="active">User Profile</li>
@@ -224,7 +224,7 @@ $(document).ready(function(){
         var search_word = $(this).val();
         $.ajax({
             "method": "POST",
-            "url": '<?= base_url() ?>' + "adminviolations/search_user/<?= $title?>",
+            "url": '<?= base_url() ?>' + "AdminViolations/search_user/<?= $title?>",
             "dataType": "JSON",
             "data": {
                 'search_word': search_word

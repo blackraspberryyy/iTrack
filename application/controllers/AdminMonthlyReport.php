@@ -7,11 +7,11 @@ class AdminMonthlyReport extends CI_Controller {
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
             $this->session->set_flashdata("err_login", "Login First!");
-            redirect(base_url() . 'adminlogin/');
+            redirect(base_url() . 'AdminLogin/');
         } else {
             if($this->session->userdata("useraccess") == "student" || $this->session->userdata("useraccess") == "teacher"){
                 $this->session->set_flashdata("err_login", "Restricted Subpage");
-                redirect(base_url() . 'userdashboard/');
+                redirect(base_url() . 'UserDashboard/');
             }else if($this->session->userdata("useraccess") == "admin"){
                 //Do nothing
             }

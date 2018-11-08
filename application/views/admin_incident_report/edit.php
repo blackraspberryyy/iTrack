@@ -38,10 +38,10 @@ $(function () { /* DOM ready */
 
 <div class="row">
     <ol class="breadcrumb">
-        <li><a href="<?= base_url() ?>admindashboard">
+        <li><a href="<?= base_url() ?>AdminDashboard">
                 <em class="fa fa-home"></em>
             </a></li>
-        <li><a href="<?= base_url() ?>adminincidentreport">
+        <li><a href="<?= base_url() ?>AdminIncidentReport">
                 Incident Report
             </a></li>
         <li class="active">Edit</li>
@@ -55,7 +55,7 @@ $(function () { /* DOM ready */
 </div>
 <div class="row margin-top-lg">
   <div class="col-xs-8 col-xs-offset-2">
-    <form action = "<?= base_url() ?>adminincidentreport/edit_submit_exec/<?= $incident_report->incident_report_id?>" method="POST" autocomplete="off">
+    <form action = "<?= base_url() ?>AdminIncidentReport/edit_submit_exec/<?= $incident_report->incident_report_id?>" method="POST" autocomplete="off">
       <div class = "row">
           <div class = "col-sm-8">
             <div id = "classification_other" class="form-group <?= !empty(form_error("classification_other")) ? "has-error" : ""; ?>">
@@ -195,7 +195,7 @@ $(function () { /* DOM ready */
         $(document).on("focusin keyup", "#user_number.autocomplete", function () {
             $.ajax({
                 "method": "POST",
-                "url": '<?= base_url() ?>' + "adminincidentreport/search_user_number",
+                "url": '<?= base_url() ?>' + "AdminIncidentReport/search_user_number",
                 "dataType": "JSON",
                 "data": {
                     'id': $(".autocomplete").val()

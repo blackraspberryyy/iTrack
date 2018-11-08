@@ -27,13 +27,13 @@ class Login extends CI_Controller {
         if (!$getUser) {
             //NO Account found
             $this->session->set_flashdata("err_login", "User Number and Password doesn't match any accounts");
-            redirect(base_url() . "login");
+            redirect(base_url() . "Login");
         } else {
             //Student Found
             if ($getUser->user_isactive == 0) {
                 //Account is blocked
                 $this->session->set_flashdata("err_login", "Account is blocked.");
-                redirect(base_url() . "login");
+                redirect(base_url() . "Login");
             } else {
                 $this->session->set_userdata('isloggedin', true);
                 $this->session->set_userdata('userid', $getUser->user_id);
@@ -41,7 +41,7 @@ class Login extends CI_Controller {
 
                 //-- Insert to USER LOGS
                 $this->Logger->saveToLogs($this->session->userdata("userid"), 'in');
-                redirect(base_url() . 'userdashboard/');
+                redirect(base_url() . 'UserDashboard/');
             }
         }
     }

@@ -50,7 +50,7 @@ function determineStatus($status) {
 </script>
 <div class="row">
     <ol class="breadcrumb">
-        <li><a href="<?= base_url() ?>userdashboard">
+        <li><a href="<?= base_url() ?>UserDashboard">
                 <em class="fa fa-home"></em>
             </a></li>
         <li class="active">Incident Report</li>
@@ -177,7 +177,7 @@ function determineStatus($status) {
 <!-- ADD INCIDENT REPORT MODAL -->
 <div class="modal fade" id="add_incident_report" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <form action = "<?= base_url() ?>userincidentreport/incident_report_exec" method="POST" autocomplete="off">
+        <form action = "<?= base_url() ?>UserIncidentReport/incident_report_exec" method="POST" autocomplete="off">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -322,7 +322,7 @@ function determineStatus($status) {
         $(document).on("focusin keyup", "#user_number.autocomplete", function () {
             $.ajax({
                 "method": "POST",
-                "url": '<?= base_url() ?>' + "userincidentreport/search_user_number",
+                "url": '<?= base_url() ?>' + "UserIncidentReport/search_user_number",
                 "dataType": "JSON",
                 "data": {
                     'id': $(".autocomplete").val()

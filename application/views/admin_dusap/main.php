@@ -55,12 +55,12 @@ function get_data($attendance){
 <div class="row">
     <ol class="breadcrumb">
         <li>
-            <a href="<?= base_url() ?>admindashboard">
+            <a href="<?= base_url() ?>AdminDashboard">
                 <em class="fa fa-home"></em>
             </a>
         </li>
         <li>
-            <a href="<?= base_url() ?>adminincidentreport">Incident Report</a>
+            <a href="<?= base_url() ?>AdminIncidentReport">Incident Report</a>
         </li>
         <li class="active">DUSAP</li>
     </ol>
@@ -81,7 +81,7 @@ function get_data($attendance){
                         <button type = "button"  data-toggle="modal" data-target="#add_attendance" class="btn btn-primary margin-right-md"><i class="fa fa-plus"></i> Add Attendance Record</button>
                         <button type = "button"  data-toggle="modal" data-target="#finish_attendance" class="btn btn-secondary"><i class="fa fa-check"></i> Finish DUSAP Attendance</button>
                     <?php else:?>
-                        <a href="<?=base_url().'adminoffensereport/view_exec/'.$incident_report->incident_report_id?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> See Offense Report</a>
+                        <a href="<?=base_url().'AdminOffenseReport/view_exec/'.$incident_report->incident_report_id?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> See Offense Report</a>
                     <?php endif;?>
                 </div>
                 <br/><br/><br/>
@@ -141,7 +141,7 @@ function get_data($attendance){
                             </tr>
                             <!-- EDIT ATTENDANCE MODAL -->
                             <div class="modal fade text-left" id="edit_<?= sha1($a->attendance_id)?>" tabindex="-1" role="dialog" aria-labelledby="editTitle" aria-hidden="true">
-                                <form action="<?= base_url()?>admindusap/edit_attendance_exec/<?= $a->attendance_id?>" method="POST">
+                                <form action="<?= base_url()?>AdminDusap/edit_attendance_exec/<?= $a->attendance_id?>" method="POST">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -268,7 +268,7 @@ function get_data($attendance){
 </div>
 <!-- ADD MODAL -->
 <div class="modal fade text-left" id="add_attendance" tabindex="-1" role="dialog" aria-labelledby="addAttendanceTitle" aria-hidden="true">
-    <form action="<?= base_url()?>admindusap/add_attendance_exec" method="POST">
+    <form action="<?= base_url()?>AdminDusap/add_attendance_exec" method="POST">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -309,7 +309,7 @@ function get_data($attendance){
 </div>
 
 <div class="modal fade text-left" id="finish_attendance" tabindex="-1" role="dialog" aria-labelledby="finishAttendanceTitle" aria-hidden="true">
-    <form action="<?= base_url().'admindusap/finish_attendance_exec'?>" method="POST">
+    <form action="<?= base_url().'AdminDusap/finish_attendance_exec'?>" method="POST">
         <input type="hidden" value="<?=$total_hours->hours_rendered?>" name="hours_rendered"/>
         <input type="hidden" value="<?=$incident_report->violation_hours?>" name="violation_hours"/>
         <div class="modal-dialog" role="document">

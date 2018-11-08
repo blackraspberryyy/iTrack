@@ -7,11 +7,11 @@ class AdminIncidentReport extends CI_Controller {
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
             $this->session->set_flashdata("err_login", "Login First!");
-            redirect(base_url() . 'adminlogin/');
+            redirect(base_url() . 'AdminLogin/');
         } else {
             if ($this->session->userdata("useraccess") == "student" || $this->session->userdata("useraccess") == "teacher") {
                 $this->session->set_flashdata("err_login", "Restricted Subpage");
-                redirect(base_url() . 'userdashboard/');
+                redirect(base_url() . 'UserDashboard/');
             } else if ($this->session->userdata("useraccess") == "admin") {
                 //Do nothing
             }
@@ -123,7 +123,7 @@ class AdminIncidentReport extends CI_Controller {
             //-- CallSlip
             $this->sendCallSlip($user, "iTrack Call Slip", "Please See the Discipline Officer for some important matter");
 
-            redirect(base_url() . "adminincidentreport");
+            redirect(base_url() . "AdminIncidentReport");
         }
     }
 
@@ -140,7 +140,7 @@ class AdminIncidentReport extends CI_Controller {
         //-- CallSlip
         $this->sendCallSlip($user, "iTrack Call Slip", "Please See the Discipline Officer for some important matter");
         if ($this->AdminIncidentReport_model->edit_incident_report($data, $incidentReportId)) {
-            redirect(base_url() . "adminincidentreport");
+            redirect(base_url() . "AdminIncidentReport");
         }
     }
 
@@ -160,7 +160,7 @@ class AdminIncidentReport extends CI_Controller {
             echo $this->email->print_debugger();
         } else {
             $this->session->set_flashdata('success_email', "Call Slip has been sent to " . $user->user_email);
-            //redirect(base_url().'adminemail');
+            //redirect(base_url().'AdminEmail');
         }
     }
 
@@ -175,7 +175,7 @@ class AdminIncidentReport extends CI_Controller {
 
     function edit_exec() {
         $this->session->set_userdata("incident_report_id", $this->uri->segment(3));
-        redirect(base_url() . 'adminincidentreport/edit');
+        redirect(base_url() . 'AdminIncidentReport/edit');
     }
 
     function edit() {
@@ -256,7 +256,7 @@ class AdminIncidentReport extends CI_Controller {
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit("admin", "Filed an incident report");
 
-            redirect(base_url() . "adminincidentreport");
+            redirect(base_url() . "AdminIncidentReport");
         }
     }
 

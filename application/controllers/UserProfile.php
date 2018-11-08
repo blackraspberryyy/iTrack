@@ -7,13 +7,13 @@ class UserProfile extends CI_Controller {
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
             $this->session->set_flashdata("err_login", "Login First!");
-            redirect(base_url() . 'login/');
+            redirect(base_url() . 'Login/');
         } else {
             if ($this->session->userdata("useraccess") == "student" || $this->session->userdata("useraccess") == "teacher") {
                 //Do Nothing
             } else if ($this->session->userdata("useraccess") == "admin") {
                 $this->session->set_flashdata("err_login", "Restricted Subpage");
-                redirect(base_url() . 'userdashboard/');
+                redirect(base_url() . 'UserDashboard/');
             }
         }
     }
@@ -72,7 +72,7 @@ class UserProfile extends CI_Controller {
             } else {
                 echo $this->upload->display_errors();
                 $this->session->set_flashdata("uploading_error", "Please make sure that the max size is 5MB the types may only be .jpg, .jpeg, .gif, .png");
-                redirect(base_url() . "userprofile");
+                redirect(base_url() . "UserProfile");
             }
         } else {
             // IF PICTURE IS EMPTY
@@ -90,10 +90,10 @@ class UserProfile extends CI_Controller {
             $this->session->set_flashdata("uploading_success", "Picture Successfully Changed");
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit($this->session->userdata("userid"), "Changed Picture of " . $currentUser->firstname . " " . $currentUser->lastname);
-            redirect(base_url() . "userprofile");
+            redirect(base_url() . "UserProfile");
         } else {
             $this->session->set_flashdata("uploading_error", "Something went wrong. Reupload your picture");
-            redirect(base_url() . "userprofile");
+            redirect(base_url() . "UserProfile");
         }
     }
 
@@ -105,21 +105,21 @@ class UserProfile extends CI_Controller {
             $this->session->set_flashdata("err_profile", "Password must be atleast 8 characters");
             echo form_error();
             die;
-            //redirect(base_url() . "userprofile");
+            //redirect(base_url() . "UserProfile");
         } else {
             $password = $this->input->post("password");
             $confpassword = $this->input->post("confpassword");
 
             if ($password != $confpassword) {
                 $this->session->set_flashdata("err_profile", "password and Confirm Password does not match.");
-                redirect(base_url() . "userprofile");
+                redirect(base_url() . "UserProfile");
             } else {
                 $data = array(
                     "user_password" => sha1($password)
                 );
                 $this->UserProfile_model->update_user($data, $this->session->userdata("userid"));
                 $this->session->set_flashdata("success_profile", "Password changed.");
-                redirect(base_url() . "userprofile");
+                redirect(base_url() . "UserProfile");
             }
         }
     }

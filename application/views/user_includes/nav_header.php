@@ -118,7 +118,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span></button>
-                    <a class="navbar-brand" href="<?= base_url() ?>userdashboard"><img src = "<?= base_url() ?>images/logo.png"></a>
+                    <a class="navbar-brand" href="<?= base_url() ?>UserDashboard"><img src = "<?= base_url() ?>images/logo.png"></a>
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
@@ -135,18 +135,18 @@
             </div>
             <div class="divider"></div>
             <ul class="nav menu">
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userdashboard") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userdashboard"><em class="fa fa-home">&nbsp;</em> Home</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userprofile") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userprofile"><em class="fa fa-user">&nbsp;</em> <?= ucfirst($currentuser->user_access) ?> Profile</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userviolation") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userviolation"><em class="fa fa-exclamation-triangle">&nbsp;</em> <?= ucfirst($currentuser->user_access) ?> Violation</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userincidentreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Report</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "UserDashboard") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>UserDashboard"><em class="fa fa-home">&nbsp;</em> Home</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "UserProfile") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>UserProfile"><em class="fa fa-user">&nbsp;</em> <?= ucfirst($currentuser->user_access) ?> Profile</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "UserViolation") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>UserViolation"><em class="fa fa-exclamation-triangle">&nbsp;</em> <?= ucfirst($currentuser->user_access) ?> Violation</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "UserIncidentReport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>UserIncidentReport"><em class="fa fa-newspaper">&nbsp;</em> Incident Report</a></li>
                 <?php if ($currentuser->user_access == "student"): ?>
-                    <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "userdusap") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>userdusap"><em class="fa fa-clock">&nbsp;</em> DUSAP</a></li>
+                    <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "UserDusap") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>UserDusap"><em class="fa fa-clock">&nbsp;</em> DUSAP</a></li>
                 <?php endif; ?>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "useroffensereport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>useroffensereport"><em class="fa fa-exclamation-circle">&nbsp;</em> Offense Report</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "studenthandbook") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>studenthandbook"><em class="fa fa-book-open">&nbsp;</em> Student Handbook</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "UserOffenseReport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>UserOffenseReport"><em class="fa fa-exclamation-circle">&nbsp;</em> Offense Report</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "StudentHandbook") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>StudentHandbook"><em class="fa fa-book-open">&nbsp;</em> Student Handbook</a></li>
                 <!--<li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "usernotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>usernotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li>-->
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "faq") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>faq"><em class="fa fa-lightbulb">&nbsp;</em> FAQ</a></li>
-                <li><a href="<?= base_url() ?>logout"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "Faq") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>Faq"><em class="fa fa-lightbulb">&nbsp;</em> FAQ</a></li>
+                <li><a href="<?= base_url() ?>Logout"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
 

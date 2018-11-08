@@ -101,7 +101,7 @@
                     <div class = "row" id = "login">
                         <div class ="col-xs-8 col-xs-offset-2">
                             <center>
-                                <form action = "<?= base_url() ?>login/login_exec" method ="POST">
+                                <form action = "<?= base_url() ?>Login/login_exec" method ="POST">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class = "fa fa-user" id="basic-addon1"></i></span>
                                         <input type="text" class="form-control" id="usernumber" name = "usernumber" placeholder="User Number" aria-describedby="basic-addon1" autocomplete="off" autofocus="true">
