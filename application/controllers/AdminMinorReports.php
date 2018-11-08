@@ -26,8 +26,13 @@ class AdminMinorReports extends CI_Controller {
     $data = array(
         'title'         => "Minor Reports",
         'currentadmin'  => $this->AdminDashboard_model->getAdmin($where)[0],
-        'cms'           => $this->AdminCMS_model->getCMS()[0]
+        'cms'           => $this->AdminCMS_model->getCMS()[0],
+        'minor_reports' => $this->AdminMinorReports_model->getMinorReports()
     );
+
+    /* prettyPrint($data);
+    exit; */
+    
     $this->load->view("admin_includes/nav_header", $data);
     $this->load->view("admin_minor_reports/main");
     $this->load->view("admin_includes/footer");

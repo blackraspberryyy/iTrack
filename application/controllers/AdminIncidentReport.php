@@ -111,7 +111,8 @@ class AdminIncidentReport extends CI_Controller {
                 "incident_report_place" => $this->input->post("place"),
                 "incident_report_age" => $this->input->post("user_age"),
                 "incident_report_section_year" => $this->input->post("user_section_year"),
-                "incident_report_message" => $this->input->post("message"),
+                "incident_report_message" => $this->input->post ("message"),
+                "incident_report_isAccepted" => 1,
                 "incident_report_added_at" => time()
             );
             $this->AdminIncidentReport_model->insert_incident_report($incident_report);

@@ -154,4 +154,5 @@ $autoload['model'] = array(
     "AdminDusap_model",
     "Api_model",
     "UserDusap_model",
+    "AdminMinorReports_model"
 );
