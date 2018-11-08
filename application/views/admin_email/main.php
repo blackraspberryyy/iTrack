@@ -1,6 +1,6 @@
 <div class="row">
   <ol class="breadcrumb">
-    <li><a href="<?= base_url() ?>admindashboard"><em class="fa fa-home"></em></a></li>
+    <li><a href="<?= base_url() ?>AdminDashboard"><em class="fa fa-home"></em></a></li>
     <li class="active">Email</li>
   </ol>
 </div><!--/.row breadcrumb-->
@@ -13,7 +13,7 @@
 </div>
 <div class="row margin-top-lg">
   <div class = "col-xs-12 col-sm-8 col-sm-offset-2">
-    <form action ="<?= base_url() ?>adminemail/send_email_exec" method="POST">
+    <form action ="<?= base_url() ?>AdminEmail/send_email_exec" method="POST">
       <small style = "text-align: left;">Email Address</small>
       <div class="input-group margin-bottom-sm">
         <span class="input-group-addon"><i class = "fa fa-envelope" id="basic-addon1"></i></span>

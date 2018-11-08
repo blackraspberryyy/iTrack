@@ -60,7 +60,7 @@ function determineStatus($status) {
 
 <div class="row">
     <ol class="breadcrumb">
-        <li><a href="<?= base_url() ?>admindashboard">
+        <li><a href="<?= base_url() ?>AdminDashboard">
                 <em class="fa fa-home"></em>
             </a></li>
         <li class="active">Incident Report</li>
@@ -116,7 +116,7 @@ function determineStatus($status) {
                                     <div class="btn-group-vertical" role="group">
                                         <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id) ?>">Details</button>
                                         <?php if ($report->incident_report_status != 0): ?>
-                                            <a href="<?= base_url() ?>adminincidentreport/edit_exec/<?= $report->incident_report_id ?>" class="btn btn-warning">Edit</a>
+                                            <a href="<?= base_url() ?>AdminIncidentReport/edit_exec/<?= $report->incident_report_id ?>" class="btn btn-warning">Edit</a>
                                         <?php endif; ?>
                                     </div>
                                 </td>
@@ -141,9 +141,9 @@ function determineStatus($status) {
                                                             <h6><?= determineStatus($report->incident_report_status) ?></h6>
 
                                                             <?php if ($report->incident_report_status == 1): ?>
-                                                                <a href="<?= base_url() . 'admindusap/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
+                                                                <a href="<?= base_url() . 'AdminDusap/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
                                                             <?php else: ?>
-                                                                <a href="<?= base_url() . 'adminoffensereport/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
+                                                                <a href="<?= base_url() . 'AdminOffenseReport/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
                                                             <?php endif; ?>
                                                         </center>
                                                     </div>
@@ -198,7 +198,7 @@ function determineStatus($status) {
 <!-- ADD INCIDENT REPORT MODAL -->
 <div class="modal fade" id="add_incident_report" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <form action = "<?= base_url() ?>adminincidentreport/incident_report_exec" method="POST" autocomplete="off">
+        <form action = "<?= base_url() ?>AdminIncidentReport/incident_report_exec" method="POST" autocomplete="off">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -371,7 +371,7 @@ function determineStatus($status) {
                                         <td>
                                             <div class="btn-group-vertical" role="group">
                                                 <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id) ?>">Details</button>
-                                                <a type = "button" class="btn btn-warning" href="<?= base_url() ?>adminincidentreport/sendCallSlip_exec/<?= $report->user_number ?>/<?= $report->incident_report_id ?>"><i class="fa fa-paper-plane"></i> Send Call Slip</a>
+                                                <a type = "button" class="btn btn-warning" href="<?= base_url() ?>AdminIncidentReport/sendCallSlip_exec/<?= $report->user_number ?>/<?= $report->incident_report_id ?>"><i class="fa fa-paper-plane"></i> Send Call Slip</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -395,9 +395,9 @@ function determineStatus($status) {
                                                                     <h6><?= determineStatus($report->incident_report_status) ?></h6>
 
                                                                     <?php if ($report->incident_report_status == 1): ?>
-                                                                        <a href="<?= base_url() . 'admindusap/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
+                                                                        <a href="<?= base_url() . 'AdminDusap/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
                                                                     <?php else: ?>
-                                                                        <a href="<?= base_url() . 'adminoffensereport/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
+                                                                        <a href="<?= base_url() . 'AdminOffenseReport/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
                                                                     <?php endif; ?>
                                                                 </center>
                                                             </div>
@@ -471,7 +471,7 @@ function determineStatus($status) {
         $(document).on("focusin keyup", "#user_number.autocomplete", function () {
             $.ajax({
                 "method": "POST",
-                "url": '<?= base_url() ?>' + "adminincidentreport/search_user_number",
+                "url": '<?= base_url() ?>' + "AdminIncidentReport/search_user_number",
                 "dataType": "JSON",
                 "data": {
                     'id': $(".autocomplete").val()

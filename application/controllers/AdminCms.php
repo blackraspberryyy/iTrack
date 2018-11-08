@@ -7,11 +7,11 @@ class AdminCms extends CI_Controller {
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
             $this->session->set_flashdata("err_login", "Login First!");
-            redirect(base_url() . 'adminlogin/');
+            redirect(base_url() . 'AdminLogin/');
         } else {
             if($this->session->userdata("useraccess") == "student" || $this->session->userdata("useraccess") == "teacher"){
                 $this->session->set_flashdata("err_login", "Restricted Subpage");
-                redirect(base_url() . 'userdashboard/');
+                redirect(base_url() . 'UserDashboard/');
             }else if($this->session->userdata("useraccess") == "admin"){
                 //Do nothing
             }
@@ -46,13 +46,13 @@ class AdminCms extends CI_Controller {
         if($this->form_validation->run() == FALSE){
             //FORM ERROR
             $this->session->set_flashdata("form_errors", validation_errors('<li>','</li>'));
-            redirect(base_url().'admincms/repeat_form');
+            redirect(base_url().'AdminCms/repeat_form');
 
         }else{
             //FORM SUCCESS
             $this->session->set_userdata("cms_id", $this->uri->segment(3));
             $this->session->set_flashdata("cms_post_data", $this->input->post());
-            redirect(base_url().'admincms/edit_cms');
+            redirect(base_url().'AdminCms/edit_cms');
         }
     }
 
@@ -81,6 +81,6 @@ class AdminCms extends CI_Controller {
         //--AUDTI TRAIL
         $this->Logger->saveToAudit("admin", "Admin made changes to the CMS");
 
-        redirect(base_url()."admincms/");
+        redirect(base_url()."AdminCms/");
     }
 }

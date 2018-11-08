@@ -11,7 +11,7 @@
 </style>
 <div class="row">
     <ol class="breadcrumb">
-        <li><a href="<?= base_url() ?>admindashboard">
+        <li><a href="<?= base_url() ?>AdminDashboard">
                 <em class="fa fa-home"></em>
             </a></li>
         <li class="active">Home</li>
@@ -20,7 +20,7 @@
 
 <div class = "row margin-top-lg">
     <div class = "col-sm-3 dashboard item ">
-        <a href="<?= base_url().'adminviolations/student_profile'?>">
+        <a href="<?= base_url().'AdminViolations/student_profile'?>">
             <div class="panel panel-primary box-shadow">
                 <div class="panel panel-body text-center">
                     <h1><?= $students_count?></h1>
@@ -30,7 +30,7 @@
         </a>
     </div>
     <div class = "col-sm-3  dashboard item">
-        <a href="<?= base_url().'adminviolations/student_profile'?>">
+        <a href="<?= base_url().'AdminViolations/student_profile'?>">
             <div class="panel panel-primary box-shadow">
                 <div class="panel panel-body text-center">
                     <h1><?= $teacher_count?></h1>
@@ -40,7 +40,7 @@
         </a>
     </div>
     <div class = "col-sm-3  dashboard item">
-        <a href="<?= base_url().'adminincidentreport'?>">
+        <a href="<?= base_url().'AdminIncidentReport'?>">
             <div class="panel panel-primary box-shadow">
                 <div class="panel panel-body text-center">
                     <h1><?= $ongoing_incident_reports_count?></h1>
@@ -50,7 +50,7 @@
         </a>
     </div>
     <div class = "col-sm-3 dashboard item">
-        <a href="<?= base_url().'adminincidentreport'?>">
+        <a href="<?= base_url().'AdminIncidentReport'?>">
             <div class="panel panel-primary box-shadow">
                 <div class="panel panel-body text-center">
                     <h1><?= $finished_incident_reports_count?></h1>

@@ -43,7 +43,7 @@
 </style>
 <div class="row">
     <ol class="breadcrumb">
-        <li><a href="<?= base_url() ?>userdashboard">
+        <li><a href="<?= base_url() ?>UserDashboard">
                 <em class="fa fa-home"></em>
             </a></li>
         <li class="active">Incident Report</li>

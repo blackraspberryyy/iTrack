@@ -44,7 +44,7 @@
 <div class="row">
     <ol class="breadcrumb">
         <li>
-            <a href="<?= base_url() ?>userdashboard">
+            <a href="<?= base_url() ?>UserDashboard">
                 <em class="fa fa-home"></em>
             </a>
         </li>
@@ -137,7 +137,7 @@
 <!-- CHANGE PICTURE MODAL -->
 <div class="modal fade" id="change_picture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <form action = "<?= base_url() ?>userprofile/change_picture_exec" method="POST" enctype="multipart/form-data">
+        <form action = "<?= base_url() ?>UserProfile/change_picture_exec" method="POST" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -166,7 +166,7 @@
 <!-- CHANGE PASSWORD MODAL -->
 <div class="modal fade" id="change_password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <form action = "<?= base_url() ?>userprofile/change_password_exec" method="POST">
+        <form action = "<?= base_url() ?>UserProfile/change_password_exec" method="POST">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

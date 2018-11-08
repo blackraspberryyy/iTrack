@@ -7,7 +7,7 @@ class StudentHandbook extends CI_Controller {
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
             $this->session->set_flashdata("err_login", "Login First!");
-            redirect(base_url() . 'login/');
+            redirect(base_url() . 'Login/');
         }
     }
 

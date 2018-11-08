@@ -5,11 +5,11 @@
             if ($this->session->has_userdata('isloggedin') == FALSE) {
                 //user is not yet logged in
                 $this->session->set_flashdata("err_login", "Login First!");
-                redirect(base_url() . 'adminlogin/');
+                redirect(base_url() . 'AdminLogin/');
             } else {
                 if($this->session->userdata("useraccess") == "student" || $this->session->userdata("useraccess") == "teacher"){
                     $this->session->set_flashdata("err_login", "Restricted Subpage");
-                    redirect(base_url() . 'userdashboard/');
+                    redirect(base_url() . 'UserDashboard/');
                 }else if($this->session->userdata("useraccess") == "admin"){
                     //Do nothing
                 }
@@ -21,11 +21,11 @@
                 'currentadmin'  => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                 'cms'           => $this->AdminCMS_model->getCMS()[0]
             );
-            redirect(base_url().'adminincidentreport');
+            redirect(base_url().'AdminIncidentReport');
         }
         function view_exec(){
             $this->session->set_userdata('incident_report_id', $this->uri->segment(3));
-            redirect(base_url().'admindusap/view');
+            redirect(base_url().'AdminDusap/view');
         }
         function view(){
             $data = array(
@@ -106,7 +106,7 @@
 
                 //-- AUDIT TRAIL
                 $this->Logger->saveToAudit("admin", "Edited attendance in DUSAP");
-                redirect(base_url().'admindusap/view');
+                redirect(base_url().'AdminDusap/view');
             }
         }
 
@@ -158,7 +158,7 @@
 
                 //-- AUDIT TRAIL
                 $this->Logger->saveToAudit("admin", "Add attendance in DUSAP");
-                redirect(base_url().'admindusap/view');
+                redirect(base_url().'AdminDusap/view');
             }
         }
         
@@ -190,7 +190,7 @@
 
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit("admin", "Finish attendance in DUSAP");
-            redirect(base_url().'admindusap/view');
+            redirect(base_url().'AdminDusap/view');
         }
         
     }

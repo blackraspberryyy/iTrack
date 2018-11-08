@@ -10,9 +10,9 @@
 <div class="row">
     <ol class="breadcrumb">
         <?php if ($this->session->userdata("useraccess") == "admin"): ?>
-            <li><a href="<?= base_url() ?>admindashboard">
+            <li><a href="<?= base_url() ?>AdminDashboard">
                 <?php else: ?>
-                    <li><a href="<?= base_url() ?>userdashboard">
+                    <li><a href="<?= base_url() ?>UserDashboard">
                         <?php endif; ?>
                         <em class="fa fa-home"></em>
                     </a></li>

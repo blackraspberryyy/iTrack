@@ -10,11 +10,11 @@ class Logout extends CI_Controller {
         $currentUser = $this->session->userdata("useraccess");
         if($currentUser == "admin"){
             $this->session->sess_destroy();
-            redirect(base_url() . 'adminlogin/');
+            redirect(base_url() . 'AdminLogin/');
         }else{
             $this->Logger->saveToLogs($this->session->userdata("userid"), 'out');
             $this->session->sess_destroy();
-            redirect(base_url() . 'login/');
+            redirect(base_url() . 'Login/');
         }
     }
 }

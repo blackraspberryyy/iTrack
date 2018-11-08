@@ -7,7 +7,7 @@ class Faq extends CI_Controller {
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
             $this->session->set_flashdata("err_login", "Login First!");
-            redirect(base_url() . 'login/');
+            redirect(base_url() . 'Login/');
         } else {
             if ($this->session->userdata("useraccess") == "student" || $this->session->userdata("useraccess") == "teacher") {
                 //Do Nothing
@@ -27,7 +27,7 @@ class Faq extends CI_Controller {
             'cms'        => $this->AdminCMS_model->getCMS()[0]
         );
         $this->load->view("user_includes/nav_header", $data);
-        $this->load->view("faq/main");
+        $this->load->view("Faq/main");
         $this->load->view("user_includes/footer");
     }
 }

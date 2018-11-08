@@ -7,13 +7,13 @@ class UserIncidentReport extends CI_Controller {
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
             $this->session->set_flashdata("err_login", "Login First!");
-            redirect(base_url() . 'login/');
+            redirect(base_url() . 'Login/');
         } else {
             if ($this->session->userdata("useraccess") == "student" || $this->session->userdata("useraccess") == "teacher") {
                 //Do Nothing
             } else if ($this->session->userdata("useraccess") == "admin") {
                 $this->session->set_flashdata("err_login", "Restricted Subpage");
-                redirect(base_url() . 'userdashboard/');
+                redirect(base_url() . 'UserDashboard/');
             }
         }
     }
@@ -119,7 +119,7 @@ class UserIncidentReport extends CI_Controller {
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit($this->session->userdata("userid"), "Filed an incident report");
 
-            redirect(base_url() . "userincidentreport");
+            redirect(base_url() . "UserIncidentReport");
         }
     }
 

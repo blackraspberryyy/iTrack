@@ -7,11 +7,11 @@ class Sms extends CI_Controller {
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
             $this->session->set_flashdata("err_login", "Login First!");
-            redirect(base_url() . 'adminlogin/');
+            redirect(base_url() . 'AdminLogin/');
         } else {
             if($this->session->userdata("useraccess") == "student" || $this->session->userdata("useraccess") == "teacher"){
                 $this->session->set_flashdata("err_login", "Restricted Subpage");
-                redirect(base_url() . 'userdashboard/');
+                redirect(base_url() . 'UserDashboard/');
             }else if($this->session->userdata("useraccess") == "admin"){
                 //Do nothing
             }
@@ -44,7 +44,7 @@ class Sms extends CI_Controller {
                 $string = $string . " " . strip_tags(form_error("message"));
             }
             $this->session->set_flashdata("err_sms", $string);
-            redirect(base_url() . "sms");
+            redirect(base_url() . "Sms");
         } else {
             $mobile_str = "0" . $this->input->post("mobile");
             $message_str = $this->input->post("message");
@@ -78,7 +78,7 @@ class Sms extends CI_Controller {
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit("admin", "Send an SMS to ".$mobile_str);
             
-            redirect(base_url() . "sms");
+            redirect(base_url() . "Sms");
         }
     }
 

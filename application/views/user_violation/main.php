@@ -54,7 +54,7 @@ function determineStatus($status) {
 <div class="row">
     <ol class="breadcrumb">
         <li>
-            <a href="<?= base_url() ?>userdashboard">
+            <a href="<?= base_url() ?>UserDashboard">
                 <em class="fa fa-home"></em>
             </a>
         </li>

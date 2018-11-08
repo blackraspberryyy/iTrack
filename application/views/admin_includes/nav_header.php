@@ -118,7 +118,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span></button>
-                    <a class="navbar-brand" href="<?= base_url() ?>admindashboard"><img src = "<?= base_url() ?>images/admin_logo.png"></a>
+                    <a class="navbar-brand" href="<?= base_url() ?>AdminDashboard"><img src = "<?= base_url() ?>images/admin_logo.png"></a>
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
@@ -135,37 +135,37 @@
             </div>
             <div class="divider"></div>
             <ul class="nav menu">
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admindashboard") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admindashboard"><em class="fa fa-home">&nbsp;</em> Home</a></li>
-                <li class="parent <?= strpos(base_url(uri_string()), $this->config->base_url() . "adminviolations/") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>adminviolations">
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminDashboard") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>AdminDashboard"><em class="fa fa-home">&nbsp;</em> Home</a></li>
+                <li class="parent <?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminViolations/") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>AdminViolations">
                     <a data-toggle="collapse" href="#violations">
                         <em class="fa fa-users">&nbsp;</em> Users <span data-toggle="collapse" href="#violations" class="icon pull-right"><em class="fa fa-plus"></em></span>
                     </a>
                     <ul class="children collapse" id="violations" >
                         <li>
-                            <a class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminviolations/teacher_profile") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>adminviolations/teacher_profile">
+                            <a class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminViolations/teacher_profile") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>AdminViolations/teacher_profile">
                                 <span class="fa fa-arrow-right">&nbsp;</span> Teacher Profile
                             </a>
                         </li>
                         <li>
-                        <a class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminviolations/student_profile") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>adminviolations/student_profile">
+                        <a class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminViolations/student_profile") !== FALSE ? "active" : ""; ?>" href="<?= base_url() ?>AdminViolations/student_profile">
                                 <span class="fa fa-arrow-right">&nbsp;</span> Student Profile
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="<?= (strpos(base_url(uri_string()), $this->config->base_url() . "adminincidentreport") !== FALSE) || (strpos(base_url(uri_string()), $this->config->base_url() . "admindusap") !== FALSE) || (strpos(base_url(uri_string()), $this->config->base_url() . "adminoffensereport") !== FALSE)? "active" : ""; ?>"><a href="<?= base_url() ?>adminincidentreport"><em class="fa fa-newspaper">&nbsp;</em> Incident Reports</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminminorreports") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminminorreports"><em class="fas fa-flag">&nbsp;</em> Minor Reports</a></li>
-                <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admingoogledrive") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admingoogledrive"><em class="fab fa-google-drive">&nbsp;</em> Google Drive</a></li> -->
-                <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminnotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminnotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li> -->
-                <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "sms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>sms"><em class="fa fa-paper-plane">&nbsp;</em> SMS</a></li> -->
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminemail") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminemail"><em class="fa fa-paper-plane">&nbsp;</em> Email</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admincms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admincms"><em class="fa fa-cog">&nbsp;</em> CMS</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminaudittrail") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminaudittrail"><em class="fa fa-search">&nbsp;</em> Audit Trail</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminuserlogs") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminuserlogs"><em class="fa fa-key">&nbsp;</em> User Logs</a></li>
-                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "studenthandbook") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>studenthandbook"><em class="fa fa-book-open">&nbsp;</em> Student Handbook</a></li>
+                <li class="<?= (strpos(base_url(uri_string()), $this->config->base_url() . "AdminIncidentReport") !== FALSE) || (strpos(base_url(uri_string()), $this->config->base_url() . "AdminDusap") !== FALSE) || (strpos(base_url(uri_string()), $this->config->base_url() . "AdminOffenseReport") !== FALSE)? "active" : ""; ?>"><a href="<?= base_url() ?>AdminIncidentReport"><em class="fa fa-newspaper">&nbsp;</em> Incident Reports</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminMinorReports") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>AdminMinorReports"><em class="fas fa-flag">&nbsp;</em> Minor Reports</a></li>
+                <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminGoogleDrive") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>AdminGoogleDrive"><em class="fab fa-google-drive">&nbsp;</em> Google Drive</a></li> -->
+                <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminNotification") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>AdminNotification"><em class="fa fa-bell">&nbsp;</em> Notifications</a></li> -->
+                <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "Sms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>Sms"><em class="fa fa-paper-plane">&nbsp;</em> SMS</a></li> -->
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminEmail") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>AdminEmail"><em class="fa fa-paper-plane">&nbsp;</em> Email</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminCms") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>AdminCms"><em class="fa fa-cog">&nbsp;</em> CMS</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminAuditTrail") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>AdminAuditTrail"><em class="fa fa-search">&nbsp;</em> Audit Trail</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminUserLogs") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>AdminUserLogs"><em class="fa fa-key">&nbsp;</em> User Logs</a></li>
+                <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "StudentHandbook") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>StudentHandbook"><em class="fa fa-book-open">&nbsp;</em> Student Handbook</a></li>
                 <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "admincallslip") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>admincallslip"><em class="fa fa-copy">&nbsp;</em> Call Slip</a></li> -->
-                <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "adminmonthlyreport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>adminmonthlyreport"><em class="fa fa-chart-bar">&nbsp;</em> Monthly Report</a></li> -->
-                <li><a href="<?= base_url() ?>logout"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+                <!-- <li class="<?= strpos(base_url(uri_string()), $this->config->base_url() . "AdminMonthlyReport") !== FALSE ? "active" : ""; ?>"><a href="<?= base_url() ?>AdminMonthlyReport"><em class="fa fa-chart-bar">&nbsp;</em> Monthly Report</a></li> -->
+                <li><a href="<?= base_url() ?>Logout"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
 
