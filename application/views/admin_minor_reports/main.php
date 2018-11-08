@@ -13,3 +13,24 @@
     <h5><?= $cms->minor_reports_text?></h5>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="table-responsive">
+      <table class="table table-hover datatable">
+        <thead>
+          <tr>
+            <th>asd</th>
+            <th>asd</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>asd</td>
+            <td>as</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
