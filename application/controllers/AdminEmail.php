@@ -46,7 +46,7 @@ class AdminEmail extends CI_Controller{
     if (!$this->email->send()) {
       echo $this->email->print_debugger();
     } else {
-      $this->session->set_flashdata('success_email', "Email has been sent to ".$this->input->post($email) );
+      $this->session->set_flashdata('success_email', "Email has been sent to ".$email );
       redirect(base_url().'AdminEmail');
     }
   }

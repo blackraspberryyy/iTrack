@@ -22,7 +22,7 @@ class AdminMinorReports_model extends CI_Model {
     $this->db->from('minor_reports_quota AS mrq');
     $this->db->join('minor_reports AS mr', 'mr.group_id = mrq.id', 'INNER JOIN');
     $this->db->join('user AS u', 'u.user_id = mr.user_id', 'INNER JOIN');
-    $this->db->join('violation AS V', 'v.violation_id = mr.violation_id', 'INNER JOIN');
+    $this->db->join('violation AS v', 'v.violation_id = mr.violation_id', 'INNER JOIN');
     $query = $this->db->get($table);
     return ($query->num_rows() > 0) ? $query->result() : false;
   }

@@ -1,8 +1,10 @@
 <?php
 
-/* $config['protocol'] = 'mail'; */
 $config['protocol'] = "smtp";
-$config['smtp_host'] = "ssl://smtp.gmail.com";
+$config['smtp_host'] = "ssl://mail.gmail.com";
+
+/* $config['protocol'] = 'mail';
+$config['smtp_host'] = "ssl://mail.gmail.com"; */
 $config['smtp_port'] = 465;
 $config['charset'] = "utf-8";
 $config['newline'] = "\r\n";
