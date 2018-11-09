@@ -2,27 +2,38 @@
 
 class AdminMinorReports_model extends CI_Model {
   function getMinorReports() {
-    $table = "minor_reports_quota";
+    $table = "minor_reports";
 
     $this->db->select(
       '
-      mrq.id AS group_id,
-      mr.id AS mr_id,
-      u.user_firstname AS fname,
-      u.user_middlename AS mname,
-      u.user_lastname AS lname,
-      mr.location AS location,
-      mr.message AS message,
+      u.user_id AS user_id,
+      u.user_firstname AS user_fname,
+      u.user_middlename AS user_mname,
+      u.user_lastname AS user_lname,
+
+      r.user_id AS reporter_id,
+      r.user_firstname AS reporter_fname,
+      r.user_middlename AS reporter_mname,
+      r.user_lastname AS reporter_lname,
+
+      v.violation_id AS violation_id,
       v.violation_name AS violation_name,
-      FROM_UNIXTIME(mr.tapped_at) AS tapped_at,
-      DAY(FROM_UNIXTIME(tapped_at)) AS daily
+
+      mr.location AS location,
+      mr.message AS message, 
+      mr.tapped_at AS tapped_at,
+      mr.created_at AS created_at
       '
     );
 
-    $this->db->from('minor_reports_quota AS mrq');
-    $this->db->join('minor_reports AS mr', 'mr.group_id = mrq.id', 'INNER JOIN');
+    $this->db->from('minor_reports AS mr');
     $this->db->join('user AS u', 'u.user_id = mr.user_id', 'INNER JOIN');
+    $this->db->join('user AS r', 'r.user_id = mr.reporter_id', 'INNER JOIN');
     $this->db->join('violation AS v', 'v.violation_id = mr.violation_id', 'INNER JOIN');
+
+    $this->db->order_by("mr.tapped_at", "DESC");
+    $this->db->order_by("mr.created_at", "DESC");
+
     $query = $this->db->get($table);
     return ($query->num_rows() > 0) ? $query->result() : false;
   }

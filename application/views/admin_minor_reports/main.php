@@ -31,9 +31,9 @@
         <tbody>
           <?php foreach($minor_reports as $mr):?>
           <tr>
-            <td><?= $mr->fname?></td>
-            <td><?= $mr->mname?></td>
-            <td><?= $mr->lname?></td>
+            <td><?= $mr->user_fname?></td>
+            <td><?= $mr->user_mname?></td>
+            <td><?= $mr->user_lname?></td>
             <td><?= $mr->violation_name?></td>
             <td><?= $mr->tapped_at?></td>
             <td>
@@ -50,7 +50,9 @@
                   <div class="row">
                     <div class="col-xs-6">
                       <h3>User</h3>
-                      <p><?= $mr->fname." ".$mr->mname." ".$mr->lname;?></p>
+                      <p><?= $mr->user_fname." ".$mr->user_mname." ".$mr->user_lname;?></p>
+                      <h3>Reporter</h3>
+                      <p><?= $mr->reporter_fname." ".$mr->reporter_mname." ".$mr->reporter_lname;?></p>
                       <h3>Violation</h3>
                       <p><?= $mr->violation_name;?></p>
                     </div>
