@@ -27,6 +27,7 @@ class UserViolation extends CI_Controller {
             "title" => ucfirst($this->session->userdata("useraccess")) . "'s Violation",
             'currentuser' => $this->UserDashboard_model->getUser($where)[0],
             'violations' => $violations,
+            'minor_reports' => $this->AdminMinorReports_model->getMinorReports(array('mr.user_id' => $this->session->userdata("userid")))
         );
         $this->load->view("user_includes/nav_header", $data);
         $this->load->view("user_violation/main");

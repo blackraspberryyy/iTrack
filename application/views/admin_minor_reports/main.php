@@ -16,6 +16,9 @@
 
 <div class="row">
   <div class="col-xs-12">
+    <?php if(!$minor_reports):?>
+    <center><h3>No minor reports so far...</h3></center>
+    <?php else:?>
     <div class="table-responsive">
       <table class="table table-hover datatable">
         <thead>
@@ -82,5 +85,6 @@
         </tbody>
       </table>
     </div>
+    <?php endif;?>
   </div>
 </div>

@@ -1,7 +1,7 @@
 <?php
 
 class AdminMinorReports_model extends CI_Model {
-  function getMinorReports() {
+  function getMinorReports($where = NULL) {
     $table = "minor_reports";
 
     $this->db->select(
@@ -35,6 +35,10 @@ class AdminMinorReports_model extends CI_Model {
     $this->db->join('user AS r', 'r.user_id = mr.reporter_id', 'INNER JOIN');
     $this->db->join('violation AS v', 'v.violation_id = mr.violation_id', 'INNER JOIN');
 
+    if ($where !== NULL) {
+      $this->db->where($where);
+    }
+    
     $this->db->order_by("mr.tapped_at", "DESC");
     $this->db->order_by("mr.created_at", "DESC");
     
