@@ -32,12 +32,12 @@
         <tbody>
           <?php foreach($minor_reports as $mr):?>
           <tr>
-            <td><?= $mr->group_id?></td>
+            <td><?= $mr->group_id ? $mr->group_id : 'NONE'?></td>
             <td><?= $mr->user_fname?></td>
             <td><?= $mr->user_mname?></td>
             <td><?= $mr->user_lname?></td>
             <td><?= $mr->violation_name?></td>
-            <td><?= $mr->tapped_at?></td>
+            <td><?= date("F d,Y - h:i A", $mr->tapped_at)?></td>
             <td>
               <button class ="btn btn-primary"type="button" data-toggle="modal" data-target="#mr_details_<?= $mr->mr_id?>">Details</button> 
             </td> 
@@ -68,7 +68,7 @@
                   <div class="row">
                     <div class="col-xs-12">
                       <h3>Tapped At</h3>
-                      <p><?= $mr->tapped_at?></p>
+                      <p><?= date("F d,Y - h:i A", $mr->tapped_at)?></p>
                     </div>
                   </div>
                 </div>

@@ -22,8 +22,8 @@ class AdminMinorReports_model extends CI_Model {
       mr.id AS mr_id,
       mr.location AS location,
       mr.message AS message, 
-      FROM_UNIXTIME(mr.tapped_at) AS tapped_at,
-      FROM_UNIXTIME(mr.created_at) AS created_at,
+      mr.tapped_at AS tapped_at,
+      mr.created_at AS created_at,
 
       mr.group_id AS group_id,
       mr.grouped_at AS grouped_at
