@@ -27,7 +27,7 @@ class Faq extends CI_Controller {
             'cms'        => $this->AdminCMS_model->getCMS()[0]
         );
         $this->load->view("user_includes/nav_header", $data);
-        $this->load->view("Faq/main");
+        $this->load->view("faq/main");
         $this->load->view("user_includes/footer");
     }
 }
