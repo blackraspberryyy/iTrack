@@ -18,11 +18,12 @@ class AdminMinorReports_model extends CI_Model {
 
       v.violation_id AS violation_id,
       v.violation_name AS violation_name,
-
+      
+      mr.id AS mr_id,
       mr.location AS location,
       mr.message AS message, 
-      mr.tapped_at AS tapped_at,
-      mr.created_at AS created_at
+      FROM_UNIXTIME(mr.tapped_at) AS tapped_at,
+      FROM_UNIXTIME(mr.created_at) AS created_at
       '
     );
 
@@ -33,8 +34,9 @@ class AdminMinorReports_model extends CI_Model {
 
     $this->db->order_by("mr.tapped_at", "DESC");
     $this->db->order_by("mr.created_at", "DESC");
-
-    $query = $this->db->get($table);
+    
+    $query = $this->db->get();
+    
     return ($query->num_rows() > 0) ? $query->result() : false;
   }
 }
