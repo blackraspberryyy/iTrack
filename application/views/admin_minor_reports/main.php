@@ -20,6 +20,7 @@
       <table class="table table-hover datatable">
         <thead>
           <tr>
+            <td>Group</td>
             <th>Firstname</th>
             <th>Middlename</th>
             <th>Lastname</th>
@@ -31,6 +32,7 @@
         <tbody>
           <?php foreach($minor_reports as $mr):?>
           <tr>
+            <td><?= $mr->group_id?></td>
             <td><?= $mr->user_fname?></td>
             <td><?= $mr->user_mname?></td>
             <td><?= $mr->user_lname?></td>
