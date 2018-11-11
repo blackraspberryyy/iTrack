@@ -205,6 +205,32 @@ class Api_model extends CI_Model {
 
     return $arr;
   }
+
+
+  // student
+  public function getTotalHours($uid = FALSE) {
+    $this->db
+    ->select('
+        u.user_id AS user_id,
+        SUM(a.attendance_hours_rendered) AS total_hours
+      ')
+      ->from('incident_report ir')
+      ->join('user u', 'u.user_id = ir.user_id')
+      ->join('attendance a', 'a.incident_report_id = ir.incident_report_id')
+      ->where(array(
+        'ir.incident_report_status' => 1,
+        'u.user_isactive' => 1,
+        'a.attendance_status' => 1,
+        'u.user_access' => 'student'
+      ));
+
+    if ($uid) {
+      $this->db->where('u.user_id', $uid);
+    }
+
+    $query = $this->db->get();
+    return query_result($query, 'array');
+  }
 }
 
 //! some queries to save lives
@@ -267,3 +293,18 @@ class Api_model extends CI_Model {
 
 // GROUP BY mr.user_id, mr.violation_id, daily
 // ORDER BY group_id
+
+
+
+// get total hours
+// SELECT
+// u.user_id AS user_id,
+// SUM(a.attendance_hours_rendered) AS total_hours
+// FROM incident_report ir
+// JOIN user u ON u.user_id = ir.user_id
+// JOIN attendance a ON a.incident_report_id = ir.incident_report_id
+// WHERE
+// 	ir.incident_report_status = 1 AND
+//   u.user_isactive = 1 AND
+//   a.attendance_status = 1 AND
+//   u.user_id = 5
