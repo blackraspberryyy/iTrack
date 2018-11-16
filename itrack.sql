@@ -384,7 +384,7 @@ INSERT INTO `user` (`user_id`, `user_number`, `user_serial_no`, `user_firstname`
 
 CREATE TABLE `violation` (
   `violation_id` int(11) NOT NULL,
-  `effects_id` int(11) NOT NULL,
+  `effect_id` int(11) NOT NULL,
   `violation_name` varchar(197) DEFAULT NULL,
   `violation_type` enum('minor','major') DEFAULT NULL,
   `violation_category` enum('default','other') NOT NULL,
@@ -395,7 +395,7 @@ CREATE TABLE `violation` (
 -- Dumping data for table `violation`
 --
 
-INSERT INTO `violation` (`violation_id`, `effects_id`, `violation_name`, `violation_type`, `violation_category`, `violation_added_at`) VALUES
+INSERT INTO `violation` (`violation_id`, `effect_id`, `violation_name`, `violation_type`, `violation_category`, `violation_added_at`) VALUES
 (1, 1, 'not wearing proper uniform', 'minor', 'default', 1531446357),
 (2, 1, 'multiple entry without ID', 'minor', 'default', 1531446357),
 (3, 1, 'possession of offensive/subversive materials', 'minor', 'default', 1531446357),
