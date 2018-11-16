@@ -21,4 +21,10 @@ class ApiAttendance extends CI_Controller {
       api_respond(TRUE, 'No attendance.');
     }
   }
+
+  // public function add() {
+  //   $v = $this->uri->segment(3);
+  //   $this->db->set('attendance_hours_rendered', "attendance_hours_rendered + $v", FALSE);
+  //   $this->db->update('attendance');
+  // }
 }
