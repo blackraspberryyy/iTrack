@@ -16,10 +16,14 @@
 
 <div class="row">
   <div class="col-xs-12">
+    <?php if(!$minor_reports):?>
+    <center><h3>No minor reports so far...</h3></center>
+    <?php else:?>
     <div class="table-responsive">
       <table class="table table-hover datatable">
         <thead>
           <tr>
+            <td>Group</td>
             <th>Firstname</th>
             <th>Middlename</th>
             <th>Lastname</th>
@@ -31,11 +35,12 @@
         <tbody>
           <?php foreach($minor_reports as $mr):?>
           <tr>
-            <td><?= $mr->fname?></td>
-            <td><?= $mr->mname?></td>
-            <td><?= $mr->lname?></td>
+            <td><?= $mr->group_id ? $mr->group_id : 'NONE'?></td>
+            <td><?= $mr->user_fname?></td>
+            <td><?= $mr->user_mname?></td>
+            <td><?= $mr->user_lname?></td>
             <td><?= $mr->violation_name?></td>
-            <td><?= $mr->tapped_at?></td>
+            <td><?= date("F d,Y - h:i A", $mr->tapped_at)?></td>
             <td>
               <button class ="btn btn-primary"type="button" data-toggle="modal" data-target="#mr_details_<?= $mr->mr_id?>">Details</button> 
             </td> 
@@ -50,7 +55,9 @@
                   <div class="row">
                     <div class="col-xs-6">
                       <h3>User</h3>
-                      <p><?= $mr->fname." ".$mr->mname." ".$mr->lname;?></p>
+                      <p><?= $mr->user_fname." ".$mr->user_mname." ".$mr->user_lname;?></p>
+                      <h3>Reporter</h3>
+                      <p><?= $mr->reporter_fname." ".$mr->reporter_mname." ".$mr->reporter_lname;?></p>
                       <h3>Violation</h3>
                       <p><?= $mr->violation_name;?></p>
                     </div>
@@ -64,7 +71,7 @@
                   <div class="row">
                     <div class="col-xs-12">
                       <h3>Tapped At</h3>
-                      <p><?= $mr->tapped_at?></p>
+                      <p><?= date("F d,Y - h:i A", $mr->tapped_at)?></p>
                     </div>
                   </div>
                 </div>
@@ -78,5 +85,6 @@
         </tbody>
       </table>
     </div>
+    <?php endif;?>
   </div>
 </div>

@@ -29,7 +29,7 @@ class AdminMinorReports extends CI_Controller {
         'cms'           => $this->AdminCMS_model->getCMS()[0],
         'minor_reports' => $this->AdminMinorReports_model->getMinorReports()
     );
-
+    
     /* prettyPrint($data);
     exit; */
     

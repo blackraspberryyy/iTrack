@@ -205,6 +205,35 @@ class Api_model extends CI_Model {
 
     return $arr;
   }
+
+
+  // student
+  public function getTotalHours($uid = FALSE) {
+    $this->db
+      ->select('
+        u.user_id AS user_id,
+        SUM(a.attendance_hours_rendered) AS hours_rendered,
+        v.violation_hours AS violation_hours
+      ')
+      ->from('attendance a')
+      ->join('incident_report ir', 'ir.incident_report_id = a.incident_report_id')
+      ->join('user u', 'u.user_id = ir.user_id')
+      ->join('violation v', 'v.violation_id = ir.violation_id')
+      ->where(array(
+        'a.attendance_status' => 1,
+        'ir.incident_report_status' => 1,
+        'u.user_isactive' => 1,
+        'u.user_access' => 'student'
+      ))
+      ->group_by(array('u.user_id', 'v.violation_id', 'ir.incident_report_id'));
+
+    if ($uid) {
+      $this->db->where('u.user_id', $uid);
+    }
+
+    $query = $this->db->get();
+    return query_result($query, 'array');
+  }
 }
 
 //! some queries to save lives
@@ -267,3 +296,37 @@ class Api_model extends CI_Model {
 
 // GROUP BY mr.user_id, mr.violation_id, daily
 // ORDER BY group_id
+
+
+
+// get total hours
+// SELECT
+// u.user_id AS user_id,
+// SUM(a.attendance_hours_rendered) AS total_hours
+// FROM incident_report ir
+// JOIN user u ON u.user_id = ir.user_id
+// JOIN attendance a ON a.incident_report_id = ir.incident_report_id
+// WHERE
+// 	ir.incident_report_status = 1 AND
+//   u.user_isactive = 1 AND
+//   a.attendance_status = 1 AND
+//   u.user_id = 5
+
+
+// SELECT
+// u.user_id AS user_id,
+// ir.incident_report_id AS incident_report_id,
+// v.violation_name AS violation_name,
+// SUM(a.attendance_hours_rendered) AS hours_rendered,
+// v.violation_hours AS violation_hours
+
+// FROM attendance a
+// JOIN incident_report ir ON ir.incident_report_id = a.incident_report_id
+// JOIN user u ON u.user_id = ir.user_id
+// JOIN violation v ON v.violation_id = ir.violation_id
+// WHERE
+// 	a.attendance_status = 1 AND
+// 	ir.incident_report_status = 1 AND
+// 	u.user_isactive = 1 AND
+// 	u.user_id = 2
+// GROUP BY u.user_id, v.violation_id, ir.incident_report_id
