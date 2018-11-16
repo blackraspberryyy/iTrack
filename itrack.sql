@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2018 at 07:53 AM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.2
+-- Generation Time: Nov 16, 2018 at 07:58 AM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -125,20 +125,20 @@ INSERT INTO `cms` (`cms_id`, `dusap_title`, `dusap_text`, `incident_report_title
 -- --------------------------------------------------------
 
 --
--- Table structure for table `effect`
+-- Table structure for table `effects`
 --
 
-CREATE TABLE `effect` (
+CREATE TABLE `effects` (
   `effect_id` int(11) NOT NULL,
   `effect_name` varchar(255) NOT NULL,
   `effect_hours` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `effect`
+-- Dumping data for table `effects`
 --
 
-INSERT INTO `effect` (`effect_id`, `effect_name`, `effect_hours`) VALUES
+INSERT INTO `effects` (`effect_id`, `effect_name`, `effect_hours`) VALUES
 (1, 'dusap', 100),
 (2, 'suspension', 0);
 
@@ -467,9 +467,9 @@ ALTER TABLE `cms`
   ADD PRIMARY KEY (`cms_id`);
 
 --
--- Indexes for table `effect`
+-- Indexes for table `effects`
 --
-ALTER TABLE `effect`
+ALTER TABLE `effects`
   ADD PRIMARY KEY (`effect_id`);
 
 --
@@ -536,9 +536,9 @@ ALTER TABLE `cms`
   MODIFY `cms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `effect`
+-- AUTO_INCREMENT for table `effects`
 --
-ALTER TABLE `effect`
+ALTER TABLE `effects`
   MODIFY `effect_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
