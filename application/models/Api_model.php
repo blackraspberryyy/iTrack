@@ -213,12 +213,13 @@ class Api_model extends CI_Model {
       ->select('
         u.user_id AS user_id,
         SUM(a.attendance_hours_rendered) AS hours_rendered,
-        v.violation_hours AS violation_hours
+        e.effect_hours AS violation_hours
       ')
       ->from('attendance a')
       ->join('incident_report ir', 'ir.incident_report_id = a.incident_report_id')
       ->join('user u', 'u.user_id = ir.user_id')
       ->join('violation v', 'v.violation_id = ir.violation_id')
+      ->join('effects e', 'e.effect_id = v.effect_id')
       ->where(array(
         'a.attendance_status' => 1,
         'ir.incident_report_status' => 1,
