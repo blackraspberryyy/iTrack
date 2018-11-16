@@ -248,21 +248,21 @@ function get_data($attendance){
     <div class="col-xs-12 col-sm-7 col-md-8 text-center">
         <div class="panel panel-primary">
             <div class="panel panel-heading">Attendance Progress</div>
-            <?php if($attendance):?>
             <div class="panel panel-body">
                 <div class="second circle">
                     <strong></strong>
                 </div>
                 <br/><br/>
+                <?php if($attendance):?>
                 <canvas id="attendanceChart"></canvas>
-            </div>
-            <?php else:?>
+                <?php else:?>
                 <div class="margin-bottom-lg">
                     <center>
                         <h3>No attendance record yet</h3>
                     </center>
                 </div>
-            <?php endif;?>
+                <?php endif;?>
+            </div>
         </div>
     </div>
 </div>
