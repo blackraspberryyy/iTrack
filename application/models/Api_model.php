@@ -13,10 +13,17 @@ class Api_model extends CI_Model {
   }
 
   public function getViolationsList($type = NULL) {
-    $this->db->from('violation');
+    $this->db
+      ->select('
+        v.*,
+        e.*,
+        e.effect_hours AS violation_hours
+      ')
+      ->from('violation v')
+      ->join('effects e', 'e.effect_id = v.effect_id');
 
     if ($type) {
-      $this->db->where('violation_type', $type);
+      $this->db->where('v.violation_type', $type);
     }
 
     $query = $this->db->get();
