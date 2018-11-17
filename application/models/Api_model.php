@@ -12,6 +12,16 @@ class Api_model extends CI_Model {
     return query_result($query, 'array');
   }
 
+  public function getTypeOfViolation($vid) {
+    $this->db
+      ->select('violation_type')
+      ->from('violation')
+      ->where('violation_id', $vid);
+
+    $query = $this->db->get();
+    return query_result($query, 'array');
+  }
+
   public function getViolationsList($type = NULL) {
     $this->db
       ->select('
@@ -30,6 +40,20 @@ class Api_model extends CI_Model {
     return query_result($query, 'array');
   }
 
+  public function addIncidentReport($serial, $report) {
+    // get uid via serial
+    if ($users = $this->getUserViaSerial($serial)) {
+      $user = $users[0];
+    } else {
+      return FALSE;
+    }
+
+    // attach uid to $report
+    $report['user_id'] = $user['user_id'];
+
+    return $this->db->insert('incident_report', $report);
+  }
+
   public function addMinorReport($serial, $report) {
     // get uid via serial
     if ($users = $this->getUserViaSerial($serial)) {
@@ -44,7 +68,10 @@ class Api_model extends CI_Model {
     return $this->db->insert('minor_reports', $report);
   }
 
-  public function addMinorReports($reports) {
+  public function addReports($reports) {
+    $allMinors = array();
+    $allMajors = array();
+
     foreach ($reports as $key => $report) {
       // get user via serial
       $serial = $report['serial'];
@@ -55,22 +82,50 @@ class Api_model extends CI_Model {
         return FALSE;
       }
 
-      // build report
-      $mReport = array(
-        'user_id' => $user['user_id'],
-        'reporter_id' => $report['reporter_id'],
-        'violation_id' => $report['violation_id'],
-        'location' => $report['location'],
-        'message' => $report['message'],
-        'tapped_at' => $report['timestamp'],
-        'created_at' => time()
-      );
+      // get type of violation
+      if ($types = $this->getTypeOfViolation($report['violation_id'])) {
+        $type = $types[0]['violation_type'];
+      } else {
+        return FALSE;
+      }
 
-      // set to $reports
-      $reports[$key] = $mReport;
+      // build report
+      if ($type == 'minor') {
+        array_push($allMinors, array(
+          'user_id' => $user['user_id'],
+          'reporter_id' => $report['reporter_id'],
+          'violation_id' => $report['violation_id'],
+          'location' => $report['location'],
+          'message' => $report['message'],
+          'tapped_at' => $report['timestamp'],
+          'created_at' => time()
+        ));
+      } else if ($type == 'major') {
+        array_push($allMajors, array(
+          'user_id' => $user['user_id'],
+          'user_reported_by' => $report['reporter_id'],
+          'violation_id' => $report['violation_id'],
+          'incident_report_datetime' => $report['timestamp'],
+          'incident_report_place' => $report['location'],
+          'incident_report_age' => $report['age'],
+          'incident_report_section_year' => $report['year_section'],
+          'incident_report_message' => $report['message'],
+          'incident_report_status' => 1,
+          'incident_report_isAccepted' => 0,
+          'incident_report_added_at' => time()
+        ));
+      }
     }
 
-    return $this->db->insert_batch('minor_reports', $reports);
+    $res = TRUE;
+    if (count($allMinors) > 0) {
+      $res = $res && $this->db->insert_batch('minor_reports', $allMinors);
+    }
+    if (count($allMajors) > 0) {
+      $res = $res && $this->db->insert_batch('incident_report', $allMajors);
+    }
+
+    return $res;
   }
 
   // group
