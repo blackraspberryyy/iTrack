@@ -143,7 +143,11 @@ function determineStatus($status) {
 															<h6><?= determineStatus($report->incident_report_status) ?></h6>
 
 															<?php if ($report->incident_report_status == 1): ?>
-																<a href="<?= base_url() . 'AdminDusap/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
+																<?php if($report->effect_id == 1):?>
+																	<a href="<?= base_url() . 'AdminDusap/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
+																<?php else:?>
+																	<a href="#" onClick="alert('Go to suspension details')" class="btn btn-primary">See Suspension Details</a>
+																<?php endif;?>
 															<?php else: ?>
 																<a href="<?= base_url() . 'AdminOffenseReport/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
 															<?php endif; ?>
@@ -154,30 +158,33 @@ function determineStatus($status) {
 														<span><?php
 															if ($report->reportedby_id != "") {
 																//if REPORTED_BY teacher, get user's name 
-																echo $report->reportedby_firstname . " " . ($report->reportedby_middlename == "" ? "" : substr($report->reportedby_middlename, 0, 1) . ". ") . $report->reportedby_lastname;
-																echo " <small class = 'text-muted'><b>(" . $report->reportedby_access . ")</b></small>";
+																echo $report->reportedby_firstname . " " . ($report->reportedby_middlename == "" ? "" : substr($report->reportedby_middlename, 0, 1).". "). $report->reportedby_lastname;
+																echo " <small class = 'text-muted'><b>(".$report->reportedby_access.")</b></small>";
 															} else {
 																//if REPORTED_BY admin, get admin's name
 																echo "Admin";
 															}
-															?></span>
+														?></span>
 														<br/>
 														<br/>
 														<h5><strong>Place</strong></h5>
-														<span><?= $report->incident_report_place ?></span>
+														<span><?= $report->incident_report_place?></span>
+														<br/>
+														<br/>
+														<h5><strong>Sanction</strong></h5>
+														<span><?= $report->effect_name?></span>
 													</div>
 													<div class="col-xs-6  margin-top-lg  text-center">
 														<h5><strong>Violation</strong></h5>
-														<span><?= ucfirst($report->violation_name) ?></span>
+														<span><?= ucfirst($report->violation_name)?></span>
 														<br/>
 														<br/>
 														<h5><strong>Time</strong></h5>
-														<span><?= date('F d, Y \a\t h:i A', $report->incident_report_datetime) ?></span>
-													</div>
-													<div class="col-xs-12 text-center">
+														<span><?= date('F d, Y \a\t h:i A', $report->incident_report_datetime)?></span>
+														<br/>
 														<br/>
 														<h5><strong>Message</strong></h5>
-														<p><?= $report->incident_report_message ?></p>
+														<p><?= $report->incident_report_message?></p>
 													</div>
 												</div>
 											</div>

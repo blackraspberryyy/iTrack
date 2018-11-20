@@ -1,7 +1,7 @@
 <?php
 
 $config['protocol'] = "smtp";
-$config['smtp_host'] = "ssl://mail.gmail.com";
+$config['smtp_host'] = "ssl://smtp.gmail.com";
 
 /* $config['protocol'] = 'mail';
 $config['smtp_host'] = "ssl://mail.gmail.com"; */
