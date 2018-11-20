@@ -39,4 +39,17 @@ class AdminDashboard extends CI_Controller {
         $this->load->view("admin_includes/footer");
     }
     
+    public function pdfsample(){
+        $legal_paper_size = array(215.9,355.6);
+        $samplePDF = new Pdf("P", "mm", $legal_paper_size, true, 'UTF-8', false);
+        $samplePDF->setTitle("Sample Title");
+        $samplePDF->SetMargins(PDF_MARGIN_LEFT, 12, PDF_MARGIN_RIGHT, true);
+        $samplePDF->SetAutoPageBreak(TRUE, 20);
+
+        $samplePDF->AddPage('P', $legal_paper_size);
+        
+        $samplePDF->writeHTML("<h1>HEHE</h1>");
+        $samplePDF->Output('Sample File output');
+        exit;
+    }
 }
