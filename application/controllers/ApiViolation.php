@@ -24,8 +24,6 @@ class ApiViolation extends CI_Controller {
     $location = $params['location'];
     $message = $params['message'];
     $timestamp = $params['timestamp'];
-    $age = $params['age'];
-    $year_section = $params['year_section'];
 
     // get type of violation first
     $type = '';
@@ -50,6 +48,10 @@ class ApiViolation extends CI_Controller {
         api_respond(TRUE, 'Minor report added.');
       }
     } else if ($type == 'major') {
+      // some params for major :D
+      $age = $params['age'];
+      $year_section = $params['year_section'];
+
       // build report
       $report = array(
         'user_reported_by' => $reporter_id,
