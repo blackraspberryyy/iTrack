@@ -14,7 +14,7 @@
         height: 100%;
         width: auto;
     }
-    .form-control:read-only { 
+    .form-control:read-only {
         background-color: white;
     }
     .btn-file {
@@ -43,7 +43,8 @@
 </style>
 <?php
 
-function determineStatus($status) {
+function determineStatus($status)
+{
     if ($status == 0) {
         echo '<span class = "badge badge-secondary">Finished</span>';
     } else {
@@ -54,26 +55,27 @@ function determineStatus($status) {
 <div class="row">
     <ol class="breadcrumb">
         <li>
-            <a href="<?= base_url() ?>UserDashboard">
+            <a href="<?=base_url(); ?>UserDashboard">
                 <em class="fa fa-home"></em>
             </a>
         </li>
-        <li class="active"><?= ucfirst($this->session->userdata("useraccess")) ?> Violation</li>
+        <li class="active"><?=ucfirst($this->session->userdata('useraccess')); ?> Violation</li>
     </ol>
 </div><!--/.row breadcrumb-->
 
 <div class = "row">
     <div class = "col-sm-3 text-center">
         <div class="image-cropper" >
-            <img src = "<?= base_url() . $currentuser->user_picture ?>" alt="<?= $currentuser->user_firstname . " " . $currentuser->user_lastname ?>">
+            <img src = "<?=base_url().$currentuser->user_picture; ?>" alt="<?=$currentuser->user_firstname.' '.$currentuser->user_lastname; ?>">
         </div>
 
     </div>
     <div class = "col-sm-9" style="padding:15px;">
-        <h3><?= $currentuser->user_lastname . ", " . $currentuser->user_firstname . " " . $currentuser->user_middlename ?></h3>
-        <h4><?= $currentuser->user_number ?></h4>
+        <h3><?=$currentuser->user_lastname.', '.$currentuser->user_firstname.' '.$currentuser->user_middlename; ?></h3>
+        <h4><?=$currentuser->user_number; ?></h4>
     </div>
 </div>
+<h1>Major Reports</h1>
 <div class="row">
     <div class="col-sm-12">
         <div class="table-responsive">
@@ -84,28 +86,29 @@ function determineStatus($status) {
                         <th>Status</th>
                         <th>Reported By</th>
                         <th>Violation</th>
+                        <th>Sanction</th>
                     </tr>
                 </thead>
                 <?php if ($violations): ?>
                     <?php foreach ($violations as $violation): ?>
                         <tbody>
                             <tr>
-                                <td><span class = "hidden"><?= $violation->incident_report_datetime ?></span><?= date('F d, Y \a\t h:i A', $violation->incident_report_datetime) ?></td>
-                                <td><?= determineStatus($violation->incident_report_status); ?></td>
+                                <td><span class = "hidden"><?=$violation->incident_report_datetime; ?></span><?=date('F d, Y \a\t h:i A', $violation->incident_report_datetime); ?></td>
+                                <td><?=determineStatus($violation->incident_report_status); ?></td>
                                 <td>
                                     <?php
-                                    if ($violation->reportedby_id != "") {
-                                        //if REPORTED_BY teacher, get user's name 
-                                        echo $violation->reportedby_firstname . " " . ($violation->reportedby_middlename == "" ? "" : substr($violation->reportedby_middlename, 0, 1) . ". ") . $violation->reportedby_lastname;
-                                        echo " <small class = 'text-muted'><b>(" . $violation->reportedby_access . ")</b></small>";
-                                    } else {
-                                        //if REPORTED_BY admin, get admin's name
-                                        echo "Admin";
-                                    }
-                                    ?>
+                                        if ($violation->reportedby_id != '') {
+                                            //if REPORTED_BY teacher, get user's name
+                                            echo $violation->reportedby_firstname.' '.($violation->reportedby_middlename == '' ? '' : substr($violation->reportedby_middlename, 0, 1).'. ').$violation->reportedby_lastname;
+                                            echo " <small class = 'text-muted'><b>(".$violation->reportedby_access.')</b></small>';
+                                        } else {
+                                            //if REPORTED_BY admin, get admin's name
+                                            echo 'Admin';
+                                        }
+                                        ?>
                                 </td>
-
-                                <td><?= ucfirst($violation->violation_name) ?></td>
+                                <td><?=ucfirst($violation->violation_name); ?></td>
+                                <td><?=ucfirst($violation->effect_name); ?></td>
                             </tr>
                         </tbody>
                     <?php endforeach; ?>
@@ -118,9 +121,9 @@ function determineStatus($status) {
 <h1>Minor Reports</h1>
 <div class="row">
     <div class="col-xs-12">
-        <?php if(!$minor_reports):?>
+        <?php if (!$minor_reports): ?>
         <center><h3>No minor reports so far...</h3></center>
-        <?php else:?>
+        <?php else: ?>
         <div class="table-responsive">
             <table class="table table-hover datatable">
                 <thead>
@@ -135,19 +138,19 @@ function determineStatus($status) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($minor_reports as $mr):?>
+                    <?php foreach ($minor_reports as $mr): ?>
                     <tr>
-                        <td><?= $mr->group_id ? $mr->group_id : 'NONE'?></td>
-                        <td><?= $mr->user_fname?></td>
-                        <td><?= $mr->user_mname?></td>
-                        <td><?= $mr->user_lname?></td>
-                        <td><?= $mr->violation_name?></td>
-                        <td><?= date("F d,Y - h:i A", $mr->tapped_at)?></td>
+                        <td><?=$mr->group_id ? $mr->group_id : 'NONE'; ?></td>
+                        <td><?=$mr->user_fname; ?></td>
+                        <td><?=$mr->user_mname; ?></td>
+                        <td><?=$mr->user_lname; ?></td>
+                        <td><?=$mr->violation_name; ?></td>
+                        <td><?=date('F d,Y - h:i A', $mr->tapped_at); ?></td>
                         <td>
-                            <button class ="btn btn-primary"type="button" data-toggle="modal" data-target="#mr_details_<?= $mr->mr_id?>">Details</button> 
-                        </td> 
+                            <button class ="btn btn-primary"type="button" data-toggle="modal" data-target="#mr_details_<?=$mr->mr_id; ?>">Details</button>
+                        </td>
                     </tr>
-                    <div class="modal fade text-left" id="mr_details_<?= $mr->mr_id?>" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
+                    <div class="modal fade text-left" id="mr_details_<?=$mr->mr_id; ?>" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -157,23 +160,23 @@ function determineStatus($status) {
                                     <div class="row">
                                         <div class="col-xs-6">
                                             <h3>User</h3>
-                                            <p><?= $mr->user_fname." ".$mr->user_mname." ".$mr->user_lname;?></p>
+                                            <p><?=$mr->user_fname.' '.$mr->user_mname.' '.$mr->user_lname; ?></p>
                                             <h3>Reporter</h3>
-                                            <p><?= $mr->reporter_fname." ".$mr->reporter_mname." ".$mr->reporter_lname;?></p>
+                                            <p><?=$mr->reporter_fname.' '.$mr->reporter_mname.' '.$mr->reporter_lname; ?></p>
                                             <h3>Violation</h3>
-                                            <p><?= $mr->violation_name;?></p>
+                                            <p><?=$mr->violation_name; ?></p>
                                         </div>
                                         <div class="col-xs-6">
                                             <h3>Location</h3>
-                                            <p><?= $mr->location ? $mr->location : "None";?></p>
+                                            <p><?=$mr->location ? $mr->location : 'None'; ?></p>
                                             <h3>Message</h3>
-                                            <p><?= $mr->message ? $mr->message : "None";?></p>
+                                            <p><?=$mr->message ? $mr->message : 'None'; ?></p>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <h3>Tapped At</h3>
-                                            <p><?= date("F d,Y - h:i A", $mr->tapped_at)?></p>
+                                            <p><?=date('F d,Y - h:i A', $mr->tapped_at); ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -183,10 +186,10 @@ function determineStatus($status) {
                             </div>
                         </div>
                     </div> <!--END DETAILS MODAL-->
-                    <?php endforeach;?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-        <?php endif;?>
+        <?php endif; ?>
     </div>
 </div>

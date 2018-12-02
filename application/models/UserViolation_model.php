@@ -19,7 +19,7 @@ class UserViolation_model extends CI_Model {
                 . 'u2.user_isActive AS reportedby_isActive,'
                 . 'u2.user_added_at AS reportedby_added_at,'
                 . 'u2.user_updated_at AS reportedby_updated_at,'
-                . 'v.*'
+                . 'v.*,'
                 . 'e.*, e.effect_hours AS violation_hours'
                 
                 

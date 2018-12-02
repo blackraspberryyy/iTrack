@@ -19,7 +19,7 @@ class UserDusap_model extends CI_Model {
                 . 'u2.user_isActive AS reportedby_isActive,'
                 . 'u2.user_added_at AS reportedby_added_at,'
                 . 'u2.user_updated_at AS reportedby_updated_at,'
-                . 'v.*'
+                . 'v.*,'
         );
         $this->db->from('attendance AS att');
         $this->db->join('incident_report AS ir', 'att.incident_report_id = ir.incident_report_id', 'LEFT OUTER');
