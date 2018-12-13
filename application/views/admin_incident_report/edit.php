@@ -70,31 +70,40 @@ $(function () { /* DOM ready */
               <?php
               foreach ($major_violations as $violation) {
                   ?>
-                  <option value = "<?= $violation->violation_id ?>" data-type = "<?= $violation->violation_type ?>" title = "<?= ucfirst($violation->violation_name) ?>" <?= set_select('classification', $violation->violation_id); ?>><?= ucfirst($violation->violation_name) ?></option>    
+                  <option value = "<?= $violation->violation_id ?>" data-type = "<?= $violation->violation_type ?>" title = "<?= ucfirst($violation->violation_name) ?>" <?= $incident_report->violation_id == $violation->violation_id ? 'selected' : ''?>><?= ucfirst($violation->violation_name) ?></option>    
                   <?php
               }
               ?>
               <option disabled="disabled" style = "background:#ddd;">-- New Violation --</option>
 
-              <option value="0" data-type = "other" title = "Other Violation" <?= set_select('classification', '0'); ?>>Other Violation</option>
+              <!-- <option value="0" data-type = "other" title = "Other Violation" <?= set_select('classification', '0'); ?>>Other Violation</option> -->
             </select>
           </div>
           <div class = "col-sm-4">
             <span class="control-label">Nature of Violation</span>
             <select id = "nature" name = "nature" class = "form-control">
-              <option value="major" <?= set_select('nature', 'major'); ?>>Major</option>
-                <option value="minor" <?= set_select('nature', 'minor'); ?>>Minor</option>
+              <option value="major" <?= $incident_report->violation_type == "major" ? 'selected' : ''?>>Major</option>
+              <option value="minor" <?= $incident_report->effects_id == "minor" ? 'selected' : ''?>>Minor</option>
             </select>
           </div>
       </div>
       <br/>
       <div class = "row">
-        <div class = "col-sm-6 <?= !empty(form_error("date_time")) ? "has-error" : ""; ?>">
+        <div class = "col-sm-4 <?= !empty(form_error("date_time")) ? "has-error" : ""; ?>">
           <span class="control-label" id="date_time">Date &AMP; Time</span>
           <input type="text" class="form-control datetimepicker" name = "date_time" placeholder="Type Here" aria-describedby="date_time" value = "<?= set_value("date_time", date('m/d/Y h:i A', $incident_report->incident_report_datetime)) ?>">
           <small><?= form_error("date_time") ?></small>
         </div>
-        <div class = "col-sm-6 <?= !empty(form_error("place")) ? "has-error" : ""; ?>">
+        <div class="col-sm-4">
+          <span class="control-label">Sanction</span>
+            <select id = "effect" name = "effect" class = "form-control">
+              <?php foreach($effects as $effect):?>
+              <option value="<?= $effect->effect_id?>" <?= $incident_report->effects_id == $effect->effect_id ? 'selected' : ''?>><?= $effect->effect_name?></option>
+              <?php endforeach;?>
+            </select>
+          <small><?= form_error("effect") ?></small>
+        </div>
+        <div class = "col-sm-4 <?= !empty(form_error("place")) ? "has-error" : ""; ?>">
           <span class="control-label">Place of the Offense Committed</span>
           <input type="text" class="form-control" name = "place" placeholder="Type Here" value = "<?= set_value("place") ?>">
           <small><?= form_error("place") ?></small>

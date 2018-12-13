@@ -17,7 +17,11 @@
         <li class="active">Home</li>
     </ol>
 </div><!--/.row breadcrumb-->
-
+<div class="row">
+    <div class="col-xs-12" style="text-align:right; padding: 16px;">
+        <a href="<?= base_url().'AdminDashboard/reports'?>" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Print Reports</a>
+    </div>
+</div>
 <div class = "row margin-top-lg">
     <div class = "col-sm-3 dashboard item ">
         <a href="<?= base_url().'AdminViolations/student_profile'?>">

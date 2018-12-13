@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2018 at 08:41 AM
+-- Generation Time: Dec 13, 2018 at 04:28 PM
 -- Server version: 5.7.24
--- PHP Version: 7.2.5
+-- PHP Version: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -75,7 +75,8 @@ INSERT INTO `attendance` (`attendance_id`, `incident_report_id`, `attendance_dep
 (1, 2, 'Admissions', 'John Doe', 1, 1, 1539392400, 1539396060, 1539528072),
 (4, 2, 'ITE Dept.', 'John Doe', 12, 1, 1539533760, 1539576960, 1539533829),
 (10, 3, 'Admissions', 'John Doe', 12, 1, 1540353060, 1540396260, 1540396274),
-(13, 3, '-', '-', 88, 1, 0, 0, 1540398197);
+(13, 3, '-', '-', 88, 1, 0, 0, 1540398197),
+(14, 4, 'dsa', 'dsa', 24, 1, 1544797740, 1544884140, 1544711439);
 
 -- --------------------------------------------------------
 
@@ -139,8 +140,10 @@ CREATE TABLE `effects` (
 --
 
 INSERT INTO `effects` (`effect_id`, `effect_name`, `effect_hours`) VALUES
-(1, 'dusap', 100),
-(2, 'suspension', 0);
+(1, 'DUSAP', 100),
+(2, 'Suspension', 0),
+(3, 'Non Readmission', 0),
+(4, 'Expulsion', 0);
 
 -- --------------------------------------------------------
 
@@ -150,9 +153,10 @@ INSERT INTO `effects` (`effect_id`, `effect_name`, `effect_hours`) VALUES
 
 CREATE TABLE `incident_report` (
   `incident_report_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT '1',
   `user_reported_by` int(11) DEFAULT NULL,
   `violation_id` int(11) NOT NULL,
+  `effects_id` int(11) NOT NULL,
   `incident_report_ref_id` int(11) DEFAULT NULL,
   `incident_report_datetime` int(11) NOT NULL,
   `incident_report_place` varchar(256) NOT NULL,
@@ -168,11 +172,10 @@ CREATE TABLE `incident_report` (
 -- Dumping data for table `incident_report`
 --
 
-INSERT INTO `incident_report` (`incident_report_id`, `user_id`, `user_reported_by`, `violation_id`, `incident_report_ref_id`, `incident_report_datetime`, `incident_report_place`, `incident_report_age`, `incident_report_section_year`, `incident_report_message`, `incident_report_status`, `incident_report_isAccepted`, `incident_report_added_at`) VALUES
-(1, 3, 4, 18, NULL, 1530611400, 'F1202 FIT', 19, 'W31/2018', 'Student has been disrespectful since the day we met.', 1, 1, 1531802826),
-(2, 2, NULL, 24, NULL, 1535781302, 'somwehere', 19, 'W31/3rd', 'asd', 1, 1, 1535781302),
-(3, 1, NULL, 24, NULL, 1537502785, 'F1206', 19, 'W41', 'ASD', 0, 1, 1537502785),
-(4, 1, 4, 15, NULL, 1541326020, 'x', 19, 'w31', 'tesetsfdfsd', 1, 1, 1541326140);
+INSERT INTO `incident_report` (`incident_report_id`, `user_id`, `user_reported_by`, `violation_id`, `effects_id`, `incident_report_ref_id`, `incident_report_datetime`, `incident_report_place`, `incident_report_age`, `incident_report_section_year`, `incident_report_message`, `incident_report_status`, `incident_report_isAccepted`, `incident_report_added_at`) VALUES
+(1, 3, 4, 18, 1, NULL, 1530611400, 'F1202 FIT', 19, 'W31/2018', 'Student has been disrespectful since the day we met.', 1, 1, 1531802826),
+(2, 2, NULL, 24, 1, NULL, 1535781302, 'somwehere', 19, 'W31/3rd', 'asd', 1, 1, 1535781302),
+(3, 1, NULL, 24, 1, NULL, 1537502785, 'F1206', 19, 'W41', 'ASD', 0, 1, 1537502785);
 
 -- --------------------------------------------------------
 
@@ -233,7 +236,9 @@ INSERT INTO `log` (`log_id`, `user_id`, `log_type`, `log_desc`, `log_added_at`) 
 (41, NULL, 'trail', 'Admin made changes to the CMS', 1540398965),
 (42, NULL, 'trail', 'Admin made changes to the CMS', 1540480304),
 (43, 4, 'log', 'Logged in', 1541325738),
-(44, NULL, 'log', 'Logged out', 1541333343);
+(44, NULL, 'log', 'Logged out', 1541333343),
+(45, NULL, 'trail', 'Add attendance in DUSAP', 1544711439),
+(46, NULL, 'trail', 'Filed an incident report', 1544713063);
 
 -- --------------------------------------------------------
 
@@ -385,7 +390,6 @@ INSERT INTO `user` (`user_id`, `user_number`, `user_serial_no`, `user_firstname`
 
 CREATE TABLE `violation` (
   `violation_id` int(11) NOT NULL,
-  `effect_id` int(11) NOT NULL,
   `violation_name` varchar(197) DEFAULT NULL,
   `violation_type` enum('minor','major') DEFAULT NULL,
   `violation_category` enum('default','other') NOT NULL,
@@ -396,53 +400,53 @@ CREATE TABLE `violation` (
 -- Dumping data for table `violation`
 --
 
-INSERT INTO `violation` (`violation_id`, `effect_id`, `violation_name`, `violation_type`, `violation_category`, `violation_added_at`) VALUES
-(1, 1, 'not wearing proper uniform', 'minor', 'default', 1531446357),
-(2, 1, 'multiple entry without ID', 'minor', 'default', 1531446357),
-(3, 1, 'possession of offensive/subversive materials', 'minor', 'default', 1531446357),
-(4, 1, 'possession of pornographic materials', 'minor', 'default', 1531446357),
-(5, 1, 'possession of stun gun or any harmful electronic gadget', 'minor', 'default', 1531446357),
-(6, 1, 'possession of cigarette and e-cigarette', 'minor', 'default', 1531446357),
-(7, 1, 'simple misconduct', 'minor', 'default', 1531446357),
-(8, 1, 'smoking', 'minor', 'default', 1531446357),
-(9, 1, 'loitering', 'minor', 'default', 1531446357),
-(10, 1, 'cutting of classes', 'minor', 'default', 1531446357),
-(11, 1, 'eating in restricted areas', 'minor', 'default', 1531446357),
-(12, 1, 'unauthorized use of school facilities', 'minor', 'default', 1531446357),
-(13, 1, 'unauthorized use of electronic gadgets', 'minor', 'default', 1531446357),
-(14, 1, 'lending/borrowing of Identification Card', 'minor', 'default', 1531446357),
-(15, 1, 'possession of alcoholic drink/prohibited drug', 'major', 'default', 1531446357),
-(16, 1, 'being under the influence of liquor/prohibited drugs', 'major', 'default', 1531446357),
-(17, 1, 'possession of deadly weapon', 'major', 'default', 1531446357),
-(18, 1, 'disrespect', 'major', 'default', 1531446357),
-(19, 1, 'vandalism', 'major', 'default', 1531446357),
-(20, 1, 'dishonesty', 'major', 'default', 1531446357),
-(21, 1, 'behavior outside the campus specially during internship which bring dishonor to the Institute', 'major', 'default', 1531446357),
-(22, 1, 'creating barricades/obstruction', 'major', 'default', 1531446357),
-(23, 1, 'destruction of school facilities or properties', 'major', 'default', 1531446357),
-(24, 1, 'assault/physical injury', 'major', 'default', 1531446357),
-(25, 1, 'hazing', 'major', 'default', 1531446357),
-(26, 1, 'harassment', 'major', 'default', 1531446357),
-(27, 1, 'possession of explosive materials', 'major', 'default', 1531446357),
-(28, 1, 'sexual abuse', 'major', 'default', 1531446357),
-(29, 1, 'use of unauthorized electronic software/program', 'major', 'default', 1531446357),
-(30, 1, 'involvement in fraternity-related disorders', 'major', 'default', 1531446357),
-(31, 1, 'multiple minor offenses', 'major', 'default', 1531446357),
-(32, 1, 'gambling', 'major', 'default', 1531446357),
-(33, 1, 'public display of intimacy', 'major', 'default', 1531446357),
-(34, 1, 'distribution of offensive/subversive materials', 'major', 'default', 1531446357),
-(35, 1, 'grave threat by any means', 'major', 'default', 1531446357),
-(36, 1, 'inciting to fight', 'major', 'default', 1531446357),
-(37, 1, 'indecent or immoral conduct', 'major', 'default', 1531446357),
-(38, 1, 'conducting and/or representing the Institute in any student activity without the endorsement of SACSO and approval of the Institute.', 'major', 'default', 1531446357),
-(39, 1, 'cheating', 'major', 'default', 1531446357),
-(40, 1, 'stealing', 'major', 'default', 1531446357),
-(41, 1, 'violence against women (RA 9262: An act defining violence against women and their children, providing for protective measures for victims, prescribing penalties therefore and for other Institution)', 'major', 'default', 1531446357),
-(42, 1, 'plagiarism (as covered by policy code P504014003 of QAO)', 'major', 'default', 1531446357),
-(43, 1, 'maligning the Institute through any means including social media', 'major', 'default', 1531446357),
-(44, 1, 'falsification of documents', 'major', 'default', 1531446357),
-(45, 1, 'misrepresentation', 'major', 'default', 1531446357),
-(46, 1, 'illegal recruitment', 'major', 'default', 1531446357);
+INSERT INTO `violation` (`violation_id`, `violation_name`, `violation_type`, `violation_category`, `violation_added_at`) VALUES
+(1, 'not wearing proper uniform', 'minor', 'default', 1531446357),
+(2, 'multiple entry without ID', 'minor', 'default', 1531446357),
+(3, 'possession of offensive/subversive materials', 'minor', 'default', 1531446357),
+(4, 'possession of pornographic materials', 'minor', 'default', 1531446357),
+(5, 'possession of stun gun or any harmful electronic gadget', 'minor', 'default', 1531446357),
+(6, 'possession of cigarette and e-cigarette', 'minor', 'default', 1531446357),
+(7, 'simple misconduct', 'minor', 'default', 1531446357),
+(8, 'smoking', 'minor', 'default', 1531446357),
+(9, 'loitering', 'minor', 'default', 1531446357),
+(10, 'cutting of classes', 'minor', 'default', 1531446357),
+(11, 'eating in restricted areas', 'minor', 'default', 1531446357),
+(12, 'unauthorized use of school facilities', 'minor', 'default', 1531446357),
+(13, 'unauthorized use of electronic gadgets', 'minor', 'default', 1531446357),
+(14, 'lending/borrowing of Identification Card', 'minor', 'default', 1531446357),
+(15, 'possession of alcoholic drink/prohibited drug', 'major', 'default', 1531446357),
+(16, 'being under the influence of liquor/prohibited drugs', 'major', 'default', 1531446357),
+(17, 'possession of deadly weapon', 'major', 'default', 1531446357),
+(18, 'disrespect', 'major', 'default', 1531446357),
+(19, 'vandalism', 'major', 'default', 1531446357),
+(20, 'dishonesty', 'major', 'default', 1531446357),
+(21, 'behavior outside the campus specially during internship which bring dishonor to the Institute', 'major', 'default', 1531446357),
+(22, 'creating barricades/obstruction', 'major', 'default', 1531446357),
+(23, 'destruction of school facilities or properties', 'major', 'default', 1531446357),
+(24, 'assault/physical injury', 'major', 'default', 1531446357),
+(25, 'hazing', 'major', 'default', 1531446357),
+(26, 'harassment', 'major', 'default', 1531446357),
+(27, 'possession of explosive materials', 'major', 'default', 1531446357),
+(28, 'sexual abuse', 'major', 'default', 1531446357),
+(29, 'use of unauthorized electronic software/program', 'major', 'default', 1531446357),
+(30, 'involvement in fraternity-related disorders', 'major', 'default', 1531446357),
+(31, 'multiple minor offenses', 'major', 'default', 1531446357),
+(32, 'gambling', 'major', 'default', 1531446357),
+(33, 'public display of intimacy', 'major', 'default', 1531446357),
+(34, 'distribution of offensive/subversive materials', 'major', 'default', 1531446357),
+(35, 'grave threat by any means', 'major', 'default', 1531446357),
+(36, 'inciting to fight', 'major', 'default', 1531446357),
+(37, 'indecent or immoral conduct', 'major', 'default', 1531446357),
+(38, 'conducting and/or representing the Institute in any student activity without the endorsement of SACSO and approval of the Institute.', 'major', 'default', 1531446357),
+(39, 'cheating', 'major', 'default', 1531446357),
+(40, 'stealing', 'major', 'default', 1531446357),
+(41, 'violence against women (RA 9262: An act defining violence against women and their children, providing for protective measures for victims, prescribing penalties therefore and for other Institution)', 'major', 'default', 1531446357),
+(42, 'plagiarism (as covered by policy code P504014003 of QAO)', 'major', 'default', 1531446357),
+(43, 'maligning the Institute through any means including social media', 'major', 'default', 1531446357),
+(44, 'falsification of documents', 'major', 'default', 1531446357),
+(45, 'misrepresentation', 'major', 'default', 1531446357),
+(46, 'illegal recruitment', 'major', 'default', 1531446357);
 
 --
 -- Indexes for dumped tables
@@ -481,7 +485,8 @@ ALTER TABLE `incident_report`
   ADD KEY `fk_user_id` (`user_id`),
   ADD KEY `fk_violation_id_2` (`violation_id`),
   ADD KEY `fk_student_reported_by` (`user_reported_by`),
-  ADD KEY `fk_ir_ref_id` (`incident_report_ref_id`);
+  ADD KEY `fk_ir_ref_id` (`incident_report_ref_id`),
+  ADD KEY `fk_effects_id` (`effects_id`);
 
 --
 -- Indexes for table `log`
@@ -528,7 +533,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `cms`
@@ -540,19 +545,19 @@ ALTER TABLE `cms`
 -- AUTO_INCREMENT for table `effects`
 --
 ALTER TABLE `effects`
-  MODIFY `effect_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `effect_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `incident_report`
 --
 ALTER TABLE `incident_report`
-  MODIFY `incident_report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `incident_report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `minor_reports`
@@ -592,6 +597,7 @@ ALTER TABLE `attendance`
 -- Constraints for table `incident_report`
 --
 ALTER TABLE `incident_report`
+  ADD CONSTRAINT `fk_effects_id` FOREIGN KEY (`effects_id`) REFERENCES `effects` (`effect_id`),
   ADD CONSTRAINT `fk_ir_ref_id` FOREIGN KEY (`incident_report_ref_id`) REFERENCES `incident_report` (`incident_report_id`),
   ADD CONSTRAINT `fk_student_reported_by` FOREIGN KEY (`user_reported_by`) REFERENCES `user` (`user_id`),
   ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),

@@ -1,9 +1,9 @@
 <script>
 	$(document).ready(function () {
 <?php if (validation_errors()): ?>
-			$('#add_incident_report').modal({
-				show: 'true'
-			})
+	$('#add_incident_report').modal({
+		show: 'true'
+	})
 <?php endif; ?>
 	});
 </script>
@@ -145,8 +145,12 @@ function determineStatus($status) {
 															<?php if ($report->incident_report_status == 1): ?>
 																<?php if($report->effect_id == 1):?>
 																	<a href="<?= base_url() . 'AdminDusap/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
-																<?php else:?>
+																<?php elseif($report->effect_id == 2):?>
 																	<a href="#" onClick="alert('Go to suspension details')" class="btn btn-primary">See Suspension Details</a>
+																<?php elseif($report->effect_id == 3):?>
+																	<a href="#" onClick="alert('Go to Non Readmission details')" class="btn btn-primary">See Non Readmission Details</a>
+																<?php else:?>
+																	<a href="#" onClick="alert('Go to Expulsion details')" class="btn btn-primary">See Expulsion Details</a>
 																<?php endif;?>
 															<?php else: ?>
 																<a href="<?= base_url() . 'AdminOffenseReport/view_exec/' . $report->incident_report_id ?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
@@ -234,7 +238,7 @@ function determineStatus($status) {
 								?>
 								<option disabled="disabled" style = "background:#ddd;">-- New Violation --</option>
 
-								<option value="0" data-type = "other" title = "Other Violation" <?= set_select('classification', '0'); ?>>Other Violation</option>
+								<!-- <option value="0" data-type = "other" title = "Other Violation" <?= set_select('classification', '0'); ?>>Other Violation</option> -->
 							</select>
 
 						</div>
@@ -248,12 +252,21 @@ function determineStatus($status) {
 					</div>
 					<br/>
 					<div class = "row">
-						<div class = "col-sm-6 <?= !empty(form_error("date_time")) ? "has-error" : ""; ?>">
+						<div class = "col-sm-4 <?= !empty(form_error("date_time")) ? "has-error" : ""; ?>">
 							<span class="control-label" id="date_time">Date &AMP; Time</span>
 							<input type="text" class="form-control datetimepicker" name = "date_time" placeholder="Type Here" aria-describedby="date_time" value = "<?= set_value("date_time") ?>">
 							<small><?= form_error("date_time") ?></small>
 						</div>
-						<div class = "col-sm-6 <?= !empty(form_error("place")) ? "has-error" : ""; ?>">
+						<div class="col-sm-4">
+							<span class="control-label">Sanction</span>
+							<select id = "effect" name = "effect" class = "form-control">
+								<?php foreach($effects as $effect):?>
+								<option value="<?= $effect->effect_id?>" <?= set_select('effect', $effect->effect_id)?>><?= $effect->effect_name?></option>
+								<?php endforeach;?>
+							</select>
+							<small><?= form_error("effect") ?></small>
+						</div>
+						<div class = "col-sm-4 <?= !empty(form_error("place")) ? "has-error" : ""; ?>">
 							<span class="control-label">Place of the Offense Committed</span>
 							<input type="text" class="form-control" name = "place" placeholder="Type Here" value = "<?= set_value("place") ?>">
 							<small><?= form_error("place") ?></small>

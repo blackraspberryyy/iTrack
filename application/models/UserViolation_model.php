@@ -29,8 +29,7 @@ class UserViolation_model extends CI_Model {
         $this->db->join('user AS u', 'ir.user_id = u.user_id', 'LEFT OUTER');
         $this->db->join('user AS u2', 'ir.user_reported_by = u2.user_id', 'LEFT OUTER');
         $this->db->join('violation AS v', 'ir.violation_id = v.violation_id', 'LEFT OUTER');
-        $this->db->join('effects AS e', 'v.effect_id = e.effect_id','LEFT OUTER');
-
+        $this->db->join('effects AS e', 'ir.effects_id = e.effect_id','LEFT OUTER');
 
         $query = $this->db->get();
         return ($query->num_rows() > 0) ? $query->result() : false;

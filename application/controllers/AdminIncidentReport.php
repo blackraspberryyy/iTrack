@@ -26,6 +26,7 @@ class AdminIncidentReport extends CI_Controller {
             'minor_violations' => $this->AdminIncidentReport_model->getMinorViolations(),
             'incident_reports' => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_isAccepted' => 1)),
             'request_reports' => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_isAccepted' => 0)),
+            'effects' => $this->AdminIncidentReport_model->getEffects(),
             'cms' => $this->AdminCMS_model->getCMS()[0]
         );
 
@@ -81,6 +82,7 @@ class AdminIncidentReport extends CI_Controller {
                 'minor_violations' => $this->AdminIncidentReport_model->getMinorViolations(),
                 'incident_reports' => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_isAccepted' => 1)),
                 'request_reports' => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_isAccepted' => 0)),
+                'effects' => $this->AdminIncidentReport_model->getEffects(),            
                 'cms' => $this->AdminCMS_model->getCMS()[0]
             );
 
@@ -108,6 +110,7 @@ class AdminIncidentReport extends CI_Controller {
                 "user_reported_by" => NULL, //NULL if the ADMIN is the one to report
                 "user_id" => $user->user_id,
                 "violation_id" => $violation_id,
+                "effects_id" =>  $this->input->post("effect"),
                 "incident_report_datetime" => strtotime($this->input->post("date_time")),
                 "incident_report_place" => $this->input->post("place"),
                 "incident_report_age" => $this->input->post("user_age"),
@@ -186,7 +189,8 @@ class AdminIncidentReport extends CI_Controller {
             'currentadmin' => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
             'incident_report' => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
             'major_violations' => $this->AdminIncidentReport_model->getMajorViolations(),
-            'minor_violations' => $this->AdminIncidentReport_model->getMinorViolations()
+            'minor_violations' => $this->AdminIncidentReport_model->getMinorViolations(),
+            'effects' => $this->AdminIncidentReport_model->getEffects()
         );
         /* prettyPrint($data['incident_report']);
           exit; */
@@ -220,7 +224,8 @@ class AdminIncidentReport extends CI_Controller {
                 'currentadmin' => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                 'incident_report' => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
                 'major_violations' => $this->AdminIncidentReport_model->getMajorViolations(),
-                'minor_violations' => $this->AdminIncidentReport_model->getMinorViolations()
+                'minor_violations' => $this->AdminIncidentReport_model->getMinorViolations(),
+                'effects' => $this->AdminIncidentReport_model->getEffects()
             );
 
             $this->load->view("admin_includes/nav_header", $data);
@@ -245,6 +250,7 @@ class AdminIncidentReport extends CI_Controller {
                 "user_reported_by" => NULL, //NULL if the ADMIN is the one to report
                 "user_id" => $this->AdminIncidentReport_model->get_user_id($this->input->post("user_number"))[0]->user_id,
                 "violation_id" => $violation_id,
+                "effects_id" => $this->input->post("effect"), 
                 "incident_report_datetime" => strtotime($this->input->post("date_time")),
                 "incident_report_place" => $this->input->post("place"),
                 "incident_report_age" => $this->input->post("user_age"),
