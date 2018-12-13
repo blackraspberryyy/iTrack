@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2018 at 07:58 AM
--- Server version: 10.1.32-MariaDB
+-- Generation Time: Dec 13, 2018 at 08:41 AM
+-- Server version: 5.7.24
 -- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -356,6 +356,7 @@ CREATE TABLE `user` (
   `user_lastname` varchar(256) NOT NULL,
   `user_middlename` varchar(256) DEFAULT NULL,
   `user_password` varchar(256) NOT NULL,
+  `user_fcm_token` text NOT NULL,
   `user_email` varchar(255) NOT NULL,
   `user_picture` varchar(256) NOT NULL,
   `user_course` varchar(256) DEFAULT NULL,
@@ -369,12 +370,12 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_number`, `user_serial_no`, `user_firstname`, `user_lastname`, `user_middlename`, `user_password`, `user_email`, `user_picture`, `user_course`, `user_access`, `user_isactive`, `user_added_at`, `user_updated_at`) VALUES
-(1, '201511961', '72ADAFC4', 'Cham', 'Coscos', 'Mosquito', '8B5382D8441C3B21679FA89D75833E60888C49F8', 'hanzcoscos@gmail.com', 'images/student/dca2f1b853a2b0233c9a9f0983eab084.jpg', 'BSITWMA', 'student', 1, 1531202862, 1531623977),
-(2, '201512570', '498590A4', 'Meryll', 'Rodriguez', 'Ponce De Leon', '5EBFFD12F0A9184A3D623016B860CCAE820FC35C', 'mirayrodriguez21@gmail.com', 'images/student/1d71346309099d931fa2fb9fdbf8cb60.jpg', 'BSITWMA', 'student', 1, 1531329730, 1531624031),
-(3, '201510592', '735EE1D4', 'Ralph Adrian', 'Buen', NULL, 'D6424ECC823CA663BDCBAEA8E2D9DF58A4D0E2B8', 'rabuen@fit.edu.ph', 'images/student/c28aeafdba8274a90dba7e4072286433.jpg', 'BSITWMA', 'student', 1, 1531380182, 1531624066),
-(4, '200812161', '', 'Jane', 'Doe', 'Allison', '4a82cb6db537ef6c5b53d144854e146de79502e8', 'jda@fit.edu.ph', 'images/teacher/f63c2792c8d1553e7dd418a064e932ea.png', NULL, 'teacher', 1, 1531555055, 1535794831),
-(5, '201512030', 'DB99AFC4', 'Trisha', 'Cunanan', 'Balingit', 'B4C644ED8FA2EB260BA20F361E02BCF05C312D14', 'trishikim@gmail.com', 'images/student/27c88789c0d90160620c3502ab66586a.jpg', 'BSITWMA', 'student', 1, 1535793953, 1535794002);
+INSERT INTO `user` (`user_id`, `user_number`, `user_serial_no`, `user_firstname`, `user_lastname`, `user_middlename`, `user_password`, `user_fcm_token`, `user_email`, `user_picture`, `user_course`, `user_access`, `user_isactive`, `user_added_at`, `user_updated_at`) VALUES
+(1, '201511961', '72ADAFC4', 'Cham', 'Coscos', 'Mosquito', '8B5382D8441C3B21679FA89D75833E60888C49F8', '', 'hanzcoscos@gmail.com', 'images/student/dca2f1b853a2b0233c9a9f0983eab084.jpg', 'BSITWMA', 'student', 1, 1531202862, 1531623977),
+(2, '201512570', '498590A4', 'Meryll', 'Rodriguez', 'Ponce De Leon', '5EBFFD12F0A9184A3D623016B860CCAE820FC35C', '', 'mirayrodriguez21@gmail.com', 'images/student/1d71346309099d931fa2fb9fdbf8cb60.jpg', 'BSITWMA', 'student', 1, 1531329730, 1531624031),
+(3, '201510592', '735EE1D4', 'Ralph Adrian', 'Buen', NULL, 'D6424ECC823CA663BDCBAEA8E2D9DF58A4D0E2B8', '', 'rabuen@fit.edu.ph', 'images/student/c28aeafdba8274a90dba7e4072286433.jpg', 'BSITWMA', 'student', 1, 1531380182, 1531624066),
+(4, '200812161', '', 'Jane', 'Doe', 'Allison', '4a82cb6db537ef6c5b53d144854e146de79502e8', 'duqCoAe6srQ:APA91bHCzB5ZAjacrMEoRWRafi07Q6Wpay8SZsMRfMXr1zzyqSwac8hReMjQzc7IIXcc8lE4Taq9p10f-liUdD8BRSLJzywBqUwBireZ6Nf75R_8N580Y0APSkah2jyXMvY6np1qQZt6', 'jda@fit.edu.ph', 'images/teacher/f63c2792c8d1553e7dd418a064e932ea.png', NULL, 'teacher', 1, 1531555055, 1535794831),
+(5, '201512030', 'DB99AFC4', 'Trisha', 'Cunanan', 'Balingit', 'B4C644ED8FA2EB260BA20F361E02BCF05C312D14', '', 'trishikim@gmail.com', 'images/student/27c88789c0d90160620c3502ab66586a.jpg', 'BSITWMA', 'student', 1, 1535793953, 1535794002);
 
 -- --------------------------------------------------------
 
