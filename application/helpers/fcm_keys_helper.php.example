@@ -1,0 +1,16 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+if (!function_exists('fcm_keys')) {
+  function fcm_keys($key) {
+    $keys = array(
+      'sender' => 'SENDER_ID',
+      'project' => 'PROJECT_ID',
+      'web_api' => 'WEB_API_KEY',
+      'legacy_server' => 'LEGACY_SERVER_KEY',
+      'server' => 'SERVER_KEY'
+    );
+
+    return array_key_exists($key, $keys) ? $keys[$key] : $keys;
+  }
+}
