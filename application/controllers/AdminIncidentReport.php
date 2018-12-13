@@ -122,6 +122,10 @@ class AdminIncidentReport extends CI_Controller {
             $this->AdminIncidentReport_model->insert_incident_report($incident_report);
             $this->session->set_flashdata("success_incident_report", "Incident Report successfully recorded.");
 
+            //Firabase
+            $violation_details = $this->AdminIncidentReport_model->getViolations($violation_id)[0];
+            $this->Notification_model->send($user->user_id, "You have been reported.", "Your violation is " + $violation_details->violation_name + ".");
+
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit("admin", "Filed an incident report");
 
@@ -140,6 +144,11 @@ class AdminIncidentReport extends CI_Controller {
             'effects_id' => $this->input->post('effect'),
             'incident_report_isAccepted' => 1,
         );
+
+        //Firabase
+        $incidentReport = $this->AdminIncidentReport_model->getIncidentReport($incidentReportId)[0];
+        $this->Notification_model->send($user->user_id, "You have been reported.", "Your violation is " + $incidentReport->violation_name + ".");
+
         //-- AUDIT TRAIL
         $this->Logger->saveToAudit("admin", "Filed an incident report");
 
