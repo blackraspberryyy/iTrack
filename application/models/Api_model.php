@@ -12,6 +12,15 @@ class Api_model extends CI_Model {
     return query_result($query, 'array');
   }
 
+  public function getUserViaId($id) {
+    $this->db
+      ->from('user')
+      ->where('user_id', $id);
+
+    $query = $this->db->get();
+    return query_result($query, 'array');
+  }
+
   public function getTypeOfViolation($vid) {
     $this->db
       ->select('violation_type')
@@ -128,6 +137,18 @@ class Api_model extends CI_Model {
     return $res;
   }
 
+  public function saveToken($user_id, $token) {
+    // make sure user exists first
+    if (!($users = $this->getUserViaId($user_id))) {
+      return FALSE;
+    }
+
+    return $this->db
+      ->set('user_fcm_token', $token)
+      ->where('user_id', $user_id)
+      ->update('user');
+  }
+
   // group
   public function groupViolations($total = 15) {
     // check whole minor_reports table with 0 group_id
@@ -177,11 +198,11 @@ class Api_model extends CI_Model {
           'group_id' => 0
         );
 
-        $this->db
-          ->set($set)
-          ->where($where)
-          ->where_in('violation_id', $vIds)
-          ->update('minor_reports');
+      $this->db
+        ->set($set)
+        ->where($where)
+        ->where_in('violation_id', $vIds)
+        ->update('minor_reports');
       }
 
     }

@@ -16,4 +16,17 @@ class ApiUser extends CI_Controller {
       api_respond(FALSE, 'No student found.');
     }
   }
+
+  public function token() {
+    // post
+    $params = api_params($this);
+    $user_id = $params['user_id'];
+    $token = $params['token'];
+
+    if ($this->Api_model->saveToken($user_id, $token)) {
+      api_respond(TRUE, 'User token saved.');
+    } else {
+      api_respond(FALSE, 'User token not saved.');
+    }
+  }
 }

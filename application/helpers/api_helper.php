@@ -24,7 +24,7 @@ if (!function_exists('api_respond')) {
     $data['success'] = $success;
     echo json_encode($data);
     exit;
-  }   
+  }
 }
 
 if (!function_exists('api_params')) {
