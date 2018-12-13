@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2018 at 04:28 PM
+-- Generation Time: Dec 13, 2018 at 06:19 PM
 -- Server version: 5.7.24
--- PHP Version: 7.2.2
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -350,6 +350,20 @@ INSERT INTO `minor_reports_quota` (`id`, `resolved_at`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `body` text NOT NULL,
+  `created_at` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -508,6 +522,12 @@ ALTER TABLE `minor_reports_quota`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -572,6 +592,12 @@ ALTER TABLE `minor_reports_quota`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
@@ -586,12 +612,6 @@ ALTER TABLE `violation`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `attendance`
---
-ALTER TABLE `attendance`
-  ADD CONSTRAINT `fk_dussap_incident_report_id` FOREIGN KEY (`incident_report_id`) REFERENCES `incident_report` (`incident_report_id`);
 
 --
 -- Constraints for table `incident_report`

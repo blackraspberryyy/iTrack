@@ -153,6 +153,7 @@ $autoload['model'] = array(
     "AdminViolations_model",
     "AdminDusap_model",
     "Api_model",
+    "Notification_model",
     "UserDusap_model",
     "AdminMinorReports_model"
 );

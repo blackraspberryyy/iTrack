@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 if (!function_exists('notificate')) {
-  function notificate($id, $user_id, $user_token, $title, $body, $timestamp) {
+  function notificate($id, $user_id, $user_token, $title, $body, $timestamp, $with_response = FALSE) {
     $url = 'https://fcm.googleapis.com/fcm/send';
     $API_KEY = fcm_keys('server');
 
@@ -38,7 +38,10 @@ if (!function_exists('notificate')) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
 
     $result = curl_exec($ch);
-    echo $result;
+
+    if ($with_response) {
+      echo $result;
+    }
 
     curl_close($ch);
   }
