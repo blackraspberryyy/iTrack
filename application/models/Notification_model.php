@@ -26,7 +26,8 @@ class Notification_model extends CI_Model {
 
     // get last inserted id
     $notif_id = $this->db->insert_id();
-    notificate($notif_id, $user_id, $user['user_fcm_token'], $title, $body, $created_at);
+    // TODO: enable notification
+    // notificate($notif_id, $user_id, $user['user_fcm_token'], $title, $body, $created_at);
     return TRUE;
   }
 }
