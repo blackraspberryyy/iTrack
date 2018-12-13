@@ -7,6 +7,7 @@ class Notification_model extends CI_Model {
       ->from('notifications')
       ->where('user_id', $user_id)
       ->order_by('created_at', 'desc')
+      ->order_by('id', 'desc')
       ->get();
 
     return query_result($query, 'array');
