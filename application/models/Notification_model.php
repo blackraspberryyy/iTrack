@@ -2,6 +2,16 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Notification_model extends CI_Model {
+  public function getAll($user_id) {
+    $query = $this->db
+      ->from('notifications')
+      ->where('user_id', $user_id)
+      ->order_by('created_at', 'desc')
+      ->get();
+
+    return query_result($query, 'array');
+  }
+
   public function send($user_id, $title, $body) {
     $created_at = time();
 
