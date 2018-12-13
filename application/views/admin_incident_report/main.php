@@ -236,7 +236,7 @@ function determineStatus($status) {
 									<?php
 								}
 								?>
-								<option disabled="disabled" style = "background:#ddd;">-- New Violation --</option>
+								<!-- <option disabled="disabled" style = "background:#ddd;">-- New Violation --</option> -->
 
 								<!-- <option value="0" data-type = "other" title = "Other Violation" <?= set_select('classification', '0'); ?>>Other Violation</option> -->
 							</select>
@@ -393,12 +393,38 @@ function determineStatus($status) {
 										<td>
 											<div class="btn-group-vertical" role="group">
 												<button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id) ?>">Details</button>
-												<a type = "button" class="btn btn-warning" href="<?= base_url() ?>AdminIncidentReport/sendCallSlip_exec/<?= $report->user_number ?>/<?= $report->incident_report_id ?>"><i class="fa fa-paper-plane"></i> Send Call Slip</a>
+												<button class="btn btn-warning" data-toggle="modal" data-target="#set_sanction_<?=$report->incident_report_id?>">Set Sanction</button>
 											</div>
 										</td>
 									</tr>
-
-									<!-- DETAILS MODAL -->
+									<!-- SET_SANCTION MODAL -->
+								<div class="modal fade" id="set_sanction_<?=$report->incident_report_id?>" tabindex="-1" role="dialog">
+									<div class="modal-dialog" role="document">
+										<form method="POST" action="<?= base_url() ?>AdminIncidentReport/sendCallSlip_exec/<?= $report->user_number ?>/<?= $report->incident_report_id ?>">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title">Modal title</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<span>Set Sanction</span>
+													<select id="effect" name="effect" class="form-control">
+														<?php foreach($effects as $effect):?>
+														<option value="<?= $effect->effect_id?>" <?= $report->effects_id == $effect->effect_id ? 'selected' : ''?>><?= $effect->effect_name?></option>
+														<?php endforeach;?>
+													</select>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+													<button type = "submit" class="btn btn-primary" ><i class="fa fa-paper-plane"></i> Send Call Slip</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+								<!-- DETAILS MODAL -->
 								<div class="modal fade text-left" id="details_<?= sha1($report->incident_report_id) ?>" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
@@ -471,7 +497,6 @@ function determineStatus($status) {
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary">Submit</button>
 			</div>
 		</div>
 	</div>

@@ -137,6 +137,7 @@ class AdminIncidentReport extends CI_Controller {
         $incidentReportId = $this->uri->segment(4);
         $user = $this->AdminIncidentReport_model->get_user_id($userId)[0];
         $data = array(
+            'effects_id' => $this->input->post('effect'),
             'incident_report_isAccepted' => 1,
         );
         //-- AUDIT TRAIL
@@ -258,7 +259,7 @@ class AdminIncidentReport extends CI_Controller {
                 "incident_report_message" => $this->input->post("message"),
                 "incident_report_added_at" => time()
             );
-            $this->AdminIncidentReport_model->insert_incident_report($incident_report);
+            $this->AdminIncidentReport_model->edit_incident_report($incident_report, $incident_report_id);
             $this->session->set_flashdata("success_incident_report", "Incident Report successfully recorded.");
 
             //-- AUDIT TRAIL
