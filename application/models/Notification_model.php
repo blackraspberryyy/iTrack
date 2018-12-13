@@ -12,7 +12,8 @@ class Notification_model extends CI_Model {
     return query_result($query, 'array');
   }
 
-  public function send($user_id, $title, $body) {
+  // TODO: in live env, change $notify to TRUE
+  public function send($user_id, $title, $body, $notify = FALSE) {
     $created_at = time();
 
     // build dat set
@@ -22,22 +23,25 @@ class Notification_model extends CI_Model {
       'body' => $body,
       'created_at' => $created_at
     );
-
-    // if not successful
-    if (!$this->db->insert('notifications', $set)) {
-      return FALSE;
-    }
     
+    // check if user exists first then get
     if ($users = $this->Api_model->getUserViaId($user_id)) {
       $user = $users[0];
     } else {
       return FALSE;
     }
 
-    // get last inserted id
-    $notif_id = $this->db->insert_id();
-    // TODO: enable notification
-    // notificate($notif_id, $user_id, $user['user_fcm_token'], $title, $body, $created_at);
+    // if not successful
+    if (!$this->db->insert('notifications', $set)) {
+      return FALSE;
+    }
+
+    if ($notify) {
+      // get last inserted id
+      $notif_id = $this->db->insert_id();
+      notificate($notif_id, $user_id, $user['user_fcm_token'], $title, $body, $created_at);
+    }
+
     return TRUE;
   }
 }
