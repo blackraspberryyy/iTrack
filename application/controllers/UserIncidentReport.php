@@ -167,6 +167,7 @@ class UserIncidentReport extends CI_Controller
                 'violation_id' => $this->input->post('classification'),
                 'incident_report_datetime' => strtotime($this->input->post('date_time')),
                 'incident_report_place' => $this->input->post('place'),
+                'effects_id' => 1,
                 'incident_report_age' => $this->input->post('user_age'),
                 'incident_report_section_year' => $this->input->post('user_section_year'),
                 'incident_report_message' => $this->input->post('message'),
@@ -174,7 +175,6 @@ class UserIncidentReport extends CI_Controller
             );
             $this->UserIncidentReport_model->insert_incident_report($incident_report);
             $this->session->set_flashdata('success_incident_report', 'Incident Report successfully recorded.');
-
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit($this->session->userdata('userid'), 'Filed an incident report');
 

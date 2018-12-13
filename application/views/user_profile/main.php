@@ -44,18 +44,18 @@
 <div class="row">
     <ol class="breadcrumb">
         <li>
-            <a href="<?= base_url() ?>UserDashboard">
+            <a href="<?= base_url(); ?>UserDashboard">
                 <em class="fa fa-home"></em>
             </a>
         </li>
-        <li class="active"><?= ucfirst($this->session->userdata("useraccess")) ?> Profile</li>
+        <li class="active"><?= ucfirst($this->session->userdata('useraccess')); ?> Profile</li>
     </ol>
 </div><!--/.row breadcrumb-->
 
 <div class = "row">
     <div class = "col-sm-3 text-center">
         <div class="image-cropper" >
-            <img src = "<?= base_url() . $currentuser->user_picture ?>" alt="<?= $currentuser->user_firstname . " " . $currentuser->user_lastname ?>">
+            <img src = "<?= base_url().$currentuser->user_picture; ?>" alt="<?= $currentuser->user_firstname.' '.$currentuser->user_lastname; ?>">
         </div>
         <button type = "button" class = "btn btn-primary" data-toggle="modal" data-target="#change_picture"><i class="fa fa-images"></i> Change Picture</button>
     </div>
@@ -63,25 +63,25 @@
         <div class ="row">
             <div class ="col-md-4">
                 <span>Firstname</span>
-                <input type = "text" class = "form-control" value = "<?= $currentuser->user_firstname ?>" readonly="">
+                <input type = "text" class = "form-control" value = "<?= $currentuser->user_firstname; ?>" readonly="">
             </div>
             <div class ="col-md-4">
                 <span>Middlename</span>
-                <input type = "text" class = "form-control" value = "<?= $currentuser->user_middlename ?>" readonly="">
+                <input type = "text" class = "form-control" value = "<?= $currentuser->user_middlename; ?>" readonly="">
             </div>
             <div class ="col-md-4">
                 <span>Lastname</span>
-                <input type = "text" class = "form-control" value = "<?= $currentuser->user_lastname ?>" readonly="">
+                <input type = "text" class = "form-control" value = "<?= $currentuser->user_lastname; ?>" readonly="">
             </div>
         </div>
         <div class="row" style = "margin-top:10px">
             <div class ="col-md-4">
-                <span><?= ucfirst($currentuser->user_access) ?> Number</span>
-                <input type = "text" class = "form-control" value = "<?= $currentuser->user_number ?>" readonly="">
+                <span><?= ucfirst($currentuser->user_access); ?> Number</span>
+                <input type = "text" class = "form-control" value = "<?= $currentuser->user_number; ?>" readonly="">
             </div>
             <div class ="col-md-4">
                 <span>Course</span>
-                <input type = "text" class = "form-control" value = "<?= $currentuser->user_course ?>" readonly="">
+                <input type = "text" class = "form-control" value = "<?= $currentuser->user_course; ?>" readonly="">
             </div>
         </div>
         <br/>
@@ -137,7 +137,7 @@
 <!-- CHANGE PICTURE MODAL -->
 <div class="modal fade" id="change_picture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <form action = "<?= base_url() ?>UserProfile/change_picture_exec" method="POST" enctype="multipart/form-data">
+        <form action = "<?= base_url(); ?>UserProfile/change_picture_exec" method="POST" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -166,7 +166,7 @@
 <!-- CHANGE PASSWORD MODAL -->
 <div class="modal fade" id="change_password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <form action = "<?= base_url() ?>UserProfile/change_password_exec" method="POST">
+        <form action = "<?= base_url(); ?>UserProfile/change_password_exec" method="POST">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -175,17 +175,17 @@
                 <div class="modal-body">
                     <div class = "row">
                         <div class = "col-xs-6">
-                            <div class="form-group <?= !empty(form_error("password")) ? "has-error" : ""; ?>">
+                            <div class="form-group <?= !empty(form_error('password')) ? 'has-error' : ''; ?>">
                                 <span class="control-label">Password</span>
                                 <input type="password" class="form-control" name = "password" placeholder="Password">
-                                <small><?= form_error("password") ?></small>
+                                <small><?= form_error('password'); ?></small>
                             </div>
                         </div>
                         <div class = "col-xs-6">
                             <div class="form-group">
                                 <span class="control-label">Confirm Password</span>
                                 <input type="password" class="form-control" name = "confpassword" placeholder="Confirm Password" >
-                                <small><?= form_error("confpassword") ?></small>
+                                <small><?= form_error('confpassword'); ?></small>
                             </div>
                         </div>
                     </div>

@@ -74,7 +74,7 @@ $(function () { /* DOM ready */
                   <?php
               }
               ?>
-              <option disabled="disabled" style = "background:#ddd;">-- New Violation --</option>
+              <!-- <option disabled="disabled" style = "background:#ddd;">-- New Violation --</option> -->
 
               <!-- <option value="0" data-type = "other" title = "Other Violation" <?= set_select('classification', '0'); ?>>Other Violation</option> -->
             </select>
@@ -105,7 +105,7 @@ $(function () { /* DOM ready */
         </div>
         <div class = "col-sm-4 <?= !empty(form_error("place")) ? "has-error" : ""; ?>">
           <span class="control-label">Place of the Offense Committed</span>
-          <input type="text" class="form-control" name = "place" placeholder="Type Here" value = "<?= set_value("place") ?>">
+          <input type="text" class="form-control" name = "place" placeholder="Type Here" value = "<?= set_value("place", $incident_report->incident_report_place) ?>">
           <small><?= form_error("place") ?></small>
         </div>
       </div>
