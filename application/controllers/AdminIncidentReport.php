@@ -124,7 +124,7 @@ class AdminIncidentReport extends CI_Controller {
 
             //Firabase
             $violation_details = $this->AdminIncidentReport_model->getViolations($violation_id)[0];
-            $this->Notification_model->send($user->user_id, "You have been reported.", "Your violation is " + $violation_details->violation_name + ".");
+            $this->Notification_model->send($user->user_id, "You have been reported.", "Your violation is " . $violation_details->violation_name . ".");
 
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit("admin", "Filed an incident report");
@@ -147,7 +147,7 @@ class AdminIncidentReport extends CI_Controller {
 
         //Firabase
         $incidentReport = $this->AdminIncidentReport_model->getIncidentReport($incidentReportId)[0];
-        $this->Notification_model->send($user->user_id, "You have been reported.", "Your violation is " + $incidentReport->violation_name + ".");
+        $this->Notification_model->send($user->user_id, "You have been reported.", "Your violation is " . $incidentReport->violation_name . ".");
 
         //-- AUDIT TRAIL
         $this->Logger->saveToAudit("admin", "Filed an incident report");
