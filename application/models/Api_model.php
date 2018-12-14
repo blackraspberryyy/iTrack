@@ -32,17 +32,10 @@ class Api_model extends CI_Model {
   }
 
   public function getViolationsList($type = NULL) {
-    $this->db
-      ->select('
-        v.*,
-        e.*,
-        e.effect_hours AS violation_hours
-      ')
-      ->from('violation v')
-      ->join('effects e', 'e.effect_id = v.effect_id');
+    $this->db->from('violation');
 
     if ($type) {
-      $this->db->where('v.violation_type', $type);
+      $this->db->where('violation_type', $type);
     }
 
     $query = $this->db->get();
@@ -114,6 +107,7 @@ class Api_model extends CI_Model {
           'user_id' => $user['user_id'],
           'user_reported_by' => $report['reporter_id'],
           'violation_id' => $report['violation_id'],
+          'effects_id' => 1,
           'incident_report_datetime' => $report['timestamp'],
           'incident_report_place' => $report['location'],
           'incident_report_age' => $report['age'],
@@ -292,6 +286,7 @@ class Api_model extends CI_Model {
 
   // student
   public function getTotalHours($uid = FALSE) {
+    // TODO: get hours per incident_report
     $this->db
       ->select('
         u.user_id AS user_id,
@@ -302,7 +297,7 @@ class Api_model extends CI_Model {
       ->join('incident_report ir', 'ir.incident_report_id = a.incident_report_id')
       ->join('user u', 'u.user_id = ir.user_id')
       ->join('violation v', 'v.violation_id = ir.violation_id')
-      ->join('effects e', 'e.effect_id = v.effect_id')
+      ->join('effects e', 'e.effect_id = ir.effects_id')
       ->where(array(
         'a.attendance_status' => 1,
         'ir.incident_report_status' => 1,

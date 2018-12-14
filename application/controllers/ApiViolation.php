@@ -56,6 +56,7 @@ class ApiViolation extends CI_Controller {
       $report = array(
         'user_reported_by' => $reporter_id,
         'violation_id' => $violation_id,
+        'effects_id' => 1,
         'incident_report_datetime' => $timestamp,
         'incident_report_place' => $location,
         'incident_report_age' => $age,
