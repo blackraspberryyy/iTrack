@@ -20,10 +20,9 @@
     <center><h3>No minor reports so far...</h3></center>
     <?php else:?>
     <div class="table-responsive">
-      <table class="table table-hover datatable">
+      <table class="table table-bordered datatable">
         <thead>
           <tr>
-            <td>Group</td>
             <th>Firstname</th>
             <th>Middlename</th>
             <th>Lastname</th>
@@ -35,7 +34,6 @@
         <tbody>
           <?php foreach($minor_reports as $mr):?>
           <tr>
-            <td><?= $mr->group_id ? $mr->group_id : 'NONE'?></td>
             <td><?= $mr->user_fname?></td>
             <td><?= $mr->user_mname?></td>
             <td><?= $mr->user_lname?></td>

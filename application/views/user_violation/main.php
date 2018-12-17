@@ -125,7 +125,7 @@ function determineStatus($status)
         <center><h3>No minor reports so far...</h3></center>
         <?php else: ?>
         <div class="table-responsive">
-            <table class="table table-hover datatable">
+            <table class="table table-bordered datatable">
                 <thead>
                     <tr>
                         <td>Group</td>

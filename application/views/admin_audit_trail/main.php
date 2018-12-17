@@ -12,7 +12,7 @@
         <h1><?= $cms->audit_trail_title?></h1>
         <h5><?= $cms->audit_trail_text?></h5>
         <div class="table-responsive">
-            <table class="table table-hover datatable">
+            <table class="table table-bordered datatable">
                 <thead>
                     <tr>
                         <th>Date &amp; Time<br><small class = "text-muted">[MM/DD/YYYY] - HH:mm:ss</small></th>
