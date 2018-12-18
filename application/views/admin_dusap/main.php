@@ -160,16 +160,26 @@ function get_data($attendance){
 														<input type="text" class="form-control datetimepicker" name = "endtime" placeholder="Type Here" aria-describedby="endtime" value = "<?= set_value("endtime", date('m/d/Y h:i A', $a->attendance_endtime)) ?>">
 														<small><?= form_error("endtime") ?></small>
 													</div>
-													<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("department")) ? "has-error" : ""; ?>">
+													<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md">
 														<span class="control-label" id="department">Department</span>
-														<input type="text" class="form-control" name = "department" placeholder="(e.g. Admissions)" aria-describedby="department" value = "<?= set_value("department", $a->attendance_dept) ?>">
-														<small><?= form_error("department") ?></small>
+														<select class="form-control" name="department">
+															<?php foreach($depts as $dept):?>
+															<option value="<?= $dept->dept_id?>" title="<?= "Supervisor: ".$dept->dept_supervisor?>" <?= $a->dept_id === $dept->dept_id ? 'selected' : ''?>><?= $dept->dept_name." - ".$dept->dept_supervisor?></option>
+															<?php endforeach;?>
+														</select>
 													</div>
-													<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("supervisor")) ? "has-error" : ""; ?>">
-														<span class="control-label" id="supervisor">Supervisor</span>
-														<input type="text" class="form-control" name = "supervisor" placeholder="(e.g. John Doe)" aria-describedby="supervisor" value = "<?= set_value("supervisor", $a->attendance_supervisor) ?>">
-														<small><?= form_error("supervisor") ?></small>
-													</div>
+													<!--
+														<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("department")) ? "has-error" : ""; ?>">
+															<span class="control-label" id="department">Department</span>
+															<input type="text" class="form-control" name = "department" placeholder="(e.g. Admissions)" aria-describedby="department" value = "<?= set_value("department", $a->attendance_dept) ?>">
+															<small><?= form_error("department") ?></small>
+														</div>
+														<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("supervisor")) ? "has-error" : ""; ?>">
+															<span class="control-label" id="supervisor">Supervisor</span>
+															<input type="text" class="form-control" name = "supervisor" placeholder="(e.g. John Doe)" aria-describedby="supervisor" value = "<?= set_value("supervisor", $a->attendance_supervisor) ?>">
+															<small><?= form_error("supervisor") ?></small>
+														</div>
+													-->
 												</div>
 											</div>
 											<div class="modal-footer">
@@ -290,16 +300,26 @@ function get_data($attendance){
 							<input type="text" class="form-control datetimepicker" name = "endtime" placeholder="Type Here" aria-describedby="endtime" value = "<?= set_value("endtime") ?>">
 							<small><?= form_error("endtime") ?></small>
 						</div>
-						<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("department")) ? "has-error" : ""; ?>">
+						<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md">
 							<span class="control-label" id="department">Department</span>
-							<input type="text" class="form-control" name = "department" placeholder="(e.g. Admissions)" aria-describedby="department" value = "<?= set_value("department") ?>">
-							<small><?= form_error("department") ?></small>
+							<select class="form-control" name="department">
+								<?php foreach($depts as $dept):?>
+								<option value="<?= $dept->dept_id?>" title="<?= "Supervisor: ".$dept->dept_supervisor?>"><?= $dept->dept_name." - ".$dept->dept_supervisor?></option>
+								<?php endforeach;?>
+							</select>
 						</div>
-						<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("supervisor")) ? "has-error" : ""; ?>">
-							<span class="control-label" id="supervisor">Supervisor</span>
-							<input type="text" class="form-control" name = "supervisor" placeholder="(e.g. John Doe)" aria-describedby="supervisor" value = "<?= set_value("supervisor") ?>">
-							<small><?= form_error("supervisor") ?></small>
-						</div>
+						<!--
+							<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("supervisor")) ? "has-error" : ""; ?>">
+								<span class="control-label" id="supervisor">Supervisor</span>
+								<input type="text" class="form-control" name = "supervisor" aria-describedby="supervisor" value = "<?= set_value("supervisor") ?>">
+								<small><?= form_error("supervisor") ?></small>
+							</div>
+							<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md <?= !empty(form_error("department")) ? "has-error" : ""; ?>">
+								<span class="control-label" id="department">Department</span>
+								<input type="text" class="form-control" name = "department" placeholder="(e.g. Admissions)" aria-describedby="department" value = "<?= set_value("department") ?>">
+								<small><?= form_error("department") ?></small>
+							</div>
+						-->
 					</div>
 				</div>
 				<div class="modal-footer">

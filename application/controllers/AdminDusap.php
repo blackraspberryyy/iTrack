@@ -32,6 +32,7 @@
                 'title'             => "DUSAP",
                 'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                 'cms'               => $this->AdminCMS_model->getCMS()[0],
+                'depts'             => $this->AdminDusap_model->getDept(),
                 'incident_report'   => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
                 'attendance'        => $this->AdminDusap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
                 'total_hours'       => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
@@ -63,7 +64,6 @@
             $this->form_validation->set_rules('starttime', 'Start Date and Time', 'required');
             $this->form_validation->set_rules('endtime', 'End Date and Time', 'required|callback_valid_endtime');
             $this->form_validation->set_rules('department', 'Department', 'required');
-            $this->form_validation->set_rules('supervisor', 'Supervisor', 'required');
 
             if ($this->form_validation->run() == FALSE) {
                 $this->session->set_userdata('error_modal', $this->input->post('modal_type'));
@@ -71,6 +71,7 @@
                     'title'             => "DUSAP",
                     'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                     'cms'               => $this->AdminCMS_model->getCMS()[0],
+                    'depts'             => $this->AdminDusap_model->getDept(),
                     'incident_report'   => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
                     'attendance'        => $this->AdminDusap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
                     'total_hours'       => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
@@ -91,8 +92,7 @@
 
                 $attendance = array(
                     'incident_report_id'        => $this->session->userdata('incident_report_id'),
-                    'attendance_dept'           => $this->input->post('department'),
-                    'attendance_supervisor'     => $this->input->post('supervisor'),
+                    'dept_id'                   => $this->input->post('department'),
                     'attendance_hours_rendered' => $this->get_timestamp_diff_in_hours($starttime, $endtime),
                     'attendance_status'         => 1,
                     'attendance_starttime'      => $starttime,
@@ -114,14 +114,16 @@
             $this->form_validation->set_rules('starttime', 'Start Date and Time', 'required');
             $this->form_validation->set_rules('endtime', 'End Date and Time', 'required|callback_valid_endtime');
             $this->form_validation->set_rules('department', 'Department', 'required');
-            $this->form_validation->set_rules('supervisor', 'Supervisor', 'required');
 
             if ($this->form_validation->run() == FALSE) {
                 $this->session->set_userdata('error_modal', $this->input->post('modal_type'));
+                //echo validation_errors();
+                exit;
                 $data = array(
                     'title'             => "DUSAP",
                     'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                     'cms'               => $this->AdminCMS_model->getCMS()[0],
+                    'depts'             => $this->AdminDusap_model->getDept(),
                     'incident_report'   => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
                     'attendance'        => $this->AdminDusap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
                     'total_hours'       => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
@@ -142,8 +144,7 @@
 
                 $attendance = array(
                     'incident_report_id'        => $this->session->userdata('incident_report_id'),
-                    'attendance_dept'           => $this->input->post('department'),
-                    'attendance_supervisor'     => $this->input->post('supervisor'),
+                    'dept_id'                   => $this->input->post('department'),
                     'attendance_hours_rendered' => $this->get_timestamp_diff_in_hours($starttime, $endtime),
                     'attendance_status'         => 1,
                     'attendance_starttime'      => $starttime,
@@ -172,8 +173,7 @@
                 // add attendance
                 $attendance = array(
                     'incident_report_id'        => $incident_report_id,
-                    'attendance_dept'           => '-',
-                    'attendance_supervisor'     => '-',
+                    'dept_id'                   => 0,
                     'attendance_hours_rendered' => $violation_hours - $hours_rendered,
                     'attendance_status'         => 1,
                     'attendance_starttime'      => 0,

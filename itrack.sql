@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2018 at 06:19 PM
+-- Generation Time: Dec 18, 2018 at 05:44 PM
 -- Server version: 5.7.24
--- PHP Version: 7.2.5
+-- PHP Version: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -58,8 +58,7 @@ INSERT INTO `admin` (`admin_id`, `admin_number`, `admin_firstname`, `admin_lastn
 CREATE TABLE `attendance` (
   `attendance_id` int(11) NOT NULL,
   `incident_report_id` int(11) NOT NULL,
-  `attendance_dept` varchar(255) NOT NULL,
-  `attendance_supervisor` varchar(255) NOT NULL,
+  `dept_id` int(11) NOT NULL,
   `attendance_hours_rendered` int(11) NOT NULL,
   `attendance_status` int(11) NOT NULL DEFAULT '1',
   `attendance_starttime` int(11) NOT NULL,
@@ -71,12 +70,8 @@ CREATE TABLE `attendance` (
 -- Dumping data for table `attendance`
 --
 
-INSERT INTO `attendance` (`attendance_id`, `incident_report_id`, `attendance_dept`, `attendance_supervisor`, `attendance_hours_rendered`, `attendance_status`, `attendance_starttime`, `attendance_endtime`, `attendance_created_at`) VALUES
-(1, 2, 'Admissions', 'John Doe', 1, 1, 1539392400, 1539396060, 1539528072),
-(4, 2, 'ITE Dept.', 'John Doe', 12, 1, 1539533760, 1539576960, 1539533829),
-(10, 3, 'Admissions', 'John Doe', 12, 1, 1540353060, 1540396260, 1540396274),
-(13, 3, '-', '-', 88, 1, 0, 0, 1540398197),
-(14, 4, 'dsa', 'dsa', 24, 1, 1544797740, 1544884140, 1544711439);
+INSERT INTO `attendance` (`attendance_id`, `incident_report_id`, `dept_id`, `attendance_hours_rendered`, `attendance_status`, `attendance_starttime`, `attendance_endtime`, `attendance_created_at`) VALUES
+(1, 2, 2, 13, 1, 1544459220, 1544506020, 1545150447);
 
 -- --------------------------------------------------------
 
@@ -122,6 +117,27 @@ CREATE TABLE `cms` (
 
 INSERT INTO `cms` (`cms_id`, `dusap_title`, `dusap_text`, `incident_report_title`, `incident_report_text`, `email_title`, `email_text`, `audit_trail_title`, `audit_trail_text`, `student_handbook_title`, `student_handbook_text`, `cms_title`, `cms_text`, `monthly_report_title`, `monthly_report_text`, `google_drive_title`, `google_drive_text`, `user_logs_title`, `user_logs_text`, `user_title`, `user_text`, `faq_title`, `faq_text`, `offense_report_title`, `offense_report_text`, `announcement_title`, `announcement_text`, `minor_reports_title`, `minor_reports_text`) VALUES
 (1, 'DUSAP', 'Discipline Unit Student Assistant Program', 'Incident Report', 'File an incident report to a student who committed an offense.', 'Send Email', 'Send Email to someone', 'Audit Trail', 'Track the changes made in iTrack System', 'Student Handbook', 'PDF Version of the FEU Institute of Technology Student Handbook', 'CMS', 'Content Management System for iTrack\'s Web Application', 'Monthly Report', 'Monitor iTrack with this monthly report page.', 'Google Drive', 'Access iTrack\'s Google Drive files here.', 'User Logs', 'Monitor iTrack\'s user logs here.', 'Users Profile', 'See user\'s profile here.', 'FAQ', 'Frequently Asked Question<div><br></div><div><br></div><div><br></div><span style=\"color: rgb(0, 0, 0); font-family: \" helvetica=\"\" neue\",=\"\" \"segoe=\"\" ui\",=\"\" helvetica,=\"\" arial,=\"\" sans-serif;=\"\" white-space:=\"\" pre-wrap;=\"\" background-color:=\"\" rgb(241,=\"\" 240,=\"\" 240);\"=\"\"><b>1. How many minor violations does it take to have 1 major violation?</b></span><div><span style=\"color: rgb(0, 0, 0); font-family: \" helvetica=\"\" neue\",=\"\" \"segoe=\"\" ui\",=\"\" helvetica,=\"\" arial,=\"\" sans-serif;=\"\" white-space:=\"\" pre-wrap;=\"\" background-color:=\"\" rgb(241,=\"\" 240,=\"\" 240);\"=\"\">       - 15 minor violations.\r\n</span><div><span style=\"background-color: rgb(241, 240, 240); color: rgb(0, 0, 0); font-family: \" helvetica=\"\" neue\",=\"\" \"segoe=\"\" ui\",=\"\" helvetica,=\"\" arial,=\"\" sans-serif;=\"\" white-space:=\"\" pre-wrap;=\"\" letter-spacing:=\"\" 0px;\"=\"\"><b>2. How many hours does a student need to serve for the DUSAP?</b></span></div><div><span style=\"background-color: rgb(241, 240, 240); color: rgb(0, 0, 0); font-family: \" helvetica=\"\" neue\",=\"\" \"segoe=\"\" ui\",=\"\" helvetica,=\"\" arial,=\"\" sans-serif;=\"\" white-space:=\"\" pre-wrap;=\"\" letter-spacing:=\"\" 0px;\"=\"\"><b>      </b> - It usually around 100hrs and above depending on the violation type and count.</span></div><div><span style=\"background-color: rgb(241, 240, 240); color: rgb(0, 0, 0); font-family: \" helvetica=\"\" neue\",=\"\" \"segoe=\"\" ui\",=\"\" helvetica,=\"\" arial,=\"\" sans-serif;=\"\" white-space:=\"\" pre-wrap;=\"\" letter-spacing:=\"\" 0px;\"=\"\"><b>3. What if my guardian/ parent cannot come to the Discipline Unit personally?</b></span></div></div><div><span style=\"background-color: rgb(241, 240, 240); color: rgb(0, 0, 0); font-family: \" helvetica=\"\" neue\",=\"\" \"segoe=\"\" ui\",=\"\" helvetica,=\"\" arial,=\"\" sans-serif;=\"\" white-space:=\"\" pre-wrap;=\"\" letter-spacing:=\"\" 0px;\"=\"\">     - Lorem ipsum dolor sit amet consectatur adipiscing elit.</span></div>', 'Offense Report', 'Summarized Report of the incident report.', 'Announcement', 'All violators must complete their DUSAP  Attendance as stated in the Student Handbook.', 'Minor Reports', 'Here are the minor reports from the iTrack App');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dept`
+--
+
+CREATE TABLE `dept` (
+  `dept_id` int(11) NOT NULL,
+  `dept_name` varchar(255) NOT NULL,
+  `dept_supervisor` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dept`
+--
+
+INSERT INTO `dept` (`dept_id`, `dept_name`, `dept_supervisor`) VALUES
+(0, '-', '-'),
+(1, 'CS', 'Joan Ace Valdez'),
+(2, 'ITE', 'Ruth Manook');
 
 -- --------------------------------------------------------
 
@@ -175,7 +191,7 @@ CREATE TABLE `incident_report` (
 INSERT INTO `incident_report` (`incident_report_id`, `user_id`, `user_reported_by`, `violation_id`, `effects_id`, `incident_report_ref_id`, `incident_report_datetime`, `incident_report_place`, `incident_report_age`, `incident_report_section_year`, `incident_report_message`, `incident_report_status`, `incident_report_isAccepted`, `incident_report_added_at`) VALUES
 (1, 3, 4, 18, 1, NULL, 1530611400, 'F1202 FIT', 19, 'W31/2018', 'Student has been disrespectful since the day we met.', 1, 1, 1531802826),
 (2, 2, NULL, 24, 1, NULL, 1535781302, 'somwehere', 19, 'W31/3rd', 'asd', 1, 1, 1535781302),
-(3, 1, NULL, 24, 1, NULL, 1537502785, 'F1206', 19, 'W41', 'ASD', 0, 1, 1537502785);
+(3, 1, NULL, 24, 1, NULL, 1537502785, 'F1206', 19, 'W41', 'ASD', 1, 1, 1537502785);
 
 -- --------------------------------------------------------
 
@@ -238,7 +254,12 @@ INSERT INTO `log` (`log_id`, `user_id`, `log_type`, `log_desc`, `log_added_at`) 
 (43, 4, 'log', 'Logged in', 1541325738),
 (44, NULL, 'log', 'Logged out', 1541333343),
 (45, NULL, 'trail', 'Add attendance in DUSAP', 1544711439),
-(46, NULL, 'trail', 'Filed an incident report', 1544713063);
+(46, NULL, 'trail', 'Filed an incident report', 1544713063),
+(47, NULL, 'trail', 'Add attendance in DUSAP', 1545148734),
+(48, NULL, 'trail', 'Add attendance in DUSAP', 1545150116),
+(49, NULL, 'trail', 'Edited attendance in DUSAP', 1545150142),
+(50, NULL, 'trail', 'Add attendance in DUSAP', 1545150447),
+(51, NULL, 'trail', 'Edited attendance in DUSAP', 1545150455);
 
 -- --------------------------------------------------------
 
@@ -477,13 +498,20 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `attendance`
   ADD PRIMARY KEY (`attendance_id`),
-  ADD KEY `fk_dussap_incident_report_id` (`incident_report_id`);
+  ADD KEY `fk_dussap_incident_report_id` (`incident_report_id`),
+  ADD KEY `fk_dept` (`dept_id`);
 
 --
 -- Indexes for table `cms`
 --
 ALTER TABLE `cms`
   ADD PRIMARY KEY (`cms_id`);
+
+--
+-- Indexes for table `dept`
+--
+ALTER TABLE `dept`
+  ADD PRIMARY KEY (`dept_id`);
 
 --
 -- Indexes for table `effects`
@@ -553,13 +581,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `cms`
 --
 ALTER TABLE `cms`
   MODIFY `cms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `dept`
+--
+ALTER TABLE `dept`
+  MODIFY `dept_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `effects`
@@ -571,13 +605,13 @@ ALTER TABLE `effects`
 -- AUTO_INCREMENT for table `incident_report`
 --
 ALTER TABLE `incident_report`
-  MODIFY `incident_report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `incident_report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `minor_reports`
@@ -612,6 +646,13 @@ ALTER TABLE `violation`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD CONSTRAINT `fk_dept` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`dept_id`),
+  ADD CONSTRAINT `fk_inc_report` FOREIGN KEY (`incident_report_id`) REFERENCES `incident_report` (`incident_report_id`);
 
 --
 -- Constraints for table `incident_report`

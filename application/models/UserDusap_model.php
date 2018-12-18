@@ -2,12 +2,14 @@
 
 class UserDusap_model extends CI_Model
 {
-    public function getAttendance($where = null)
-    {
-        if ($where !== null) {
+    function getAttendance($where = NULL){
+        if($where !== NULL){
             $this->db->where($where);
         }
-        $this->db->select('att.*, ir.*, u.*,'
+        $this->db->select('ir.*, u.*, att.*,'
+            .'d.dept_id,'
+            .'d.dept_name AS attendance_dept,'
+            .'d.dept_supervisor AS attendance_supervisor,'
             .'u2.user_id AS reportedby_id,'
             .'u2.user_number AS reportedby_number,'
             .'u2.user_firstname AS reportedby_firstname,'
@@ -23,13 +25,13 @@ class UserDusap_model extends CI_Model
             .'v.*'
         );
         $this->db->from('attendance AS att');
-        $this->db->join('incident_report AS ir', 'att.incident_report_id = ir.incident_report_id', 'LEFT OUTER');
-        $this->db->join('user AS u', 'ir.user_id = u.user_id', 'LEFT OUTER');
-        $this->db->join('user AS u2', 'ir.user_reported_by = u2.user_id', 'LEFT OUTER');
-        $this->db->join('violation AS v', 'ir.violation_id = v.violation_id', 'LEFT OUTER');
-        $this->db->order_by('att.attendance_created_at', 'asc');
+        $this->db->join('dept AS d', 'att.dept_id = d.dept_id','LEFT OUTER');
+        $this->db->join('incident_report AS ir', 'att.incident_report_id = ir.incident_report_id','LEFT OUTER');
+        $this->db->join('user AS u', 'ir.user_id = u.user_id','LEFT OUTER');
+        $this->db->join('user AS u2', 'ir.user_reported_by = u2.user_id','LEFT OUTER');
+        $this->db->join('violation AS v', 'ir.violation_id = v.violation_id','LEFT OUTER');
+        $this->db->order_by("att.attendance_created_at", "asc");
         $query = $this->db->get();
-
         return ($query->num_rows() > 0) ? $query->result() : false;
     }
 }
