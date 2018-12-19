@@ -121,6 +121,7 @@ function determineStatus($status)
 										<?php if ($report->incident_report_status != 0) : ?>
 											<a href="<?= base_url(); ?>AdminIncidentReport/edit_exec/<?= $report->incident_report_id; ?>" class="btn btn-warning">Edit</a>
 										<?php endif; ?>
+										<a href="<?= base_url(); ?>AdminIncidentReport/print_tempId_exec/<?= $report->incident_report_id; ?>" class="btn btn-info">Print</a>
 									</div>
 								</td>
 							</tr>
