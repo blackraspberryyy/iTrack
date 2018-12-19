@@ -121,7 +121,7 @@ function determineStatus($status)
 										<?php if ($report->incident_report_status != 0) : ?>
 											<a href="<?= base_url(); ?>AdminIncidentReport/edit_exec/<?= $report->incident_report_id; ?>" class="btn btn-warning">Edit</a>
 										<?php endif; ?>
-										<a href="<?= base_url(); ?>AdminIncidentReport/print_tempId_exec/<?= $report->incident_report_id; ?>" class="btn btn-info">Print</a>
+										<a href="<?= base_url(); ?>AdminIncidentReport/print_tempId_exec/<?= $report->incident_report_id; ?>" class="btn btn-info" target="_blank">Print Gatepass ID</a>
 									</div>
 								</td>
 							</tr>
@@ -146,7 +146,7 @@ function determineStatus($status)
 
 															<?php if ($report->incident_report_status == 1) : ?>
 																<?php if ($report->effect_id == 1) : ?>
-																	<a href="<?= base_url().'AdminDusap/view_exec/'.$report->incident_report_id; ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
+																	<a href="<?= base_url().'AdminDusap/view_exec/'.$report->incident_report_id."/".$report->user_id; ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
 																<?php elseif ($report->effect_id == 2) : ?>
 																	<a href="#" data-toggle = "modal" data-target = "#view_suspension_detail" class="btn btn-primary">See Suspension Details</a>
 																<?php elseif ($report->effect_id == 3) : ?>
@@ -155,7 +155,7 @@ function determineStatus($status)
 																	<a href="#" data-toggle = "modal" data-target = "#view_expulsion_detail"  class="btn btn-primary">See Expulsion Details</a>
 																<?php endif; ?>
 															<?php else : ?>
-																<a href="<?= base_url().'AdminOffenseReport/view_exec/'.$report->incident_report_id; ?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
+																<a href="<?= base_url().'AdminOffenseReport/view_exec/'.$report->incident_report_id."/".$report->user_id; ?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
 															<?php endif; ?>
 														</center>
 													</div>
@@ -445,24 +445,24 @@ function determineStatus($status)
 																	<h6><?= determineStatus($report->incident_report_status); ?></h6>
 
 																	<?php if ($report->incident_report_status == 1) : ?>
-																		<a href="<?= base_url().'AdminDusap/view_exec/'.$report->incident_report_id; ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
+																		<a href="<?= base_url().'AdminDusap/view_exec/'.$report->incident_report_id."/".$report->user_id; ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
 																	<?php else : ?>
-																		<a href="<?= base_url().'AdminOffenseReport/view_exec/'.$report->incident_report_id; ?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
+																		<a href="<?= base_url().'AdminOffenseReport/view_exec/'.$report->incident_report_id."/".$report->user_id; ?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
 																	<?php endif; ?>
 																</center>
 															</div>
 															<div class="col-xs-6 margin-top-lg text-center">
 																<h5><strong>Reported By:</strong></h5>
 																<span><?php
-                                                                                    if ($report->reportedby_id != '') {
-                                                                                        //if REPORTED_BY teacher, get user's name
-                                                                                        echo $report->reportedby_firstname.' '.($report->reportedby_middlename == '' ? '' : substr($report->reportedby_middlename, 0, 1).'. ').$report->reportedby_lastname;
-                                                                                        echo " <small class = 'text-muted'><b>(".$report->reportedby_access.')</b></small>';
-                                                                                    } else {
-                                                                                        //if REPORTED_BY admin, get admin's name
-                                                                                        echo 'Admin';
-                                                                                    }
-                                                                                    ?></span>
+																	if ($report->reportedby_id != '') {
+																		//if REPORTED_BY teacher, get user's name
+																		echo $report->reportedby_firstname.' '.($report->reportedby_middlename == '' ? '' : substr($report->reportedby_middlename, 0, 1).'. ').$report->reportedby_lastname;
+																		echo " <small class = 'text-muted'><b>(".$report->reportedby_access.')</b></small>';
+																	} else {
+																		//if REPORTED_BY admin, get admin's name
+																		echo 'Admin';
+																	}
+																	?></span>
 																<br/>
 																<br/>
 																<h5><strong>Place</strong></h5>

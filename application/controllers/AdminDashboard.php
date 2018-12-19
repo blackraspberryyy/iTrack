@@ -22,16 +22,16 @@ class AdminDashboard extends CI_Controller {
         $where = array(
             "admin_id" => $this->session->userdata("userid")
         );
-        
+
         $data = array(
             'title'             => "Home",
             'currentadmin'      => $this->AdminDashboard_model->getAdmin($where)[0],
             'cms'               => $this->AdminCMS_model->getCMS()[0],
             'users'             => $this->AdminDashboard_model->getUsers(),
-            'students_count'    => count($this->AdminDashboard_model->getUsers(array("user_access" => "student"))),
-            'teacher_count'    => count($this->AdminDashboard_model->getUsers(array("user_access" => "teacher"))),
-            'ongoing_incident_reports_count' => count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 0))),
-            'finished_incident_reports_count' => count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 1)))
+            'students_count'    => $this->AdminDashboard_model->getUsers(array("user_access" => "student")) != "" ? count($this->AdminDashboard_model->getUsers(array("user_access" => "student"))) : 0,
+            'teacher_count'    => $this->AdminDashboard_model->getUsers(array("user_access" => "teacher")) != "" ? count($this->AdminDashboard_model->getUsers(array("user_access" => "teacher"))) : 0,
+            'ongoing_incident_reports_count' => $this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 0)) != "" ? count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 0))) : 0,
+            'finished_incident_reports_count' => $this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 1)) != "" ?  count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 1))) : 0
 
         );
         $this->load->view("admin_includes/nav_header", $data);
@@ -41,10 +41,10 @@ class AdminDashboard extends CI_Controller {
     
     public function reports(){
         $users = $this->AdminDashboard_model->getUsers();
-        $students_count = count($this->AdminDashboard_model->getUsers(array("user_access" => "student")));
-        $teacher_count = count($this->AdminDashboard_model->getUsers(array("user_access" => "teacher")));
-        $ongoing_incident_reports_count = count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 0)));
-        $finished_incident_reports_count = count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 1)));
+        $students_count = $this->AdminDashboard_model->getUsers(array("user_access" => "student")) != "" ? count($this->AdminDashboard_model->getUsers(array("user_access" => "student"))) : 0;
+        $teacher_count = $this->AdminDashboard_model->getUsers(array("user_access" => "teacher")) != "" ? count($this->AdminDashboard_model->getUsers(array("user_access" => "teacher"))) : 0;
+        $ongoing_incident_reports_count = $this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 0)) != "" ? count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 0))) : 0;
+        $finished_incident_reports_count = $this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 1)) != "" ? count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 1))) : 0;
         $wma = 0;
         $agd = 0;
         $da = 0;

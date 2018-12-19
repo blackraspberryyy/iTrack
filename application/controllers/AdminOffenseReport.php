@@ -21,6 +21,8 @@ class AdminOffenseReport extends CI_Controller {
   }
   function view_exec(){
     $this->session->set_userdata("incident_report_id", $this->uri->segment(3));
+    $this->session->set_userdata('incident_report_user_id', $this->uri->segment(4));
+
     redirect(base_url().'AdminOffenseReport/view');
   }
   function view(){

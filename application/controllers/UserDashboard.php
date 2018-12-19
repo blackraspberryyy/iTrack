@@ -22,7 +22,7 @@ class UserDashboard extends CI_Controller
     public function index()
     {
         $incidentReport = $this->UserIncidentReport_model->getIncidentReport(array('u.user_id' => $this->session->userdata('userid'), 'incident_report_status' => 1))[0];
-
+        
         $where = array(
             'user_id' => $this->session->userdata('userid'),
         );
@@ -37,6 +37,8 @@ class UserDashboard extends CI_Controller
             'title' => 'Home',
             'currentuser' => $currentUser,
             'cms' => $this->AdminCMS_model->getCMS()[0],
+            'overall_violation_hours'   => $this->AdminIncidentReport_model->getOverallViolationHours($currentUser->user_id)[0]->violation_hours ? $this->AdminIncidentReport_model->getOverallViolationHours($currentUser->user_id)[0]->violation_hours : 0,
+            'overall_rendered_hours'    => $this->AdminIncidentReport_model->getOverallRenderedHours($currentUser->user_id)[0]->rendered_hours ? $this->AdminIncidentReport_model->getOverallRenderedHours($currentUser->user_id)[0]->rendered_hours : 0,
             'total_hours' => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $incidentReport->incident_report_id))[0],
             'attendance' => $attendance,
             'incident_report' => $incidentReport,

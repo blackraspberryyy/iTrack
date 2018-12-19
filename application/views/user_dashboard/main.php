@@ -19,7 +19,19 @@
 </div>
 <?php if($currentuser->user_access == "student"):?>
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Overall Attendance Progress</div>
+            <div class="panel panel-body">
+                <div class="second circle overall">
+					<strong></strong>
+				</div>
+				<br/><br/>
+				<p class="muted">*Overall Attendance Progress on active incident report/s of this user</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
         <div class="text-center">
             <div class="panel panel-primary">
                 <div class="panel panel-heading">Attendance Progress</div>
@@ -105,6 +117,17 @@ function get_data($attendance) {
             fill: {color: ["#037236"]}
         }).on('circle-animation-progress', function (event, progress) {
             $(this).find('strong').html((<?= $total_hours->hours_rendered ? $total_hours->hours_rendered : 0 ?> * progress).toFixed(2).replace(/[.,]00$/, "") + '<i>&nbsp;/&nbsp;</i>' + <?= $incident_report->violation_hours ?> + '<br/>hrs');
+        });
+        $('.second.circle.overall').circleProgress({
+            size:160,
+            value: <?= $overall_rendered_hours/$overall_violation_hours?>,
+            animation:{
+                duration:3000,
+                easing: "circleProgressEasing"
+            },
+            fill: { color: ["#037236"] }
+        }).on('circle-animation-progress', function(event, progress) {
+            $(this).find('strong').html((<?= $overall_rendered_hours ? $overall_rendered_hours : 0?> * progress).toFixed(2).replace(/[.,]00$/, "") + '<i>&nbsp;/&nbsp;</i>' + <?= $overall_violation_hours?> + '<br/>hrs');
         });
         //Bar Chart
         var labels = [' ', <?php get_labels($attendance) ?>];

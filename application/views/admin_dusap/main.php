@@ -72,7 +72,7 @@ function get_data($attendance){
 	</div>
 </div>
 <div class="row margin-top-lg">
-	<div class="col-xs-12">
+	<div class="col-xs-8">
 		<div class="panel panel-primary">
 			<div class="panel panel-heading text-center">Attendance Record</div>
 			<div class="panel panel-body">
@@ -81,7 +81,7 @@ function get_data($attendance){
 						<button type = "button"  data-toggle="modal" data-target="#add_attendance" class="btn btn-primary margin-right-md"><i class="fa fa-plus"></i> Add Attendance Record</button>
 						<button type = "button"  data-toggle="modal" data-target="#finish_attendance" class="btn btn-secondary"><i class="fa fa-check"></i> Finish DUSAP Attendance</button>
 					<?php else:?>
-						<a href="<?=base_url().'AdminOffenseReport/view_exec/'.$incident_report->incident_report_id?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> See Offense Report</a>
+						<a href="<?=base_url().'AdminOffenseReport/view_exec/'.$incident_report->incident_report_id."/".$incident_report->user_id?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> See Offense Report</a>
 					<?php endif;?>
 				</div>
 				<br/><br/><br/>
@@ -204,6 +204,18 @@ function get_data($attendance){
 			</div>
 		</div>
 		
+	</div>
+	<div class="col-xs-4">
+		<div class="panel panel-primary">
+			<div class="panel panel-heading text-center">Overall Attendance Progress</div>
+			<div class="panel panel-body">
+				<div class="second circle overall">
+					<strong></strong>
+				</div>
+				<br/><br/>
+				<p class="muted">*Overall Attendance Progress on active incident report/s of this user</p>
+			</div>
+		</div>
 	</div>
 </div>
 <div class="row margin-top-lg">
@@ -365,6 +377,18 @@ window.onload = function () {
 		fill: { color: ["#037236"] }
 	}).on('circle-animation-progress', function(event, progress) {
 		$(this).find('strong').html((<?= $total_hours->hours_rendered ? $total_hours->hours_rendered : 0?> * progress).toFixed(2).replace(/[.,]00$/, "") + '<i>&nbsp;/&nbsp;</i>' + <?= $incident_report->violation_hours?> + '<br/>hrs');
+	});
+
+	$('.second.circle.overall').circleProgress({
+		size:160,
+		value: <?= $overall_rendered_hours/$overall_violation_hours?>,
+		animation:{
+			duration:3000,
+			easing: "circleProgressEasing"
+		},
+		fill: { color: ["#037236"] }
+	}).on('circle-animation-progress', function(event, progress) {
+		$(this).find('strong').html((<?= $overall_rendered_hours ? $overall_rendered_hours : 0?> * progress).toFixed(2).replace(/[.,]00$/, "") + '<i>&nbsp;/&nbsp;</i>' + <?= $overall_violation_hours?> + '<br/>hrs');
 	});
 	//Bar Chart
 	var labels = [' ', <?php get_labels($attendance)?>];

@@ -61,6 +61,8 @@ class UserDusap extends CI_Controller {
             'cms' => $this->AdminCMS_model->getCMS()[0],
             'currentMonthAttendances' => $currentMonthAttendances,
             'currentMonth' => $this->get_month($currentMonth),
+            'overall_violation_hours'   => $this->AdminIncidentReport_model->getOverallViolationHours($this->session->userdata("userid"))[0]->violation_hours ? $this->AdminIncidentReport_model->getOverallViolationHours($this->session->userdata("userid"))[0]->violation_hours : 0,
+            'overall_rendered_hours'    => $this->AdminIncidentReport_model->getOverallRenderedHours($this->session->userdata("userid"))[0]->rendered_hours ? $this->AdminIncidentReport_model->getOverallRenderedHours($this->session->userdata("userid"))[0]->rendered_hours : 0,
             'incident_report' => $incidentReport,
             'months' => $months,
             'attendance' => $attendance,
@@ -89,6 +91,8 @@ class UserDusap extends CI_Controller {
             'months' => $months,
             'currentMonthAttendances' => $currentMonthAttendances,
             'currentMonth' => $this->get_month($monthSelected),
+            'overall_violation_hours'   => $this->AdminIncidentReport_model->getOverallViolationHours($this->session->userdata("userid"))[0]->violation_hours ? $this->AdminIncidentReport_model->getOverallViolationHours($this->session->userdata("userid"))[0]->violation_hours : 0,
+            'overall_rendered_hours'    => $this->AdminIncidentReport_model->getOverallRenderedHours($this->session->userdata("userid"))[0]->rendered_hours ? $this->AdminIncidentReport_model->getOverallRenderedHours($this->session->userdata("userid"))[0]->rendered_hours : 0,
             'incident_report' => $incidentReport,
             'attendance' => $attendance,
             'total_hours' => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $incidentReport->incident_report_id))[0]

@@ -25,17 +25,21 @@
         }
         function view_exec(){
             $this->session->set_userdata('incident_report_id', $this->uri->segment(3));
+            $this->session->set_userdata('incident_report_user_id', $this->uri->segment(4));
             redirect(base_url().'AdminDusap/view');
         }
         function view(){
+            $user_id = $this->session->userdata('incident_report_user_id');
             $data = array(
-                'title'             => "DUSAP",
-                'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
-                'cms'               => $this->AdminCMS_model->getCMS()[0],
-                'depts'             => $this->AdminDusap_model->getDept(),
-                'incident_report'   => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
-                'attendance'        => $this->AdminDusap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
-                'total_hours'       => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
+                'title'                     => "DUSAP",
+                'currentadmin'              => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
+                'cms'                       => $this->AdminCMS_model->getCMS()[0],
+                'depts'                     => $this->AdminDusap_model->getDept(),
+                'incident_report'           => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
+                'overall_violation_hours'   => $this->AdminIncidentReport_model->getOverallViolationHours($user_id)[0]->violation_hours ? $this->AdminIncidentReport_model->getOverallViolationHours($user_id)[0]->violation_hours : 0,
+                'overall_rendered_hours'    => $this->AdminIncidentReport_model->getOverallRenderedHours($user_id)[0]->rendered_hours ? $this->AdminIncidentReport_model->getOverallRenderedHours($user_id)[0]->rendered_hours : 0,
+                'attendance'                => $this->AdminDusap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
+                'total_hours'               => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
             );
             $this->load->view("admin_includes/nav_header", $data);
             $this->load->view("admin_dusap/main");
@@ -72,6 +76,8 @@
                     'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                     'cms'               => $this->AdminCMS_model->getCMS()[0],
                     'depts'             => $this->AdminDusap_model->getDept(),
+                    'overall_violation_hours'   => $this->AdminIncidentReport_model->getOverallViolationHours($user_id)[0]->violation_hours ? $this->AdminIncidentReport_model->getOverallViolationHours($user_id)[0]->violation_hours : 0,
+                    'overall_rendered_hours'    => $this->AdminIncidentReport_model->getOverallRenderedHours($user_id)[0]->rendered_hours ? $this->AdminIncidentReport_model->getOverallRenderedHours($user_id)[0]->rendered_hours : 0,
                     'incident_report'   => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
                     'attendance'        => $this->AdminDusap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
                     'total_hours'       => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]
@@ -124,6 +130,8 @@
                     'currentadmin'      => $this->AdminDashboard_model->getAdmin(array("admin_id" => $this->session->userdata("userid")))[0],
                     'cms'               => $this->AdminCMS_model->getCMS()[0],
                     'depts'             => $this->AdminDusap_model->getDept(),
+                    'overall_violation_hours'   => $this->AdminIncidentReport_model->getOverallViolationHours($user_id)[0]->violation_hours ? $this->AdminIncidentReport_model->getOverallViolationHours($user_id)[0]->violation_hours : 0,
+                    'overall_rendered_hours'    => $this->AdminIncidentReport_model->getOverallRenderedHours($user_id)[0]->rendered_hours ? $this->AdminIncidentReport_model->getOverallRenderedHours($user_id)[0]->rendered_hours : 0,
                     'incident_report'   => $this->AdminIncidentReport_model->getIncidentReport(array('ir.incident_report_id' => $this->session->userdata('incident_report_id')))[0],
                     'attendance'        => $this->AdminDusap_model->getAttendance(array('att.incident_report_id' => $this->session->userdata('incident_report_id'))),
                     'total_hours'       => $this->AdminDusap_model->getAttendanceTotalHours(array('incident_report_id' => $this->session->userdata('incident_report_id')))[0]

@@ -117,5 +117,27 @@ class AdminIncidentReport_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0) ? $query->result() : false;
     }
+    function getOverallViolationHours($user_id){
+        $this->db->where(array("ir.user_id" => $user_id));
+        $this->db->select('SUM(e.effect_hours) AS violation_hours');
+        $this->db->from('incident_report AS ir');
+        $this->db->join('user AS u', 'ir.user_id = u.user_id','LEFT OUTER');
+        $this->db->join('user AS u2', 'ir.user_reported_by = u2.user_id','LEFT OUTER');
+        $this->db->join('violation AS v', 'ir.violation_id = v.violation_id','LEFT OUTER');
+        $this->db->join('effects AS e', 'ir.effects_id = e.effect_id','LEFT OUTER');
+
+        $query = $this->db->get();
+        return ($query->num_rows() > 0) ? $query->result() : false;
+    }
+
+    function getOverallRenderedHours($user_id){
+        $table = "attendance";
+        $this->db->where(array("ir.user_id" => $user_id));
+        $this->db->select('SUM(att.attendance_hours_rendered) AS rendered_hours');
+        $this->db->from('attendance AS att');
+        $this->db->join('incident_report AS ir', 'att.incident_report_id = ir.incident_report_id','LEFT OUTER');
+        $query = $this->db->get();
+        return ($query->num_rows() > 0) ? $query->result() : false;
+    }
     
 }
