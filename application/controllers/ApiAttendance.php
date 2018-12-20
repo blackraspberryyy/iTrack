@@ -15,7 +15,7 @@ class ApiAttendance extends CI_Controller {
     ) {
       api_respond(TRUE, array(
         'msg' => 'Attendance found.',
-        'attendance' => $total_hours
+        'attendance' => $total_hours[0]
       ));
     } else {
       api_respond(TRUE, 'No attendance.');
