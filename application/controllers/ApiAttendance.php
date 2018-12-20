@@ -10,12 +10,12 @@ class ApiAttendance extends CI_Controller {
     // and should only return 1 row
     if (
       $user_id &&
-      ($total_hours = $this->Api_model->getTotalHours($user_id)) &&
+      ($total_hours = $this->Api_model->getActualTotalHours($user_id)) &&
       $total_hours[0]['user_id']
     ) {
       api_respond(TRUE, array(
         'msg' => 'Attendance found.',
-        'attendance' => $total_hours[0]
+        'attendance' => $total_hours
       ));
     } else {
       api_respond(TRUE, 'No attendance.');

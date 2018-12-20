@@ -290,27 +290,73 @@ class Api_model extends CI_Model {
     $this->db
       ->select('
         u.user_id AS user_id,
+        v.violation_id AS violation_id,
         SUM(a.attendance_hours_rendered) AS hours_rendered,
-        e.effect_hours AS violation_hours
+        e.effect_hours AS violation_hours,
+        ir.incident_report_id AS incident_report_id
       ')
-      ->from('attendance a')
-      ->join('incident_report ir', 'ir.incident_report_id = a.incident_report_id')
+      ->from('incident_report ir')
+      ->join('attendance a', 'a.incident_report_id = ir.incident_report_id', 'LEFT')
       ->join('user u', 'u.user_id = ir.user_id')
       ->join('violation v', 'v.violation_id = ir.violation_id')
       ->join('effects e', 'e.effect_id = ir.effects_id')
       ->where(array(
-        'a.attendance_status' => 1,
+        // 'a.attendance_status' => 1,
         'ir.incident_report_status' => 1,
         'u.user_isactive' => 1,
         'u.user_access' => 'student'
       ))
       ->group_by(array('u.user_id', 'v.violation_id', 'ir.incident_report_id'));
 
+    // echo $this->db->get_compiled_select();
+    // exit;
+
     if ($uid) {
       $this->db->where('u.user_id', $uid);
     }
 
     $query = $this->db->get();
+    return query_result($query, 'array');
+  }
+
+  public function getActualTotalHours($uid = FALSE) {
+    $where = '1 = 1 ';
+    if ($uid) {
+      $where = "u.user_id = $uid ";
+    }
+
+    $query = $this->db
+      ->query("
+        SELECT
+          user_id,
+          SUM(hours_rendered) AS hours_rendered,
+          SUM(violation_hours) AS violation_hours
+        FROM (
+          SELECT
+            u.user_id AS user_id,
+            v.violation_id AS violation_id,
+            SUM(a.attendance_hours_rendered) AS hours_rendered,
+            e.effect_hours AS violation_hours,
+            ir.incident_report_id AS incident_report_id
+          FROM incident_report ir
+          LEFT JOIN attendance a ON a.incident_report_id = ir.incident_report_id
+          JOIN user u ON u.user_id = ir.user_id
+          JOIN violation v ON v.violation_id = ir.violation_id
+          JOIN effects e ON e.effect_id = ir.effects_id
+          WHERE
+            $where AND
+            ir.incident_report_status = 1 AND
+            u.user_isactive = 1 AND
+            u.user_access = 'student'
+          GROUP BY
+            u.user_id, v.violation_id, ir.incident_report_id
+        ) AS tmp_tbl
+        GROUP BY
+          user_id
+      ");
+
+
+    // $query = $this->db->get();
     return query_result($query, 'array');
   }
 }
