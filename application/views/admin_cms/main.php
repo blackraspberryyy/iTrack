@@ -55,7 +55,7 @@
 
 
 
-<form action = "<?= base_url()?>AdminCMS/edit_cms_exec/<?= $cms->cms_id?>" method = "POST">
+<form action = "<?= base_url()?>AdminCms/edit_cms_exec/<?= $cms->cms_id?>" method = "POST">
     <div class="row">
         <!-- WYSIWYG for INCIDENT REPORT -->
         <div class = "col-md-6">
