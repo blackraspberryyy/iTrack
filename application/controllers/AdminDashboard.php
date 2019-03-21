@@ -102,48 +102,52 @@ class AdminDashboard extends CI_Controller {
             <h4>Incident Reports: </h4>
             <table cellpadding="4" border="1">
                 <tr>
-                    <th style="width:15%;">WMA</th>
-                    <td>'.$wma.'</td>
+                    <th style="width:15%;">Courses</th>
+                    <th style="width:85%;">No of Incident</th>
+                </tr>
+                <tr>
+                    <th>WMA</th>
+                    <td>'.$this->formatReport($wma).' incidents</td>
                     </tr>
                 <tr>
                     <th>AGD</th>
-                    <td>'.$agd.'</td>
+                    <td>'.$this->formatReport($agd).' incidents</td>
                 </tr>
                 <tr>
                     <th>DA</th>
-                    <td>'.$da.'</td>
+                    <td>'.$this->formatReport($da).' incidents</td>
                 </tr>
                 <tr>
                     <th>EMC</th>
-                    <td>'.$emc.'</td>
+                    <td>'.$this->formatReport($emc).' incidents</td>
                 </tr>
                 <tr>
                     <th>SMBA</th>
-                    <td>'.$smba.'</td>
+                    <td>'.$this->formatReport($smba).' incidents</td>
                 </tr>
                 <tr>
                     <th>CS</th>
-                    <td>'.$cs.'</td>
+                    <td>'.$this->formatReport($cs).' incidents</td>
                 </tr>
                 <tr>
                     <th>ECE</th>
-                    <td>'.$ece.'</td>
+                    <td>'.$this->formatReport($ece).' incidents</td>
                 </tr>
                 <tr>
                     <th>EE</th>
-                    <td>'.$ee.'</td>
+                    <td>'.$this->formatReport($ee).' incidents</td>
                 </tr>
                 <tr>
                     <th>CPE</th>
-                    <td>'.$cpe.'</td>
+                    <td>'.$this->formatReport($cpe).' incidents</td>
                 </tr>
                 <tr>
                     <th>ME</th>
-                    <td>'.$me.'</td>
+                    <td>'.$this->formatReport($me).' incidents</td>
                 </tr>
                 <tr>
                     <th>CS</th>
-                    <td>'.$cs.'</td>
+                    <td>'.$this->formatReport($cs).' incidents</td>
                 </tr>
             </table>
             <br/><br/><br/>
@@ -168,5 +172,9 @@ class AdminDashboard extends CI_Controller {
         $samplePDF->Output($reports_title);
         
         exit;
+    }
+
+    public function formatReport($course) {
+        return $course === 0 ? 'No' : $course;
     }
 }
