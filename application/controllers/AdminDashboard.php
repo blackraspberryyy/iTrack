@@ -45,6 +45,7 @@ class AdminDashboard extends CI_Controller {
         $teacher_count = $this->AdminDashboard_model->getUsers(array("user_access" => "teacher")) != "" ? count($this->AdminDashboard_model->getUsers(array("user_access" => "teacher"))) : 0;
         $ongoing_incident_reports_count = $this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 0)) != "" ? count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 0))) : 0;
         $finished_incident_reports_count = $this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 1)) != "" ? count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 1))) : 0;
+        $incident_reports = $this->AdminDashboard_model->getComprehensiveIncidentReport();
         $wma = 0;
         $agd = 0;
         $da = 0;
@@ -57,28 +58,28 @@ class AdminDashboard extends CI_Controller {
         $cpe = 0;
         $me = 0;
 
-        foreach($users as $user){
-            if(strpos(strtolower($user->user_course), 'wma') !== false){
+        foreach($incident_reports as $report){
+            if(strpos(strtolower($report->user_course), 'wma') !== false){
                 $wma++;
-            }else if(strpos(strtolower($user->user_course), 'agd') !== false){
+            }else if(strpos(strtolower($report->user_course), 'agd') !== false){
                 $agd++;
-            }else if(strpos(strtolower($user->user_course), 'da') !== false){
+            }else if(strpos(strtolower($report->user_course), 'da') !== false){
                 $da++;
-            }else if(strpos(strtolower($user->user_course), 'emc') !== false){
+            }else if(strpos(strtolower($report->user_course), 'emc') !== false){
                 $emc++;
-            }else if(strpos(strtolower($user->user_course), 'smba') !== false){
+            }else if(strpos(strtolower($report->user_course), 'smba') !== false){
                 $smba++;
-            }else if(strpos(strtolower($user->user_course), 'cs') !== false){
+            }else if(strpos(strtolower($report->user_course), 'cs') !== false){
                 $cs++;
-            }else if(strpos(strtolower($user->user_course), 'ece') !== false){
+            }else if(strpos(strtolower($report->user_course), 'ece') !== false){
                 $ece++;
-            }else if(strpos(strtolower($user->user_course), 'ce') !== false){
+            }else if(strpos(strtolower($report->user_course), 'ce') !== false){
                 $ce++;
-            }else if(strpos(strtolower($user->user_course), 'ee') !== false){
+            }else if(strpos(strtolower($report->user_course), 'ee') !== false){
                 $ee++;
-            }else if(strpos(strtolower($user->user_course), 'cpe') !== false){
+            }else if(strpos(strtolower($report->user_course), 'cpe') !== false){
                 $cpe++;
-            }else if(strpos(strtolower($user->user_course), 'me') !== false){
+            }else if(strpos(strtolower($report->user_course), 'me') !== false){
                 $me++;
             }
         }
