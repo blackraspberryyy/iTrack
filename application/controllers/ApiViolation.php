@@ -25,6 +25,15 @@ class ApiViolation extends CI_Controller {
     $message = $params['message'];
     $timestamp = $params['timestamp'];
 
+    // upload image
+    $img_src = NULL;
+    $upload = upload_file($this);
+    if (!$upload['success']) {
+      api_respond(FALSE, $upload['error']);
+    } else {
+      $img_src = $upload['data']['file_name'];
+    }
+
     // get type of violation first
     $type = '';
     if ($types = $this->Api_model->getTypeOfViolation($violation_id)) {
@@ -38,6 +47,7 @@ class ApiViolation extends CI_Controller {
         'violation_id' => $violation_id,
         'location' => $location,
         'message' => $message,
+        'img_src' => $img_src,
         'tapped_at' => $timestamp,
         'created_at' => time()
       );
@@ -57,6 +67,7 @@ class ApiViolation extends CI_Controller {
         'user_reported_by' => $reporter_id,
         'violation_id' => $violation_id,
         'effects_id' => 1,
+        'img_src' => $img_src,
         'incident_report_datetime' => $timestamp,
         'incident_report_place' => $location,
         'incident_report_age' => $age,

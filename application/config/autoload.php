@@ -93,7 +93,8 @@ $autoload['drivers'] = array();
 $autoload['helper'] = array(
   'url', 'form', 'security', 'file',
   'print_helper', 'api_helper', 'query_helper',
-  'key_value_helper', 'fcm_keys_helper', 'notification_helper'
+  'key_value_helper', 'fcm_keys_helper',
+  'notification_helper', 'image_upload_helper'
 );
 
 /*
