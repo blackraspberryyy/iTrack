@@ -23,11 +23,12 @@ class ApiViolation extends CI_Controller {
     $violation_id = $params['violation_id'];
     $location = $params['location'];
     $message = $params['message'];
+    $pImgSrc = $params['img_src'];
     $timestamp = $params['timestamp'];
 
     // upload image
     $img_src = NULL;
-    $upload = upload_file($this);
+    $upload = upload_file(null, $pImgSrc);
     if (!$upload['success']) {
       api_respond(FALSE, $upload['error']);
     } else {
