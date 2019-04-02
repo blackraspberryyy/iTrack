@@ -120,8 +120,8 @@ function determineStatus($status)
 										<button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id); ?>">Details</button>
 										<?php if ($report->incident_report_status != 0) : ?>
 											<a href="<?= base_url(); ?>AdminIncidentReport/edit_exec/<?= $report->incident_report_id; ?>" class="btn btn-warning">Edit</a>
+											<a href="<?= base_url(); ?>AdminIncidentReport/print_tempId_exec/<?= $report->incident_report_id; ?>" class="btn btn-info" target="_blank">Print Gatepass ID</a>
 										<?php endif; ?>
-										<a href="<?= base_url(); ?>AdminIncidentReport/print_tempId_exec/<?= $report->incident_report_id; ?>" class="btn btn-info" target="_blank">Print Gatepass ID</a>
 									</div>
 								</td>
 							</tr>
