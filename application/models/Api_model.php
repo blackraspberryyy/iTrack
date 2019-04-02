@@ -91,6 +91,17 @@ class Api_model extends CI_Model {
         return FALSE;
       }
 
+      // upload image
+      $pImgSrc = $report['img_src'];
+      $img_src = NULL;
+      $upload = upload_file(null, $pImgSrc);
+      if (!$upload['success']) {
+        // disregard since this is batch insert ;)
+        // api_respond(FALSE, $upload['error']);
+      } else {
+        $img_src = $upload['data']['file_name'];
+      }
+
       // build report
       if ($type == 'minor') {
         array_push($allMinors, array(
@@ -99,6 +110,7 @@ class Api_model extends CI_Model {
           'violation_id' => $report['violation_id'],
           'location' => $report['location'],
           'message' => $report['message'],
+          'img_src' => $img_src,
           'tapped_at' => $report['timestamp'],
           'created_at' => time()
         ));
@@ -108,6 +120,7 @@ class Api_model extends CI_Model {
           'user_reported_by' => $report['reporter_id'],
           'violation_id' => $report['violation_id'],
           'effects_id' => 1,
+          'img_src' => $img_src,
           'incident_report_datetime' => $report['timestamp'],
           'incident_report_place' => $report['location'],
           'incident_report_age' => $report['age'],

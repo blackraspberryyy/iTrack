@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2018 at 05:44 PM
+-- Generation Time: Mar 30, 2019 at 08:53 AM
 -- Server version: 5.7.24
--- PHP Version: 7.2.2
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -58,7 +58,8 @@ INSERT INTO `admin` (`admin_id`, `admin_number`, `admin_firstname`, `admin_lastn
 CREATE TABLE `attendance` (
   `attendance_id` int(11) NOT NULL,
   `incident_report_id` int(11) NOT NULL,
-  `dept_id` int(11) NOT NULL,
+  `attendance_dept` varchar(255) NOT NULL,
+  `attendance_supervisor` varchar(255) NOT NULL,
   `attendance_hours_rendered` int(11) NOT NULL,
   `attendance_status` int(11) NOT NULL DEFAULT '1',
   `attendance_starttime` int(11) NOT NULL,
@@ -70,8 +71,12 @@ CREATE TABLE `attendance` (
 -- Dumping data for table `attendance`
 --
 
-INSERT INTO `attendance` (`attendance_id`, `incident_report_id`, `dept_id`, `attendance_hours_rendered`, `attendance_status`, `attendance_starttime`, `attendance_endtime`, `attendance_created_at`) VALUES
-(1, 2, 2, 13, 1, 1544459220, 1544506020, 1545150447);
+INSERT INTO `attendance` (`attendance_id`, `incident_report_id`, `attendance_dept`, `attendance_supervisor`, `attendance_hours_rendered`, `attendance_status`, `attendance_starttime`, `attendance_endtime`, `attendance_created_at`) VALUES
+(1, 2, 'Admissions', 'John Doe', 1, 1, 1539392400, 1539396060, 1539528072),
+(4, 2, 'ITE Dept.', 'John Doe', 12, 1, 1539533760, 1539576960, 1539533829),
+(10, 3, 'Admissions', 'John Doe', 12, 1, 1540353060, 1540396260, 1540396274),
+(13, 3, '-', '-', 88, 1, 0, 0, 1540398197),
+(14, 4, 'dsa', 'dsa', 24, 1, 1544797740, 1544884140, 1544711439);
 
 -- --------------------------------------------------------
 
@@ -121,27 +126,6 @@ INSERT INTO `cms` (`cms_id`, `dusap_title`, `dusap_text`, `incident_report_title
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dept`
---
-
-CREATE TABLE `dept` (
-  `dept_id` int(11) NOT NULL,
-  `dept_name` varchar(255) NOT NULL,
-  `dept_supervisor` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `dept`
---
-
-INSERT INTO `dept` (`dept_id`, `dept_name`, `dept_supervisor`) VALUES
-(0, '-', '-'),
-(1, 'CS', 'Joan Ace Valdez'),
-(2, 'ITE', 'Ruth Manook');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `effects`
 --
 
@@ -174,6 +158,7 @@ CREATE TABLE `incident_report` (
   `violation_id` int(11) NOT NULL,
   `effects_id` int(11) NOT NULL,
   `incident_report_ref_id` int(11) DEFAULT NULL,
+  `img_src` varchar(255) DEFAULT NULL,
   `incident_report_datetime` int(11) NOT NULL,
   `incident_report_place` varchar(256) NOT NULL,
   `incident_report_age` int(3) NOT NULL,
@@ -188,10 +173,13 @@ CREATE TABLE `incident_report` (
 -- Dumping data for table `incident_report`
 --
 
-INSERT INTO `incident_report` (`incident_report_id`, `user_id`, `user_reported_by`, `violation_id`, `effects_id`, `incident_report_ref_id`, `incident_report_datetime`, `incident_report_place`, `incident_report_age`, `incident_report_section_year`, `incident_report_message`, `incident_report_status`, `incident_report_isAccepted`, `incident_report_added_at`) VALUES
-(1, 3, 4, 18, 1, NULL, 1530611400, 'F1202 FIT', 19, 'W31/2018', 'Student has been disrespectful since the day we met.', 1, 1, 1531802826),
-(2, 2, NULL, 24, 1, NULL, 1535781302, 'somwehere', 19, 'W31/3rd', 'asd', 1, 1, 1535781302),
-(3, 1, NULL, 24, 1, NULL, 1537502785, 'F1206', 19, 'W41', 'ASD', 1, 1, 1537502785);
+INSERT INTO `incident_report` (`incident_report_id`, `user_id`, `user_reported_by`, `violation_id`, `effects_id`, `incident_report_ref_id`, `img_src`, `incident_report_datetime`, `incident_report_place`, `incident_report_age`, `incident_report_section_year`, `incident_report_message`, `incident_report_status`, `incident_report_isAccepted`, `incident_report_added_at`) VALUES
+(1, 3, 4, 18, 1, NULL, '', 1530611400, 'F1202 FIT', 19, 'W31/2018', 'Student has been disrespectful since the day we met.', 1, 1, 1531802826),
+(2, 2, NULL, 24, 1, NULL, '', 1535781302, 'somwehere', 19, 'W31/3rd', 'asd', 1, 1, 1535781302),
+(3, 1, NULL, 24, 1, NULL, '', 1537502785, 'F1206', 19, 'W41', 'ASD', 0, 1, 1537502785),
+(4, 3, 4, 15, 1, NULL, '', 1544754299, 'll', 19, 'erty', 'wryuko', 1, 0, 1544754130),
+(5, 2, NULL, 15, 1, NULL, '', 1545266820, 'Sample', 19, 'W31', 'test', 1, 1, 1545266951),
+(6, 2, NULL, 15, 1, NULL, '', 1545267360, 'wer', 19, '123123', '21312313', 1, 1, 1545267488);
 
 -- --------------------------------------------------------
 
@@ -255,11 +243,10 @@ INSERT INTO `log` (`log_id`, `user_id`, `log_type`, `log_desc`, `log_added_at`) 
 (44, NULL, 'log', 'Logged out', 1541333343),
 (45, NULL, 'trail', 'Add attendance in DUSAP', 1544711439),
 (46, NULL, 'trail', 'Filed an incident report', 1544713063),
-(47, NULL, 'trail', 'Add attendance in DUSAP', 1545148734),
-(48, NULL, 'trail', 'Add attendance in DUSAP', 1545150116),
-(49, NULL, 'trail', 'Edited attendance in DUSAP', 1545150142),
-(50, NULL, 'trail', 'Add attendance in DUSAP', 1545150447),
-(51, NULL, 'trail', 'Edited attendance in DUSAP', 1545150455);
+(47, 2, 'log', 'Logged in', 1544724956),
+(48, NULL, 'trail', 'Filed an incident report', 1545266951),
+(49, 2, 'log', 'Logged in', 1545266996),
+(50, NULL, 'trail', 'Filed an incident report', 1545267488);
 
 -- --------------------------------------------------------
 
@@ -275,6 +262,7 @@ CREATE TABLE `minor_reports` (
   `group_id` int(11) NOT NULL,
   `location` varchar(255) NOT NULL,
   `message` text NOT NULL,
+  `img_src` varchar(255) DEFAULT NULL,
   `tapped_at` int(11) NOT NULL,
   `grouped_at` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
@@ -285,68 +273,68 @@ CREATE TABLE `minor_reports` (
 -- Dumping data for table `minor_reports`
 --
 
-INSERT INTO `minor_reports` (`id`, `user_id`, `reporter_id`, `violation_id`, `group_id`, `location`, `message`, `tapped_at`, `grouped_at`, `created_at`, `deleted_at`) VALUES
-(1, 1, 4, 1, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(2, 1, 4, 13, 1, '', '', 1541718000, 1541693309, 1541718000, 0),
-(3, 1, 4, 1, 1, '', '', 1541718000, 1541693309, 1541718000, 0),
-(4, 1, 4, 1, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(5, 2, 4, 1, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(6, 2, 4, 2, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(7, 2, 4, 1, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(8, 1, 4, 2, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(9, 1, 4, 2, 1, '', '', 1541718000, 1541693309, 1541718000, 0),
-(10, 1, 4, 2, 1, '', '', 1541779200, 1541693309, 1541779200, 0),
-(11, 1, 4, 3, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(12, 1, 4, 4, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(13, 2, 4, 4, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(14, 2, 4, 3, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(15, 2, 4, 2, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(16, 1, 4, 5, 1, '', '', 1541779200, 1541693309, 1541779200, 0),
-(17, 1, 4, 5, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(18, 1, 4, 3, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(19, 2, 4, 6, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(20, 2, 4, 4, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(21, 1, 4, 2, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(22, 1, 4, 6, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(23, 1, 4, 8, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(24, 2, 4, 8, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(25, 2, 4, 7, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(26, 2, 4, 6, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(27, 1, 4, 9, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(28, 1, 4, 9, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(29, 1, 4, 7, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(30, 2, 4, 11, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(31, 2, 4, 8, 2, '', '', 1541685270, 1541693309, 1541685270, 0),
-(32, 1, 4, 9, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(33, 1, 4, 10, 1, '', '', 1541685270, 1541693309, 1541685270, 0),
-(34, 1, 4, 1, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(35, 1, 4, 2, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(36, 1, 4, 3, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(37, 1, 4, 4, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(38, 1, 4, 5, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(39, 1, 4, 6, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(40, 1, 4, 7, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(41, 1, 4, 8, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(42, 1, 4, 9, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(43, 1, 4, 10, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(44, 1, 4, 11, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(45, 1, 4, 12, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(46, 1, 4, 13, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(47, 1, 4, 14, 1, '', '', 1541865600, 1541693309, 1541865600, 0),
-(48, 2, 4, 1, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(49, 2, 4, 2, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(50, 2, 4, 3, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(51, 2, 4, 4, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(52, 2, 4, 5, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(53, 2, 4, 6, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(54, 2, 4, 7, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(55, 2, 4, 8, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(56, 2, 4, 9, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(57, 2, 4, 10, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(58, 2, 4, 11, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(59, 2, 4, 12, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(60, 2, 4, 13, 2, '', '', 1541865600, 1541693309, 1541865600, 0),
-(61, 2, 4, 14, 2, '', '', 1541865600, 1541693309, 1541865600, 0);
+INSERT INTO `minor_reports` (`id`, `user_id`, `reporter_id`, `violation_id`, `group_id`, `location`, `message`, `img_src`, `tapped_at`, `grouped_at`, `created_at`, `deleted_at`) VALUES
+(1, 1, 4, 1, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(2, 1, 4, 13, 1, '', '', NULL, 1541718000, 1541693309, 1541718000, 0),
+(3, 1, 4, 1, 1, '', '', NULL, 1541718000, 1541693309, 1541718000, 0),
+(4, 1, 4, 1, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(5, 2, 4, 1, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(6, 2, 4, 2, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(7, 2, 4, 1, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(8, 1, 4, 2, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(9, 1, 4, 2, 1, '', '', NULL, 1541718000, 1541693309, 1541718000, 0),
+(10, 1, 4, 2, 1, '', '', NULL, 1541779200, 1541693309, 1541779200, 0),
+(11, 1, 4, 3, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(12, 1, 4, 4, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(13, 2, 4, 4, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(14, 2, 4, 3, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(15, 2, 4, 2, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(16, 1, 4, 5, 1, '', '', NULL, 1541779200, 1541693309, 1541779200, 0),
+(17, 1, 4, 5, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(18, 1, 4, 3, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(19, 2, 4, 6, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(20, 2, 4, 4, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(21, 1, 4, 2, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(22, 1, 4, 6, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(23, 1, 4, 8, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(24, 2, 4, 8, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(25, 2, 4, 7, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(26, 2, 4, 6, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(27, 1, 4, 9, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(28, 1, 4, 9, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(29, 1, 4, 7, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(30, 2, 4, 11, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(31, 2, 4, 8, 2, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(32, 1, 4, 9, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(33, 1, 4, 10, 1, '', '', NULL, 1541685270, 1541693309, 1541685270, 0),
+(34, 1, 4, 1, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(35, 1, 4, 2, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(36, 1, 4, 3, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(37, 1, 4, 4, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(38, 1, 4, 5, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(39, 1, 4, 6, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(40, 1, 4, 7, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(41, 1, 4, 8, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(42, 1, 4, 9, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(43, 1, 4, 10, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(44, 1, 4, 11, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(45, 1, 4, 12, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(46, 1, 4, 13, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(47, 1, 4, 14, 1, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(48, 2, 4, 1, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(49, 2, 4, 2, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(50, 2, 4, 3, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(51, 2, 4, 4, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(52, 2, 4, 5, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(53, 2, 4, 6, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(54, 2, 4, 7, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(55, 2, 4, 8, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(56, 2, 4, 9, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(57, 2, 4, 10, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(58, 2, 4, 11, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(59, 2, 4, 12, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(60, 2, 4, 13, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(61, 2, 4, 14, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0);
 
 -- --------------------------------------------------------
 
@@ -382,6 +370,19 @@ CREATE TABLE `notifications` (
   `created_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `user_id`, `title`, `body`, `created_at`) VALUES
+(1, 4, 'iTrack Notification 0', 'Lorem ipsum dolor sit amet.', 1544722745),
+(2, 4, 'iTrack Notification 1', 'Sint laboris ea do enim labore cillum. Excepteur amet irure dolor minim est culpa aute. Deserunt cillum nisi fugiat ullamco elit anim ullamco. Velit do dolor mollit irure tempor exercitation eiusmod. Culpa laborum elit magna pariatur fugiat ipsum ex. Et ut ut elit ex ea elit.', 1544722745),
+(3, 4, 'iTrack Notification 2', 'Sunt id mollit anim nulla veniam duis est. Officia elit reprehenderit esse ut Lorem exercitation. Velit proident enim proident ut commodo.', 1544722745),
+(4, 4, 'iTrack Notification 3', 'Incididunt ut consequat minim esse do veniam velit adipisicing.', 1544722745),
+(5, 4, 'iTrack Notification 0', 'Lorem ipsum dolor sit amet.', 1544723539),
+(6, 2, 'You have been reported.', 'Your violation is possession of alcoholic drink/prohibited drug.', 1545266951),
+(7, 2, 'You have been reported.', 'Your violation is possession of alcoholic drink/prohibited drug.', 1545267488);
+
 -- --------------------------------------------------------
 
 --
@@ -412,9 +413,9 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `user_number`, `user_serial_no`, `user_firstname`, `user_lastname`, `user_middlename`, `user_password`, `user_fcm_token`, `user_email`, `user_picture`, `user_course`, `user_access`, `user_isactive`, `user_added_at`, `user_updated_at`) VALUES
 (1, '201511961', '72ADAFC4', 'Cham', 'Coscos', 'Mosquito', '8B5382D8441C3B21679FA89D75833E60888C49F8', '', 'hanzcoscos@gmail.com', 'images/student/dca2f1b853a2b0233c9a9f0983eab084.jpg', 'BSITWMA', 'student', 1, 1531202862, 1531623977),
-(2, '201512570', '498590A4', 'Meryll', 'Rodriguez', 'Ponce De Leon', '5EBFFD12F0A9184A3D623016B860CCAE820FC35C', '', 'mirayrodriguez21@gmail.com', 'images/student/1d71346309099d931fa2fb9fdbf8cb60.jpg', 'BSITWMA', 'student', 1, 1531329730, 1531624031),
+(2, '201512570', '498590A4', 'Meryll', 'Rodriguez', 'Ponce De Leon', '5EBFFD12F0A9184A3D623016B860CCAE820FC35C', 'fye9oLNcW7A:APA91bFhv5ujDnpNiPIB_c8oIrzQfdPqmMjTASOXKdQ_AOjYkVv6wTVU3LvtKYzcXJ7GRJ0jd-EBSUUKAnk5MvsmV1_LB_da0OY1l-f1WaWeoBN-uf8Kw6NAOpM8BNO3d27lHtL1IQ9v', 'mirayrodriguez21@gmail.com', 'images/student/1d71346309099d931fa2fb9fdbf8cb60.jpg', 'BSITWMA', 'student', 1, 1531329730, 1531624031),
 (3, '201510592', '735EE1D4', 'Ralph Adrian', 'Buen', NULL, 'D6424ECC823CA663BDCBAEA8E2D9DF58A4D0E2B8', '', 'rabuen@fit.edu.ph', 'images/student/c28aeafdba8274a90dba7e4072286433.jpg', 'BSITWMA', 'student', 1, 1531380182, 1531624066),
-(4, '200812161', '', 'Jane', 'Doe', 'Allison', '4a82cb6db537ef6c5b53d144854e146de79502e8', 'duqCoAe6srQ:APA91bHCzB5ZAjacrMEoRWRafi07Q6Wpay8SZsMRfMXr1zzyqSwac8hReMjQzc7IIXcc8lE4Taq9p10f-liUdD8BRSLJzywBqUwBireZ6Nf75R_8N580Y0APSkah2jyXMvY6np1qQZt6', 'jda@fit.edu.ph', 'images/teacher/f63c2792c8d1553e7dd418a064e932ea.png', NULL, 'teacher', 1, 1531555055, 1535794831),
+(4, '200812161', '', 'Jane', 'Doe', 'Allison', '4a82cb6db537ef6c5b53d144854e146de79502e8', 'fye9oLNcW7A:APA91bFhv5ujDnpNiPIB_c8oIrzQfdPqmMjTASOXKdQ_AOjYkVv6wTVU3LvtKYzcXJ7GRJ0jd-EBSUUKAnk5MvsmV1_LB_da0OY1l-f1WaWeoBN-uf8Kw6NAOpM8BNO3d27lHtL1IQ9v', 'jda@fit.edu.ph', 'images/teacher/f63c2792c8d1553e7dd418a064e932ea.png', NULL, 'teacher', 1, 1531555055, 1535794831),
 (5, '201512030', 'DB99AFC4', 'Trisha', 'Cunanan', 'Balingit', 'B4C644ED8FA2EB260BA20F361E02BCF05C312D14', '', 'trishikim@gmail.com', 'images/student/27c88789c0d90160620c3502ab66586a.jpg', 'BSITWMA', 'student', 1, 1535793953, 1535794002);
 
 -- --------------------------------------------------------
@@ -498,20 +499,13 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `attendance`
   ADD PRIMARY KEY (`attendance_id`),
-  ADD KEY `fk_dussap_incident_report_id` (`incident_report_id`),
-  ADD KEY `fk_dept` (`dept_id`);
+  ADD KEY `fk_dussap_incident_report_id` (`incident_report_id`);
 
 --
 -- Indexes for table `cms`
 --
 ALTER TABLE `cms`
   ADD PRIMARY KEY (`cms_id`);
-
---
--- Indexes for table `dept`
---
-ALTER TABLE `dept`
-  ADD PRIMARY KEY (`dept_id`);
 
 --
 -- Indexes for table `effects`
@@ -581,19 +575,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `cms`
 --
 ALTER TABLE `cms`
   MODIFY `cms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `dept`
---
-ALTER TABLE `dept`
-  MODIFY `dept_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `effects`
@@ -605,13 +593,13 @@ ALTER TABLE `effects`
 -- AUTO_INCREMENT for table `incident_report`
 --
 ALTER TABLE `incident_report`
-  MODIFY `incident_report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `incident_report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `minor_reports`
@@ -629,7 +617,7 @@ ALTER TABLE `minor_reports_quota`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -646,13 +634,6 @@ ALTER TABLE `violation`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `attendance`
---
-ALTER TABLE `attendance`
-  ADD CONSTRAINT `fk_dept` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`dept_id`),
-  ADD CONSTRAINT `fk_inc_report` FOREIGN KEY (`incident_report_id`) REFERENCES `incident_report` (`incident_report_id`);
 
 --
 -- Constraints for table `incident_report`
