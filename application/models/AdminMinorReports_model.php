@@ -24,6 +24,7 @@ class AdminMinorReports_model extends CI_Model {
       mr.message AS message, 
       mr.tapped_at AS tapped_at,
       mr.created_at AS created_at,
+      mr.img_src AS img_src,
 
       mr.group_id AS group_id,
       mr.grouped_at AS grouped_at

@@ -192,6 +192,14 @@ function determineStatus($status)
 														<h5><strong>Message</strong></h5>
 														<p><?= $report->incident_report_message; ?></p>
 													</div>
+													<?php if(isset($report->img_src) && $report->img_src):?>
+													<div class="col-xs-12">
+														<center>
+															<h5><strong>Image</strong></h5>
+															<img src="<?= base_url().'uploads/images/'.$report->img_src?>" width="350" class="thumbnail"/>
+														</center>
+													</div>
+													<?php endif;?>
 												</div>
 											</div>
 										</div>

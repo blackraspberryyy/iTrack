@@ -71,6 +71,16 @@
                       <h3>Tapped At</h3>
                       <p><?= date("F d,Y - h:i A", $mr->tapped_at)?></p>
                     </div>
+                    <div class="col-xs-12">
+                      <?php if(isset($mr->img_src) && $mr->img_src):?>
+                      <div class="col-xs-12">
+                        <center>
+                          <h5><strong>Image</strong></h5>
+                          <img src="<?= base_url().'uploads/images/'.$mr->img_src?>" width="350" class="thumbnail"/>
+                        </center>
+                      </div>
+                      <?php endif;?>
+                    </div>
                   </div>
                 </div>
                 <div class="modal-footer">
