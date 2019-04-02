@@ -152,12 +152,12 @@ function get_data($attendance){
 													<input type="hidden" name ="modal_type" value="edit"/>
 													<div class = "col-sm-6 <?= !empty(form_error("starttime")) ? "has-error" : ""; ?>">
 														<span class="control-label" id="starttime">Start Date &AMP; Time</span>
-														<input type="text" class="form-control datetimepicker" name = "starttime" placeholder="Type Here" aria-describedby="starttime" value = "<?= set_value("starttime", date('m/d/Y h:i A', $a->attendance_starttime))?>">
+														<input type="text" class="form-control starttime" name = "starttime" placeholder="Type Here" aria-describedby="starttime" value = "<?= set_value("starttime", date('m/d/Y h:i A', $a->attendance_starttime))?>">
 														<small><?= form_error("starttime") ?></small>
 													</div>
 													<div class = "col-sm-6 <?= !empty(form_error("endtime")) ? "has-error" : ""; ?>">
-														<span class="control-label" id="endtime">End Date &AMP; Time</span>
-														<input type="text" class="form-control datetimepicker" name = "endtime" placeholder="Type Here" aria-describedby="endtime" value = "<?= set_value("endtime", date('m/d/Y h:i A', $a->attendance_endtime)) ?>">
+														<span class="control-label" id="endtime">End Time</span>
+														<input type="text" class="form-control endtime" name = "endtime" placeholder="Type Here" aria-describedby="endtime" value = "<?= set_value("endtime", date('m/d/Y h:i A', $a->attendance_endtime)) ?>">
 														<small><?= form_error("endtime") ?></small>
 													</div>
 													<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md">
@@ -304,12 +304,12 @@ function get_data($attendance){
 						<input type="hidden" name ="modal_type" value="add"/>
 						<div class = "col-sm-6 <?= !empty(form_error("starttime")) ? "has-error" : ""; ?>">
 							<span class="control-label" id="starttime">Start Date &AMP; Time</span>
-							<input type="text" class="form-control datetimepicker" name = "starttime" placeholder="Type Here" aria-describedby="starttime" value = "<?= set_value("starttime")?>">
+							<input type="text" class="form-control starttime" name = "starttime" placeholder="Type Here" aria-describedby="starttime" value = "<?= set_value("starttime")?>">
 							<small><?= form_error("starttime") ?></small>
 						</div>
 						<div class = "col-sm-6 <?= !empty(form_error("endtime")) ? "has-error" : ""; ?>">
-							<span class="control-label" id="endtime">End Date &AMP; Time</span>
-							<input type="text" class="form-control datetimepicker" name = "endtime" placeholder="Type Here" aria-describedby="endtime" value = "<?= set_value("endtime") ?>">
+							<span class="control-label" id="endtime">End Time</span>
+							<input type="text" class="form-control endtime" name = "endtime" placeholder="Type Here" aria-describedby="endtime" value = "<?= set_value("endtime") ?>">
 							<small><?= form_error("endtime") ?></small>
 						</div>
 						<div class="col-sm-8 col-sm-offset-2 col-xs-12 margin-top-md">
@@ -363,58 +363,58 @@ function get_data($attendance){
 		</div>
 	</form>
 </div>
+
 <script>
+	window.onload = function () {
+		//Circle Progress Bar
+		$('.second.circle').circleProgress({
+			size:160,
+			value: <?= $total_hours->hours_rendered/$incident_report->violation_hours?>,
+			animation:{
+				duration:3000,
+				easing: "circleProgressEasing"
+			},
+			fill: { color: ["#037236"] }
+		}).on('circle-animation-progress', function(event, progress) {
+			$(this).find('strong').html((<?= $total_hours->hours_rendered ? $total_hours->hours_rendered : 0?> * progress).toFixed(2).replace(/[.,]00$/, "") + '<i>&nbsp;/&nbsp;</i>' + <?= $incident_report->violation_hours?> + '<br/>hrs');
+		});
 
-window.onload = function () {
-	//Circle Progress Bar
-	$('.second.circle').circleProgress({
-		size:160,
-		value: <?= $total_hours->hours_rendered/$incident_report->violation_hours?>,
-		animation:{
-			duration:3000,
-			easing: "circleProgressEasing"
-		},
-		fill: { color: ["#037236"] }
-	}).on('circle-animation-progress', function(event, progress) {
-		$(this).find('strong').html((<?= $total_hours->hours_rendered ? $total_hours->hours_rendered : 0?> * progress).toFixed(2).replace(/[.,]00$/, "") + '<i>&nbsp;/&nbsp;</i>' + <?= $incident_report->violation_hours?> + '<br/>hrs');
-	});
-
-	$('.second.circle.overall').circleProgress({
-		size:160,
-		value: <?= $overall_rendered_hours/$overall_violation_hours?>,
-		animation:{
-			duration:3000,
-			easing: "circleProgressEasing"
-		},
-		fill: { color: ["#037236"] }
-	}).on('circle-animation-progress', function(event, progress) {
-		$(this).find('strong').html((<?= $overall_rendered_hours ? $overall_rendered_hours : 0?> * progress).toFixed(2).replace(/[.,]00$/, "") + '<i>&nbsp;/&nbsp;</i>' + <?= $overall_violation_hours?> + '<br/>hrs');
-	});
-	//Bar Chart
-	var labels = [' ', <?php get_labels($attendance)?>];
-	var ctx = document.getElementById('attendanceChart').getContext('2d');
-	var myBarChart = new Chart(ctx, {
-		type: 'bar',
-		data: {
-			labels: labels,
-			datasets: [{
-				label: "Hours Rendered",
-				backgroundColor: 'rgba(0, 114, 54, 0.5)',
-				borderColor: 'rgba(0, 114, 54, 1)',
-				data: [0, <?php get_data($attendance)?>]
-			}],
-			options:{
-				scales: {
-					yAxes: [{
-						ticks: {
-							suggestedMax: 5,
-							min: 0,
-							stepSize: 1
-						}
-					}]
+		$('.second.circle.overall').circleProgress({
+			size:160,
+			value: <?= $overall_rendered_hours/$overall_violation_hours?>,
+			animation:{
+				duration:3000,
+				easing: "circleProgressEasing"
+			},
+			fill: { color: ["#037236"] }
+		}).on('circle-animation-progress', function(event, progress) {
+			$(this).find('strong').html((<?= $overall_rendered_hours ? $overall_rendered_hours : 0?> * progress).toFixed(2).replace(/[.,]00$/, "") + '<i>&nbsp;/&nbsp;</i>' + <?= $overall_violation_hours?> + '<br/>hrs');
+		});
+		//Bar Chart
+		var labels = [' ', <?php get_labels($attendance)?>];
+		var ctx = document.getElementById('attendanceChart').getContext('2d');
+		var myBarChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: labels,
+				datasets: [{
+					label: "Hours Rendered",
+					backgroundColor: 'rgba(0, 114, 54, 0.5)',
+					borderColor: 'rgba(0, 114, 54, 1)',
+					data: [0, <?php get_data($attendance)?>]
+				}],
+				options:{
+					scales: {
+						yAxes: [{
+							ticks: {
+								suggestedMax: 5,
+								min: 0,
+								stepSize: 1
+							}
+						}]
+					}
 				}
 			}
-		}
-	});
-}
+		});
+	}
 </script>

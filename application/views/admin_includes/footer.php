@@ -17,6 +17,19 @@
 <script type="text/javascript">
     $(function () {
         $('.datetimepicker').datetimepicker();
+        $('.starttime').datetimepicker();
+        $('.endtime').datetimepicker({
+            format: 'LT',
+            useCurrent: false //Important! See issue #1075
+        });
+
+
+        $(".starttime").on("dp.change", function (e) {
+            $('.endtime').data("DateTimePicker").minDate(e.time);
+        });
+        $(".endtime").on("dp.change", function (e) {
+            $('.starttime').data("DateTimePicker").maxDate(e.time);
+        });
     });
 </script>
 
