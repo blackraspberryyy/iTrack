@@ -1,7 +1,7 @@
 <?php
-    class AdminImport_model extends CI_Model{
-		function add_student($student){
-			$this->db->insert("user", $student);
-			return $this->db->affected_rows();
-		}
+class AdminImport_model extends CI_Model{
+    function add_students($students){
+        $this->db->insert_batch("user", $students);
+        return $this->db->affected_rows();
     }
+}

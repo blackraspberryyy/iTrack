@@ -1,7 +1,5 @@
 <?php
 
-use PhpOffice\PhpSpreadsheet\IOFactory;
-
 class AdminImport extends CI_Controller {
 
     function __construct() {
@@ -31,25 +29,53 @@ class AdminImport extends CI_Controller {
     }
 
     public function importExcel() {
-        $inputFileName = base_url('uploads/user.xlsx');
-
-        /** Load $inputFileName to a Spreadsheet Object  **/
-        $spreadsheet = IOFactory::load($inputFileName);
-        $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
         
-        var_dump($sheetData);
-        exit;
-
-        $student = array(
+        $file_mimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        if(isset($_FILES['xlsx_file']['name']) && in_array($_FILES['xlsx_file']['type'], $file_mimes)) {
+            $arr_file = explode('.', $_FILES['xlsx_file']['name']);
+            $extension = end($arr_file);
+            if('csv' == $extension) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+            $spreadsheet = $reader->load($_FILES['xlsx_file']['tmp_name']);
+            $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
             
-        );
+            $students = array();
+            foreach($sheetData as $key => $data){
+                if($key === 1){
+                    // row is a header
+                    //ignore this loop
+                }else{
+                    $tmp = array(
+                        "user_number"       => $data['A'],
+                        "user_serial_no"    => '',
+                        "user_firstname"    => $data['B'],
+                        "user_lastname"     => $data['C'],
+                        "user_middlename"   => $data['D'],
+                        "user_password"     => sha1($data['E']),
+                        "user_fcm_token"    => '',
+                        "user_email"        => $data['F'],
+                        "user_picture"      => 'images/admin/200900001.gif',
+                        "user_course"       => $data['G'],
+                        "user_isActive"     => 1,
+                        "user_added_at"     => time(),
+                        "user_updated_at"   => time()
+                    );
+                    $students[] = $tmp;
+                }
+            }
 
-        $this->AdminImport_model->add_student($student);
-        $this->session->set_flashdata("success_incident_report", "Incident Report successfully recorded.");
+            $this->AdminImport_model->add_students($students);
+            $this->session->set_flashdata("success_import", "Students imported successfully.");
 
-      //-- AUDIT TRAIL
-        $this->Logger->saveToAudit("admin", "Edited attendance in DUSAP");
-        redirect(base_url().'AdminDusap/view');
+            //-- AUDIT TRAIL
+            $this->Logger->saveToAudit("admin", "Import STudents from Excel File");
+            redirect(base_url().'AdminImport');
+
+        }else{
+            $this->session->set_flashdata("error_import", "There have been errors in importing the excel file.");
+        }
     }
-    
 }
