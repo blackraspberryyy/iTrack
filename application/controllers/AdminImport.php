@@ -76,6 +76,7 @@ class AdminImport extends CI_Controller {
 
         }else{
             $this->session->set_flashdata("error_import", "There have been errors in importing the excel file.");
+            redirect(base_url().'AdminImport');            
         }
     }
 }
