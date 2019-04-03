@@ -57,6 +57,26 @@ class AdminIncidentReport extends CI_Controller
         echo json_encode($res);
     }
 
+    public function search_user_lastname()
+    {
+        $keyword = strval($this->input->post('id'));
+
+        $query = $this->db->query("SELECT * FROM user WHERE user_lastname LIKE '%".$keyword."%'");
+        $result = $query->result_array();
+        $res = array();
+        foreach ($result as $key => $arr) {
+            $res[$key]['user_id'] = $arr['user_id'];
+            $res[$key]['user_number'] = $arr['user_number'];
+            $res[$key]['user_firstname'] = $arr['user_firstname'];
+            $res[$key]['user_lastname'] = $arr['user_lastname'];
+            $res[$key]['user_middlename'] = $arr['user_middlename'];
+            $res[$key]['user_course'] = $arr['user_course'];
+            $res[$key]['user_access'] = $arr['user_access'];
+            $res[$key]['user_picture'] = $arr['user_picture'];
+        }
+        echo json_encode($res);
+    }
+    
     public function incident_report_exec()
     {
         if ($this->input->post('classification') == '0') {
