@@ -93,7 +93,7 @@ class AdminIncidentReport extends CI_Controller
         $this->form_validation->set_rules('user_number', 'User Number', 'required|integer');
         $this->form_validation->set_rules('user_lastname', 'Lastname', 'required');
         $this->form_validation->set_rules('user_firstname', 'Firstname', 'required');
-        $this->form_validation->set_rules('user_age', 'Age', 'required|max_length[3]|integer');
+        // $this->form_validation->set_rules('user_age', 'Age', 'required|max_length[3]|integer');
         $this->form_validation->set_rules('user_access', 'Access', 'required');
         $this->form_validation->set_rules('message', 'Message', 'required');
 
@@ -137,7 +137,7 @@ class AdminIncidentReport extends CI_Controller
                 'effects_id' => $this->input->post('effect'),
                 'incident_report_datetime' => strtotime($this->input->post('date_time')),
                 'incident_report_place' => $this->input->post('place'),
-                'incident_report_age' => $this->input->post('user_age'),
+                //'incident_report_age' => $this->input->post('user_age'),
                 'incident_report_section_year' => $this->input->post('user_section_year'),
                 'incident_report_message' => $this->input->post('message'),
                 'incident_report_isAccepted' => 1,
@@ -254,7 +254,7 @@ class AdminIncidentReport extends CI_Controller
         $this->form_validation->set_rules('user_number', 'User Number', 'required|integer');
         $this->form_validation->set_rules('user_lastname', 'Lastname', 'required');
         $this->form_validation->set_rules('user_firstname', 'Firstname', 'required');
-        $this->form_validation->set_rules('user_age', 'Age', 'required|max_length[3]|integer');
+        //$this->form_validation->set_rules('user_age', 'Age', 'required|max_length[3]|integer');
         $this->form_validation->set_rules('user_access', 'Access', 'required');
         $this->form_validation->set_rules('message', 'Message', 'required');
         if ($this->form_validation->run() == false) {
@@ -292,7 +292,7 @@ class AdminIncidentReport extends CI_Controller
                 'effects_id' => $this->input->post('effect'),
                 'incident_report_datetime' => strtotime($this->input->post('date_time')),
                 'incident_report_place' => $this->input->post('place'),
-                'incident_report_age' => $this->input->post('user_age'),
+                //'incident_report_age' => $this->input->post('user_age'),
                 'incident_report_section_year' => $this->input->post('user_section_year'),
                 'incident_report_message' => $this->input->post('message'),
                 'incident_report_added_at' => time(),

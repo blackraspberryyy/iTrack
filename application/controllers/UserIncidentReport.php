@@ -168,7 +168,7 @@ class UserIncidentReport extends CI_Controller
                 'incident_report_datetime' => strtotime($this->input->post('date_time')),
                 'incident_report_place' => $this->input->post('place'),
                 'effects_id' => 1,
-                'incident_report_age' => $this->input->post('user_age'),
+                //'incident_report_age' => $this->input->post('user_age'),
                 'incident_report_section_year' => $this->input->post('user_section_year'),
                 'incident_report_message' => $this->input->post('message'),
                 'incident_report_added_at' => time(),
