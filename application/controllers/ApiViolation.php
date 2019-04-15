@@ -23,8 +23,8 @@ class ApiViolation extends CI_Controller {
     $violation_id = $params['violation_id'];
     $location = $params['location'];
     $message = $params['message'];
-    $pImgSrc = $params['img_src'];
     $timestamp = $params['timestamp'];
+    $pImgSrc = isset($params['img_src']) ? $params['img_src'] : null;
 
     // upload image
     $img_src = NULL;

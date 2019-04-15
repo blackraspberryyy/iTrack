@@ -92,7 +92,7 @@ class Api_model extends CI_Model {
       }
 
       // upload image
-      $pImgSrc = $report['img_src'];
+      $pImgSrc = isset($report['img_src']) ? $report['img_src'] : null;
       $img_src = NULL;
       $upload = upload_file(null, $pImgSrc);
       if (!$upload['success']) {

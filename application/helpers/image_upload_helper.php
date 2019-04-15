@@ -8,8 +8,15 @@ if (!function_exists('upload_file')) {
 
     // if $controller is falsy, do simple
     // use $file_name as content
-    if (!$controller && $file_name) {
-      // TODO: uses jpg by default looool
+    if (!$controller) {
+      if (!$file_name) {
+        // if no $file_name, then return false success
+        return [
+          'success' => FALSE,
+          'error' => 'Unable to upload item.'
+        ];
+      }
+
       $decoded = base64_decode("$file_name");
       $actualFileName = "$actualFileName.jpg";
       file_put_contents("$uploadPath$actualFileName", $decoded);
