@@ -9,7 +9,13 @@ if (!function_exists('upload_file')) {
     // if $controller is falsy, do simple
     // use $file_name as content
     if (!$controller) {
-      if (!$file_name) {
+      // if null, bypass!
+      if ($file_name === null) {
+        return [
+          'success' => TRUE,
+          'data' => ['file_name' => '']
+        ];
+      } else if (!$file_name) {
         // if no $file_name, then return false success
         return [
           'success' => FALSE,

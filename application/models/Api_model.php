@@ -43,29 +43,36 @@ class Api_model extends CI_Model {
   }
 
   public function addIncidentReport($serial, $report) {
-    // get uid via serial
-    if ($users = $this->getUserViaSerial($serial)) {
-      $user = $users[0];
-    } else {
-      return FALSE;
+    // again with the serial check
+    if ($serial) {
+      // get uid via serial
+      if ($users = $this->getUserViaSerial($serial)) {
+        $user = $users[0];
+      } else {
+        return FALSE;
+      }
     }
 
     // attach uid to $report
-    $report['user_id'] = $user['user_id'];
+    $report['user_id'] = $serial ? $user['user_id'] : null;
 
     return $this->db->insert('incident_report', $report);
   }
 
   public function addMinorReport($serial, $report) {
-    // get uid via serial
-    if ($users = $this->getUserViaSerial($serial)) {
-      $user = $users[0];
-    } else {
-      return FALSE;
+    // if serial is falsy, skip check
+    if ($serial) {
+      // get uid via serial
+      if ($users = $this->getUserViaSerial($serial)) {
+        $user = $users[0];
+      } else {
+        return FALSE;
+      }
     }
 
     // attach uid to $report
-    $report['user_id'] = $user['user_id'];
+    // set null if no serial
+    $report['user_id'] = $serial ? $user['user_id'] : null;
 
     return $this->db->insert('minor_reports', $report);
   }
@@ -77,11 +84,15 @@ class Api_model extends CI_Model {
     foreach ($reports as $key => $report) {
       // get user via serial
       $serial = $report['serial'];
-      if ($users = $this->getUserViaSerial($serial)) {
-        $user = $users[0];
-      } else {
-        // if no user, do not insert
-        return FALSE;
+
+      // skip serial if falsy
+      if ($serial) {
+        if ($users = $this->getUserViaSerial($serial)) {
+          $user = $users[0];
+        } else {
+          // if no user, do not insert
+          return FALSE;
+        }
       }
 
       // get type of violation
@@ -102,10 +113,13 @@ class Api_model extends CI_Model {
         $img_src = $upload['data']['file_name'];
       }
 
+      // if no serial, null
+      $userId = $serial ? $user['user_id'] : null;
+
       // build report
       if ($type == 'minor') {
         array_push($allMinors, array(
-          'user_id' => $user['user_id'],
+          'user_id' => $userId,
           'reporter_id' => $report['reporter_id'],
           'violation_id' => $report['violation_id'],
           'location' => $report['location'],
@@ -116,7 +130,7 @@ class Api_model extends CI_Model {
         ));
       } else if ($type == 'major') {
         array_push($allMajors, array(
-          'user_id' => $user['user_id'],
+          'user_id' => $userId,
           'user_reported_by' => $report['reporter_id'],
           'violation_id' => $report['violation_id'],
           'effects_id' => 1,
@@ -175,6 +189,10 @@ class Api_model extends CI_Model {
 
     foreach ($pair as $row) {
       $user_id = $row['user_id'];
+      // skip if $user_id null
+      if ($user_id == null) {
+        continue;
+      }
       // assert that total is the same as $total
 
       $TIME = time();
@@ -234,8 +252,10 @@ class Api_model extends CI_Model {
             tapped_at,
             DAY(FROM_UNIXTIME(tapped_at)) AS daily
           FROM minor_reports
-          WHERE group_id = 0
-          GROUP BY daily, user_id, violation_id
+          WHERE
+            group_id = 0 AND
+            user_id IS NOT NULL
+          GROUP BY tapped_at, user_id, violation_id
         ) AS mr_temp
       ", FALSE)
       ->group_by('user_id')
@@ -246,6 +266,8 @@ class Api_model extends CI_Model {
   }
 
   public function getGroupedUidVidPair($user_id = FALSE) {
+    $where = 'group_id = 0 AND user_id IS NOT NULL';
+
     $this->db
       ->select('
         user_id,
@@ -253,9 +275,7 @@ class Api_model extends CI_Model {
         DAY(FROM_UNIXTIME(tapped_at)) AS daily
       ')
       ->from('minor_reports')
-      ->where(array(
-        'group_id' => 0
-      ));
+      ->where($where, NULL, FALSE);
 
     if ($user_id) {
       $this->db->where('user_id', $user_id);
