@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2019 at 08:53 AM
+-- Generation Time: May 06, 2019 at 05:40 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.5
 
@@ -153,7 +153,7 @@ INSERT INTO `effects` (`effect_id`, `effect_name`, `effect_hours`) VALUES
 
 CREATE TABLE `incident_report` (
   `incident_report_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '1',
+  `user_id` int(11) DEFAULT '1',
   `user_reported_by` int(11) DEFAULT NULL,
   `violation_id` int(11) NOT NULL,
   `effects_id` int(11) NOT NULL,
@@ -256,7 +256,7 @@ INSERT INTO `log` (`log_id`, `user_id`, `log_type`, `log_desc`, `log_added_at`) 
 
 CREATE TABLE `minor_reports` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `reporter_id` int(11) NOT NULL,
   `violation_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
