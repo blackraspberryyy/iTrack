@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2019 at 05:52 PM
+-- Generation Time: May 07, 2019 at 06:49 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.2
 
@@ -175,7 +175,7 @@ INSERT INTO `effects` (`effect_id`, `effect_name`, `effect_hours`) VALUES
 
 CREATE TABLE `incident_report` (
   `incident_report_id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT '1',
+  `user_id` int(11) DEFAULT NULL,
   `user_reported_by` int(11) DEFAULT NULL,
   `violation_id` int(11) NOT NULL,
   `effects_id` int(11) NOT NULL,
@@ -271,7 +271,10 @@ INSERT INTO `log` (`log_id`, `user_id`, `log_type`, `log_desc`, `log_added_at`) 
 (50, NULL, 'trail', 'Filed an incident report', 1545267488),
 (51, NULL, 'trail', 'Filed an incident report', 1557215706),
 (52, NULL, 'trail', 'Set user to pending incident report.', 1557241499),
-(53, NULL, 'trail', 'Added deparment.', 1557242046);
+(53, NULL, 'trail', 'Added deparment.', 1557242046),
+(54, NULL, 'trail', 'Set user to pending incident report.', 1557247539),
+(55, NULL, 'trail', 'Set user to pending incident report.', 1557247602),
+(56, NULL, 'trail', 'Set user to pending minor report.', 1557247706);
 
 -- --------------------------------------------------------
 
@@ -357,7 +360,7 @@ INSERT INTO `minor_reports` (`id`, `user_id`, `reporter_id`, `violation_id`, `gr
 (56, 2, 4, 9, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
 (57, 2, 4, 10, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
 (58, 2, 4, 11, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
-(59, NULL, 4, 12, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(59, 2, 4, 12, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
 (60, 2, 4, 13, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
 (61, 2, 4, 14, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0);
 
@@ -636,7 +639,7 @@ ALTER TABLE `incident_report`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `minor_reports`
