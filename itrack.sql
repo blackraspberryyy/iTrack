@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2019 at 05:40 PM
+-- Generation Time: May 07, 2019 at 05:14 PM
 -- Server version: 5.7.24
--- PHP Version: 7.2.5
+-- PHP Version: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -126,6 +126,27 @@ INSERT INTO `cms` (`cms_id`, `dusap_title`, `dusap_text`, `incident_report_title
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dept`
+--
+
+CREATE TABLE `dept` (
+  `dept_id` int(11) NOT NULL,
+  `dept_name` varchar(255) NOT NULL,
+  `dept_supervisor` varchar(255) NOT NULL,
+  `dept_status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dept`
+--
+
+INSERT INTO `dept` (`dept_id`, `dept_name`, `dept_supervisor`, `dept_status`) VALUES
+(1, 'ITE', 'Ruth Manook', 1),
+(2, 'HSC', 'Jane Doe Smith', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `effects`
 --
 
@@ -177,7 +198,7 @@ INSERT INTO `incident_report` (`incident_report_id`, `user_id`, `user_reported_b
 (1, 3, 4, 18, 1, NULL, '', 1530611400, 'F1202 FIT', 19, 'W31/2018', 'Student has been disrespectful since the day we met.', 1, 1, 1531802826),
 (2, 2, NULL, 24, 1, NULL, '', 1535781302, 'somwehere', 19, 'W31/3rd', 'asd', 1, 1, 1535781302),
 (3, 1, NULL, 24, 1, NULL, '', 1537502785, 'F1206', 19, 'W41', 'ASD', 0, 1, 1537502785),
-(4, 3, 4, 15, 1, NULL, '', 1544754299, 'll', 19, 'erty', 'wryuko', 1, 0, 1544754130),
+(4, NULL, 4, 15, 1, NULL, '', 1544754299, 'll', 19, 'erty', 'wryuko', 1, 0, 1544754130),
 (5, 2, NULL, 15, 1, NULL, '', 1545266820, 'Sample', 19, 'W31', 'test', 1, 1, 1545266951),
 (6, 2, NULL, 15, 1, NULL, '', 1545267360, 'wer', 19, '123123', '21312313', 1, 1, 1545267488);
 
@@ -246,7 +267,10 @@ INSERT INTO `log` (`log_id`, `user_id`, `log_type`, `log_desc`, `log_added_at`) 
 (47, 2, 'log', 'Logged in', 1544724956),
 (48, NULL, 'trail', 'Filed an incident report', 1545266951),
 (49, 2, 'log', 'Logged in', 1545266996),
-(50, NULL, 'trail', 'Filed an incident report', 1545267488);
+(50, NULL, 'trail', 'Filed an incident report', 1545267488),
+(51, NULL, 'trail', 'Filed an incident report', 1557215706),
+(52, NULL, 'trail', 'Set user to pending incident report.', 1557241499),
+(53, NULL, 'trail', 'Added deparment.', 1557242046);
 
 -- --------------------------------------------------------
 
@@ -508,6 +532,12 @@ ALTER TABLE `cms`
   ADD PRIMARY KEY (`cms_id`);
 
 --
+-- Indexes for table `dept`
+--
+ALTER TABLE `dept`
+  ADD PRIMARY KEY (`dept_id`);
+
+--
 -- Indexes for table `effects`
 --
 ALTER TABLE `effects`
@@ -584,6 +614,12 @@ ALTER TABLE `cms`
   MODIFY `cms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `dept`
+--
+ALTER TABLE `dept`
+  MODIFY `dept_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `effects`
 --
 ALTER TABLE `effects`
@@ -599,7 +635,7 @@ ALTER TABLE `incident_report`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `minor_reports`
