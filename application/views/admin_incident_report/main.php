@@ -142,7 +142,9 @@ function determineStatus($status)
 												<div class="row">
 													<div class="col-xs-12">
 														<center>
+															<?php if($report->user_id != NULL):?>
 															<img src="<?= base_url().$report->user_picture; ?>" class="img-responsive img-circle" width="150">
+															<?php endif;?>
 															<h4><?= $report->user_firstname.' '.($report->user_middlename != '' ? $report->user_middlename : '').' '.$report->user_lastname; ?></h4>
 															<h5><?= ucfirst($report->user_access); ?></h5>
 															<h6><?= determineStatus($report->incident_report_status); ?></h6>
@@ -292,7 +294,6 @@ function determineStatus($status)
 							<input onkeypress = 'return keypresshandler(event)' maxlength="9" type="text" class="form-control" name = "user_number" id = "user_number" placeholder="Type Here" readonly value = "<?= set_value('user_number'); ?>" >          
 							<small><?= form_error('user_number'); ?></small>
 						</div>
-
 					</div>
 					<div class ="row">
 						<div class = "col-sm-8 col-sm-offset-2">
@@ -391,32 +392,35 @@ function determineStatus($status)
 										<td><?= $report->user_firstname.' '.($report->user_middlename == '' ? '' : substr($report->user_middlename, 0, 1).'. ').$report->user_lastname; ?></td>
 										<td>
 											<?php
-                                        if ($report->reportedby_id != '') {
-                                            //if REPORTED_BY teacher, get user's name
-                                            echo $report->reportedby_firstname.' '.($report->reportedby_middlename == '' ? '' : substr($report->reportedby_middlename, 0, 1).'. ').$report->reportedby_lastname;
-                                            echo " <small class = 'text-muted'><b>(".$report->reportedby_access.')</b></small>';
-                                        } else {
-                                            //if REPORTED_BY admin, get admin's name
-                                            echo 'Admin';
-                                        }
-                                        ?>
+												if ($report->reportedby_id != '') {
+														//if REPORTED_BY teacher, get user's name
+														echo $report->reportedby_firstname.' '.($report->reportedby_middlename == '' ? '' : substr($report->reportedby_middlename, 0, 1).'. ').$report->reportedby_lastname;
+														echo " <small class = 'text-muted'><b>(".$report->reportedby_access.')</b></small>';
+												} else {
+														//if REPORTED_BY admin, get admin's name
+														echo 'Admin';
+												}
+											?>
 										</td>
-
 										<td><?= ucfirst($report->violation_name); ?></td>
 										<td>
 											<div class="btn-group-vertical" role="group">
 												<button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id); ?>">Details</button>
-												<button class="btn btn-warning" data-toggle="modal" data-target="#set_sanction_<?= $report->incident_report_id; ?>">Set Sanction</button>
+												<?php if($report->user_id == NULL):?>
+													<a href="<?= base_url()?>AdminIncidentReport/setUser_exec/<?= $report->incident_report_id; ?>" class="btn btn-warning">Set User</a>
+												<?php else:?>
+													<button class="btn btn-warning" data-toggle="modal" data-target="#set_sanction_<?= $report->incident_report_id; ?>">Set Sanction</button>
+												<?php endif;?>
 											</div>
 										</td>
 									</tr>
-									<!-- SET_SANCTION MODAL -->
+								<!-- SET_SANCTION MODAL -->
 								<div class="modal fade" id="set_sanction_<?= $report->incident_report_id; ?>" tabindex="-1" role="dialog">
 									<div class="modal-dialog" role="document">
 										<form method="POST" action="<?= base_url(); ?>AdminIncidentReport/sendCallSlip_exec/<?= $report->user_number; ?>/<?= $report->incident_report_id; ?>">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title">Modal title</h5>
+													<h5 class="modal-title">Set Sanction</h5>
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 													<span aria-hidden="true">&times;</span>
 													</button>
@@ -450,16 +454,19 @@ function determineStatus($status)
 														<div class="row">
 															<div class="col-xs-12">
 																<center>
+																	<?php if($report->user_id != NULL):?>
 																	<img src="<?= base_url().$report->user_picture; ?>" class="img-responsive img-circle" width="150">
+																	<?php endif;?>
 																	<h4><?= $report->user_firstname.' '.($report->user_middlename != '' ? $report->user_middlename : '').' '.$report->user_lastname; ?></h4>
 																	<h5><?= ucfirst($report->user_access); ?></h5>
 																	<h6><?= determineStatus($report->incident_report_status); ?></h6>
 
-																	<?php if ($report->incident_report_status == 1) : ?>
+																	<!-- <?php if ($report->incident_report_status == 1) : ?>
 																		<a href="<?= base_url().'AdminDusap/view_exec/'.$report->incident_report_id."/".$report->user_id; ?>" class="btn btn-primary"><i class="fa fa-search"></i> Manage DUSAP Attendance</a>
 																	<?php else : ?>
 																		<a href="<?= base_url().'AdminOffenseReport/view_exec/'.$report->incident_report_id."/".$report->user_id; ?>" class="btn btn-primary"><i class="fa fa-file-alt"></i> Offense Report</a>
-																	<?php endif; ?>
+																	<?php endif; ?> -->
+
 																</center>
 															</div>
 															<div class="col-xs-6 margin-top-lg text-center">
@@ -492,6 +499,13 @@ function determineStatus($status)
 																<h5><strong>Message</strong></h5>
 																<p><?= $report->incident_report_message; ?></p>
 															</div>
+															<?php if($report->img_src != NULL):?>
+															<div class="col-xs-12 text-center">
+																<br/>
+																<h5><strong>Image</strong></h5>
+																<img src="<?= base_url().$report->img_src; ?>"/>
+															</div>
+															<?php endif;?>
 														</div>
 													</div>
 												</div>

@@ -61,7 +61,7 @@ class AdminIncidentReport extends CI_Controller
     {
         $keyword = strval($this->input->post('id'));
 
-        $query = $this->db->query("SELECT * FROM user WHERE user_lastname LIKE '%".$keyword."%'");
+        $query = $this->db->query("SELECT * FROM user WHERE user_lastname LIKE '%".$keyword."%' AND user_access = 'student'");
         $result = $query->result_array();
         $res = array();
         foreach ($result as $key => $arr) {
@@ -160,6 +160,56 @@ class AdminIncidentReport extends CI_Controller
         }
     }
 
+    public function setUser_exec()
+    {
+        $this->session->set_userdata('incident_report_id', $this->uri->segment(3));
+        redirect(base_url().'AdminIncidentReport/setUser');
+    }
+
+    public function setUser(){
+        $incident_id = $this->session->userdata('incident_report_id');
+        $data = array(
+            'title' => 'Set User',
+            'currentadmin' => $this->AdminDashboard_model->getAdmin(array('admin_id' => $this->session->userdata('userid')))[0],
+            'incident_report' => $this->AdminIncidentReport_model->getIncidentReport(array('incident_report_id' => $incident_id))
+        );
+
+        $this->load->view('admin_includes/nav_header', $data);
+        $this->load->view('admin_incident_report/setUser');
+        $this->load->view('admin_includes/footer');
+    }
+    
+    public function setUser_submit(){
+        $incident_id = $this->uri->segment(3);
+        $this->form_validation->set_rules('user_number', 'User Number', 'required|integer');
+        $this->form_validation->set_rules('user_lastname', 'Lastname', 'required');
+        $this->form_validation->set_rules('user_firstname', 'Firstname', 'required');
+        $this->form_validation->set_rules('user_access', 'Access', 'required');
+        $this->form_validation->set_rules('user_course', 'Course', 'required');
+        if ($this->form_validation->run() == false) {
+            $incident_id = $this->session->userdata('incident_report_id');
+            $data = array(
+                'title' => 'Set User',
+                'currentadmin' => $this->AdminDashboard_model->getAdmin(array('admin_id' => $this->session->userdata('userid')))[0],
+                'incident_report' => $this->AdminIncidentReport_model->getIncidentReport(array('incident_report_id' => $incident_id))
+            );
+
+            $this->load->view('admin_includes/nav_header', $data);
+            $this->load->view('admin_incident_report/setUser');
+            $this->load->view('admin_includes/footer');
+        }else{
+            $data = [
+                "user_id"   => $this->input->post('user_id')
+            ];
+            $this->AdminIncidentReport_model->edit_incident_report($data, $incident_id);
+
+             //-- AUDIT TRAIL
+            $this->Logger->saveToAudit('admin', 'Set user to pending incident report.');
+
+            redirect(base_url().'AdminIncidentReport');
+        }
+    }
+
     public function sendCallSlip_exec()
     {
         $userId = $this->uri->segment(3);
@@ -204,15 +254,6 @@ class AdminIncidentReport extends CI_Controller
             //redirect(base_url().'AdminEmail');
         }
     }
-
-    /* function sample(){
-      $data = array(
-      "message"   => "Please See the Discipline Officer for some important matter",
-      "username"  => "Juan Dela Cruz",
-      "datetime"  => 1541521453
-      );
-      $this->load->view('admin_email/email_callslip', $data);
-      } */
 
     public function edit_exec()
     {

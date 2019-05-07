@@ -47,4 +47,41 @@ class AdminMinorReports_model extends CI_Model {
     
     return ($query->num_rows() > 0) ? $query->result() : false;
   }
+
+  function getPendingReports(){
+    $this->db->select(
+      '
+      r.user_id AS reporter_id,
+      r.user_firstname AS reporter_fname,
+      r.user_middlename AS reporter_mname,
+      r.user_lastname AS reporter_lname,
+
+      v.violation_id AS violation_id,
+      v.violation_name AS violation_name,
+      
+      mr.id AS mr_id,
+      mr.location AS location,
+      mr.message AS message, 
+      mr.tapped_at AS tapped_at,
+      mr.created_at AS created_at,
+      mr.img_src AS img_src,
+
+      mr.group_id AS group_id,
+      mr.grouped_at AS grouped_at
+      '
+    );
+    $this->db->from('minor_reports AS mr');
+    $this->db->join('user AS r', 'r.user_id = mr.reporter_id', 'INNER JOIN');
+    $this->db->join('violation AS v', 'v.violation_id = mr.violation_id', 'INNER JOIN');
+    
+    $this->db->where(array('mr.user_id' => NULL));
+    $query = $this->db->get();
+    
+    return ($query->num_rows() > 0) ? $query->result() : false;
+  }
+  function edit_minor_report($incident_report, $id){
+    $this->db->where(array('id' => $id));
+    $this->db->update("minor_reports", $incident_report);
+    return $this->db->affected_rows();
+}
 }
