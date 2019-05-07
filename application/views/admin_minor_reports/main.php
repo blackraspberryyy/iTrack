@@ -19,6 +19,10 @@
     <?php if(!$minor_reports):?>
     <center><h3>No minor reports so far...</h3></center>
     <?php else:?>
+    <div class="text-right">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#view_pendings">View Pending Reports</button>
+    </div>
+    <br/>
     <div class="table-responsive">
       <table class="table table-bordered datatable">
         <thead>
@@ -43,6 +47,7 @@
               <button class ="btn btn-primary"type="button" data-toggle="modal" data-target="#mr_details_<?= $mr->mr_id?>">Details</button> 
             </td> 
           </tr>
+          <!-- DETAILS MODAL-->
           <div class="modal fade text-left" id="mr_details_<?= $mr->mr_id?>" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -88,7 +93,7 @@
                 </div>
               </div>
             </div>
-        </div> <!--END DETAILS MODAL-->
+          </div> <!--END DETAILS MODAL-->
           <?php endforeach;?>
         </tbody>
       </table>
@@ -96,3 +101,44 @@
     <?php endif;?>
   </div>
 </div>
+<!-- VIEW PENDINGS MODAL-->
+<div class="modal fade text-left" id="view_pendings" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="detailsTitle">Pending Reports</h3>
+      </div>
+      <div class="modal-body">
+      <?php if(!$pending_reports):?>
+      <center><h3>No pending reports so far...</h3></center>
+      <?php else:?>
+      <div class="table-responsive">
+        <table class="table table-bordered datatable">
+          <thead>
+            <tr>
+              <th>Violation</th>
+              <th>Tapped At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($pending_reports as $mr):?>
+            <tr>
+              <td><?= $mr->violation_name?></td>
+              <td><?= date("F d,Y - h:i A", $mr->tapped_at)?></td>
+              <td>
+                <a href="<?= base_url()?>AdminMinorReports/setUser_exec/<?= $mr->mr_id?>" class ="btn btn-primary">Set User</button> 
+              </td> 
+            </tr>
+            <?php endforeach;?>
+          </tbody>
+        </table>
+      </div>
+      <?php endif;?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div> <!--END DETAILS MODAL-->
