@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2019 at 05:14 PM
+-- Generation Time: May 07, 2019 at 05:52 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.2
 
@@ -58,6 +58,7 @@ INSERT INTO `admin` (`admin_id`, `admin_number`, `admin_firstname`, `admin_lastn
 CREATE TABLE `attendance` (
   `attendance_id` int(11) NOT NULL,
   `incident_report_id` int(11) NOT NULL,
+  `dept_id` int(11) NOT NULL,
   `attendance_dept` varchar(255) NOT NULL,
   `attendance_supervisor` varchar(255) NOT NULL,
   `attendance_hours_rendered` int(11) NOT NULL,
@@ -71,12 +72,12 @@ CREATE TABLE `attendance` (
 -- Dumping data for table `attendance`
 --
 
-INSERT INTO `attendance` (`attendance_id`, `incident_report_id`, `attendance_dept`, `attendance_supervisor`, `attendance_hours_rendered`, `attendance_status`, `attendance_starttime`, `attendance_endtime`, `attendance_created_at`) VALUES
-(1, 2, 'Admissions', 'John Doe', 1, 1, 1539392400, 1539396060, 1539528072),
-(4, 2, 'ITE Dept.', 'John Doe', 12, 1, 1539533760, 1539576960, 1539533829),
-(10, 3, 'Admissions', 'John Doe', 12, 1, 1540353060, 1540396260, 1540396274),
-(13, 3, '-', '-', 88, 1, 0, 0, 1540398197),
-(14, 4, 'dsa', 'dsa', 24, 1, 1544797740, 1544884140, 1544711439);
+INSERT INTO `attendance` (`attendance_id`, `incident_report_id`, `dept_id`, `attendance_dept`, `attendance_supervisor`, `attendance_hours_rendered`, `attendance_status`, `attendance_starttime`, `attendance_endtime`, `attendance_created_at`) VALUES
+(1, 2, 1, 'ITE', 'John Doe', 1, 1, 1539392400, 1539396060, 1539528072),
+(4, 2, 1, 'ITE', 'John Doe', 12, 1, 1539533760, 1539576960, 1539533829),
+(10, 3, 1, 'ITE', 'John Doe', 12, 1, 1540353060, 1540396260, 1540396274),
+(13, 3, 1, 'ITE', 'ITE', 88, 1, 0, 0, 1540398197),
+(14, 4, 1, 'ITE', 'dsa', 24, 1, 1544797740, 1544884140, 1544711439);
 
 -- --------------------------------------------------------
 
@@ -356,7 +357,7 @@ INSERT INTO `minor_reports` (`id`, `user_id`, `reporter_id`, `violation_id`, `gr
 (56, 2, 4, 9, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
 (57, 2, 4, 10, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
 (58, 2, 4, 11, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
-(59, 2, 4, 12, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
+(59, NULL, 4, 12, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
 (60, 2, 4, 13, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0),
 (61, 2, 4, 14, 2, '', '', NULL, 1541865600, 1541693309, 1541865600, 0);
 
