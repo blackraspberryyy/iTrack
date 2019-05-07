@@ -4,7 +4,7 @@
         height: 180px;
         overflow: hidden;
         border-radius: 50%;
-        margin:20px auto;
+        margin: 20px auto;
         box-shadow: 0px 0px 10px gray;
     }
 
@@ -14,13 +14,16 @@
         height: 100%;
         width: auto;
     }
-    .form-control:read-only { 
+
+    .form-control:read-only {
         background-color: white;
     }
+
     .btn-file {
         position: relative;
         overflow: hidden;
     }
+
     .btn-file input[type=file] {
         position: absolute;
         top: 0;
@@ -37,7 +40,7 @@
         display: block;
     }
 
-    #img-upload{
+    #img-upload {
         width: 100%;
     }
 </style>
@@ -48,10 +51,12 @@
             </a></li>
         <li class="active">Incident Report</li>
     </ol>
-</div><!--/.row breadcrumb-->
+</div>
+<!--/.row breadcrumb-->
 <?php
 
-function determineStatus($status) {
+function determineStatus($status)
+{
     if ($status == 0) {
         echo '<span class = "badge badge-secondary">Finished</span>';
     } else {
@@ -63,7 +68,7 @@ function determineStatus($status) {
     <div class="col-sm-12">
         <h1>Offense Report</h1>
         <div class="table-responsive">
-            <table class="table table-bordered datatable" width="100%" cellspacing="0">
+            <table class="table table-striped datatable" style="width:100%">
                 <thead>
                     <tr>
                         <th>Date &amp; Time</th>
@@ -73,11 +78,11 @@ function determineStatus($status) {
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <?php if ($violations): ?>
-                    <?php foreach ($violations as $violation): ?>
-                        <tbody>
+                <tbody>
+                    <?php if ($violations) : ?>
+                        <?php foreach ($violations as $violation) : ?>
                             <tr>
-                                <td><span class = "hidden"><?= $violation->incident_report_datetime ?></span><?= date('F d, Y \a\t h:i A', $violation->incident_report_datetime) ?></td>
+                                <td><span class="hidden"><?= $violation->incident_report_datetime ?></span><?= date('F d, Y \a\t h:i A', $violation->incident_report_datetime) ?></td>
                                 <td><?= determineStatus($violation->incident_report_status); ?></td>
                                 <td>
                                     <?php
@@ -94,97 +99,94 @@ function determineStatus($status) {
 
                                 <td><?= ucfirst($violation->violation_name) ?></td>
                                 <td>
-                        <center>
-                            <div class="btn-group-vertical" role="group">
-                                <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#summary_<?= $violation->violation_id ?>">Summary</button>
+                                    <center>
+                                        <div class="btn-group-vertical" role="group">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#summary_<?= $violation->violation_id ?>">Summary</button>
+                                        </div>
+                                    </center>
+                                </td>
+                            </tr>
+                            <!-- DETAILS MODAL -->
+                            <div class="modal fade text-left" id="summary_<?= $violation->violation_id ?>" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="detailsTitle">Summary of the Offense Report</h3>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <center>
+                                                            <img src="<?= base_url() . $violation->user_picture ?>" class="img-responsive img-circle" width="150">
+                                                            <h4><?= $violation->user_firstname . ' ' . ($violation->user_middlename != '' ? $violation->user_middlename : '') . ' ' . $violation->user_lastname ?></h4>
+                                                            <h5><?= ucfirst($violation->user_access) ?></h5>
+                                                            <h6><?= determineStatus($violation->incident_report_status) ?></h6>
+                                                        </center>
+                                                        <div class="table-responsive">
 
-                            </div>
+                                                            <table class="table table-striped" width="100%" cellspacing="0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th>Nature of the Violation committed</th>
+                                                                        <td><?= $violation->violation_name ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Date and Time</th>
+                                                                        <td><?= date('F d, Y \a\t h:i A', $violation->incident_report_datetime) ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Classification of the Offense</th>
+                                                                        <td><?= $violation->violation_type ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Place of the Offense</th>
+                                                                        <td><?= $violation->incident_report_place ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Reported By</th>
+                                                                        <?php if (empty($violation->reportedby_id)) : ?>
+                                                                            <td>Admin</td>
+                                                                        <?php else : ?>
+                                                                            <td><?= $violation->reportedby_lastname ?>, <?= $violation->reportedby_firstname ?></td>
+                                                                        <?php endif; ?>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Course/Section/Year</th>
+                                                                        <td>
+                                                                            <?php
+                                                                            if ($violation->reportedby_access == "student") {
+                                                                                echo $violation->reportedby_course . "/" . $violation->incident_report_section_year;
+                                                                            } else {
+                                                                                echo "Teacher";
+                                                                            }
+                                                                            ?>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Student/Teacher Number</th>
+                                                                        <td><?= $violation->reportedby_number ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Comments</th>
+                                                                        <td><?= $violation->incident_report_message ?></td>
+                                                                    </tr>
+                                                                </tbody>
 
-                        </center>
-                        </td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-                    <!-- DETAILS MODAL -->
-                    <div class="modal fade text-left" id="summary_<?= $violation->violation_id ?>" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3 class="modal-title" id="detailsTitle">Summary of the Offense Report</h3>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <center>
-                                                <img src="<?= base_url() . $violation->user_picture ?>" class="img-responsive img-circle" width="150">
-                                                <h4><?= $violation->user_firstname . ' ' . ($violation->user_middlename != '' ? $violation->user_middlename : '') . ' ' . $violation->user_lastname ?></h4>
-                                                <h5><?= ucfirst($violation->user_access) ?></h5>
-                                                <h6><?= determineStatus($violation->incident_report_status) ?></h6>
-                                            </center>
-                                            <div class="table-responsive">
-
-                                                <table class="table table-striped" width="100%" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>Nature of the Violation committed</th>
-                                                            <td><?= $violation->violation_name ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Date and Time</th>
-                                                            <td><?= date('F d, Y \a\t h:i A', $violation->incident_report_datetime) ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Classification of the Offense</th>
-                                                            <td><?= $violation->violation_type ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Place of the Offense</th>
-                                                            <td><?= $violation->incident_report_place ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Reported By</th>
-                                                            <?php if (empty($violation->reportedby_id)): ?>
-                                                                <td>Admin</td>
-                                                            <?php else: ?>
-                                                                <td><?= $violation->reportedby_lastname ?>, <?= $violation->reportedby_firstname ?></td>
-                                                            <?php endif; ?>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Course/Section/Year</th>
-                                                            <td>
-                                                                <?php
-                                                                if ($violation->reportedby_access == "student") {
-                                                                    echo $violation->reportedby_course . "/" . $violation->incident_report_section_year;
-                                                                } else {
-                                                                    echo "Teacher";
-                                                                }
-                                                                ?>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Student/Teacher Number</th>
-                                                            <td><?= $violation->reportedby_number ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Comments</th>
-                                                            <td><?= $violation->incident_report_message ?></td>
-                                                        </tr>
-                                                    </tbody>
-
-                                                </table>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!--END DETAILS MODAL-->
-                <?php endforeach; ?>
-            <?php endif; ?>
+                                <!-- END DETAILS MODAL -->
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

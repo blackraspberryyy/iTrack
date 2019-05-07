@@ -8,13 +8,13 @@ class UserIncidentReport extends CI_Controller
         if ($this->session->has_userdata('isloggedin') == false) {
             //user is not yet logged in
             $this->session->set_flashdata('err_login', 'Login First!');
-            redirect(base_url().'Login/');
+            redirect(base_url() . 'Login/');
         } else {
             if ($this->session->userdata('useraccess') == 'student' || $this->session->userdata('useraccess') == 'teacher') {
                 //Do Nothing
             } elseif ($this->session->userdata('useraccess') == 'admin') {
                 $this->session->set_flashdata('err_login', 'Restricted Subpage');
-                redirect(base_url().'UserDashboard/');
+                redirect(base_url() . 'UserDashboard/');
             }
         }
     }
@@ -23,7 +23,7 @@ class UserIncidentReport extends CI_Controller
     {
         $keyword = strval($this->input->post('id'));
 
-        $query = $this->db->query("SELECT * FROM user WHERE user_number LIKE '%".$keyword."%'");
+        $query = $this->db->query("SELECT * FROM user WHERE user_number LIKE '%" . $keyword . "%'");
         $result = $query->result_array();
         $res = array();
         foreach ($result as $key => $arr) {
@@ -46,13 +46,13 @@ class UserIncidentReport extends CI_Controller
         $where = array(
             'user_id' => $this->session->userdata('userid'),
         );
-//        echo $this->db->last_query();
-//        echo "<pre>";
-//        print_r($majorViolations);
-//        echo "</pre>";
-//        die;
+        //        echo $this->db->last_query();
+        //        echo "<pre>";
+        //        print_r($majorViolations);
+        //        echo "</pre>";
+        //        die;
         $data = array(
-            'title' => ucfirst($this->session->userdata('useraccess'))."'s Incident Reports",
+            'title' => ucfirst($this->session->userdata('useraccess')) . "'s Incident Reports",
             'currentuser' => $this->UserDashboard_model->getUser($where)[0],
             'majorViolations' => $majorViolations,
             'major_violations' => $this->UserIncidentReport_model->getMajorViolations(),
@@ -178,7 +178,42 @@ class UserIncidentReport extends CI_Controller
             //-- AUDIT TRAIL
             $this->Logger->saveToAudit($this->session->userdata('userid'), 'Filed an incident report');
 
-            redirect(base_url().'UserIncidentReport');
+            redirect(base_url() . 'UserIncidentReport');
+        }
+    }
+
+    public function add_incident_report_exec_no_userID()
+    {
+
+        $this->form_validation->set_rules('date_time', 'Date and Time', 'required');
+        $this->form_validation->set_rules('place', 'Place', 'required');
+        $this->form_validation->set_rules('message', 'Message', 'required');
+
+        if ($this->form_validation->run() == false) {
+            //ERROR
+            $this->add_incident_report();
+        } else {
+            $this->UserIncidentReport_model->get_user_id($this->uri->segment(3))[0]->user_id;
+            // echo $this->db->last_query();
+            // die;
+            $incident_report = array(
+                'user_reported_by' => $this->session->userdata('userid'), //NULL if the ADMIN is the one to report
+                // 'user_id' => $this->UserIncidentReport_model->get_user_id($this->uri->segment(3))[0]->user_id,
+                'violation_id' => $this->input->post('classification'),
+                'incident_report_datetime' => strtotime($this->input->post('date_time')),
+                'incident_report_place' => $this->input->post('place'),
+                'effects_id' => 1,
+                //'incident_report_age' => $this->input->post('user_age'),
+                'incident_report_section_year' => $this->input->post('user_section_year'),
+                'incident_report_message' => $this->input->post('message'),
+                'incident_report_added_at' => time(),
+            );
+            $this->UserIncidentReport_model->insert_incident_report($incident_report);
+            $this->session->set_flashdata('success_incident_report', 'Incident Report successfully recorded.');
+            //-- AUDIT TRAIL
+            $this->Logger->saveToAudit($this->session->userdata('userid'), 'Filed an incident report');
+
+            redirect(base_url() . 'UserIncidentReport');
         }
     }
 
@@ -203,7 +238,7 @@ class UserIncidentReport extends CI_Controller
             } else {
                 $data = array(
                     'success' => 3,
-                    'result' => count($matched_users).' results found',
+                    'result' => count($matched_users) . ' results found',
                     'users' => $matched_users,
                 );
             }
@@ -232,7 +267,7 @@ class UserIncidentReport extends CI_Controller
             } else {
                 $data = array(
                     'success' => 3,
-                    'result' => count($matched_users).' results found',
+                    'result' => count($matched_users) . ' results found',
                     'users' => $matched_users,
                 );
             }
@@ -262,7 +297,7 @@ class UserIncidentReport extends CI_Controller
             } else {
                 $data = array(
                     'success' => 3,
-                    'result' => count($matched_users).' results found',
+                    'result' => count($matched_users) . ' results found',
                     'users' => $matched_users,
                 );
             }

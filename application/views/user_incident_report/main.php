@@ -1,8 +1,9 @@
 <style>
-    .dropdown-menu li{
+    .dropdown-menu li {
         cursor: pointer;
     }
-    .table > tbody > tr > td {
+
+    .table>tbody>tr>td {
         vertical-align: middle;
     }
 </style>
@@ -18,7 +19,8 @@ function determineStatus($status)
 }
 ?>
 <script>
-    $(function () { /* DOM ready */
+    $(function() {
+        /* DOM ready */
         if ($(this).find(":selected").attr("data-type") == "other") {
             $("#classification_other").show();
             $("#nature").prop("disabled", false);
@@ -28,7 +30,7 @@ function determineStatus($status)
         }
 
 
-        $('#classification').change(function () {
+        $('#classification').change(function() {
             if ($(this).find(":selected").attr("data-type") == "other") {
                 //Creation of new violation
                 $("#nature").prop("disabled", false);
@@ -43,7 +45,7 @@ function determineStatus($status)
 
         $('.datetimepicker').datetimepicker({
             maxDate: moment()
-        }).on('dp.show', function () {
+        }).on('dp.show', function() {
             $('#datetimepicker').data("DateTimePicker").maxDate(moment());
         });
 
@@ -56,18 +58,19 @@ function determineStatus($status)
             </a></li>
         <li class="active">Incident Report</li>
     </ol>
-</div><!--/.row breadcrumb-->
+</div>
+<!--/.row breadcrumb-->
 
-<div class = "row">
+<div class="row">
     <div class="col-xs-12 text-right">
-        <br/>
-        <a type ="button" href="<?= base_url(); ?>UserIncidentReport/add_incident_report" class="btn btn-primary"><i class="fa fa-plus" ></i> Add Incident Report</a>
+        <br />
+        <a type="button" href="<?= base_url(); ?>UserIncidentReport/add_incident_report" class="btn btn-primary"><i class="fa fa-plus"></i> Add Incident Report</a>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-12">
         <h1><?= $cms->incident_report_title; ?></h1>
-        <div class ="table-responsive">
+        <div class="table-responsive">
             <table class="table table-striped datatable" style="width:100%">
                 <thead>
                     <tr>
@@ -83,14 +86,14 @@ function determineStatus($status)
                     <?php if ($majorViolations) : ?>
                         <?php foreach ($majorViolations as $report) : ?>
                             <tr>
-                                <td><span class = "hidden"><?= $report->incident_report_datetime; ?></span><?= date('F d, Y \a\t h:i A', $report->incident_report_datetime); ?></td>
+                                <td><span class="hidden"><?= $report->incident_report_datetime; ?></span><?= date('F d, Y \a\t h:i A', $report->incident_report_datetime); ?></td>
                                 <td><?= determineStatus($report->incident_report_status); ?></td>
                                 <td>
                                     <?php
                                     if ($report->reportedby_id != '') {
                                         //if REPORTED_BY teacher, get user's name
-                                        echo $report->reportedby_firstname.' '.($report->reportedby_middlename == '' ? '' : substr($report->reportedby_middlename, 0, 1).'. ').$report->reportedby_lastname;
-                                        echo " <small class = 'text-muted'><b>(".$report->reportedby_access.')</b></small>';
+                                        echo $report->reportedby_firstname . ' ' . ($report->reportedby_middlename == '' ? '' : substr($report->reportedby_middlename, 0, 1) . '. ') . $report->reportedby_lastname;
+                                        echo " <small class = 'text-muted'><b>(" . $report->reportedby_access . ')</b></small>';
                                     } else {
                                         //if REPORTED_BY admin, get admin's name
                                         echo 'Admin';
@@ -101,77 +104,77 @@ function determineStatus($status)
                                 <td><?= ucfirst($report->violation_name); ?></td>
                                 <td><?= ucfirst($report->effect_name); ?></td>
                                 <td>
-                        <center>
+                                    <center>
 
-                            <div class="btn-group-vertical" role="group">
-                                <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id); ?>">Details</button>
+                                        <div class="btn-group-vertical" role="group">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#details_<?= sha1($report->incident_report_id); ?>">Details</button>
 
-                            </div>
-                        </center>
-                        </td>
-                        </tr>
-                        <!-- DETAILS MODAL -->
-                        <div class="modal fade text-left" id="details_<?= sha1($report->incident_report_id); ?>" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title" id="detailsTitle">Details</h3>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <div class="row">
-                                                    <div class="col-xs-12">
-                                                        <center>
-                                                            <img src="<?= base_url().$report->user_picture; ?>" class="img-responsive img-circle" width="150">
-                                                            <h4><?= $report->user_firstname.' '.($report->user_middlename != '' ? $report->user_middlename : '').' '.$report->user_lastname; ?></h4>
-                                                            <h5><?= ucfirst($report->user_access); ?></h5>
-                                                            <h6><?= determineStatus($report->incident_report_status); ?></h6>
-                                                        </center>
-                                                    </div>
-                                                    <div class="col-xs-6 margin-top-lg text-center">
-                                                        <h5><strong>Reported By:</strong></h5>
-                                                        <span><?php
-                                                                if ($report->reportedby_id != '') {
-                                                                    //if REPORTED_BY teacher, get user's name
-                                                                    echo $report->reportedby_firstname.' '.($report->reportedby_middlename == '' ? '' : substr($report->reportedby_middlename, 0, 1).'. ').$report->reportedby_lastname;
-                                                                    echo " <small class = 'text-muted'><b>(".$report->reportedby_access.')</b></small>';
-                                                                } else {
-                                                                    //if REPORTED_BY admin, get admin's name
-                                                                    echo 'Admin';
-                                                                }
-                                                                ?></span>
-                                                        <br/>
-                                                        <br/>
-                                                        <h5><strong>Place</strong></h5>
-                                                        <span><?= $report->incident_report_place; ?></span>
-                                                    </div>
-                                                    <div class="col-xs-6  margin-top-lg  text-center">
-                                                        <h5><strong>Violation</strong></h5>
-                                                        <span><?= ucfirst($report->violation_name); ?></span>
-                                                        <br/>
-                                                        <br/>
-                                                        <h5><strong>Time</strong></h5>
-                                                        <span><?= date('F d, Y \a\t h:i A', $report->incident_report_datetime); ?></span>
-                                                    </div>
-                                                    <div class="col-xs-12 text-center">
-                                                        <br/>
-                                                        <h5><strong>Message</strong></h5>
-                                                        <p><?= $report->incident_report_message; ?></p>
+                                        </div>
+                                    </center>
+                                </td>
+                            </tr>
+                            <!-- DETAILS MODAL -->
+                            <div class="modal fade text-left" id="details_<?= sha1($report->incident_report_id); ?>" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="detailsTitle">Details</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <center>
+                                                                <img src="<?= base_url() . $report->user_picture; ?>" class="img-responsive img-circle" width="150">
+                                                                <h4><?= $report->user_firstname . ' ' . ($report->user_middlename != '' ? $report->user_middlename : '') . ' ' . $report->user_lastname; ?></h4>
+                                                                <h5><?= ucfirst($report->user_access); ?></h5>
+                                                                <h6><?= determineStatus($report->incident_report_status); ?></h6>
+                                                            </center>
+                                                        </div>
+                                                        <div class="col-xs-6 margin-top-lg text-center">
+                                                            <h5><strong>Reported By:</strong></h5>
+                                                            <span><?php
+                                                                    if ($report->reportedby_id != '') {
+                                                                        //if REPORTED_BY teacher, get user's name
+                                                                        echo $report->reportedby_firstname . ' ' . ($report->reportedby_middlename == '' ? '' : substr($report->reportedby_middlename, 0, 1) . '. ') . $report->reportedby_lastname;
+                                                                        echo " <small class = 'text-muted'><b>(" . $report->reportedby_access . ')</b></small>';
+                                                                    } else {
+                                                                        //if REPORTED_BY admin, get admin's name
+                                                                        echo 'Admin';
+                                                                    }
+                                                                    ?></span>
+                                                            <br />
+                                                            <br />
+                                                            <h5><strong>Place</strong></h5>
+                                                            <span><?= $report->incident_report_place; ?></span>
+                                                        </div>
+                                                        <div class="col-xs-6  margin-top-lg  text-center">
+                                                            <h5><strong>Violation</strong></h5>
+                                                            <span><?= ucfirst($report->violation_name); ?></span>
+                                                            <br />
+                                                            <br />
+                                                            <h5><strong>Time</strong></h5>
+                                                            <span><?= date('F d, Y \a\t h:i A', $report->incident_report_datetime); ?></span>
+                                                        </div>
+                                                        <div class="col-xs-12 text-center">
+                                                            <br />
+                                                            <h5><strong>Message</strong></h5>
+                                                            <p><?= $report->incident_report_message; ?></p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                         <!-- END DETAILS MODAL -->
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                            <!-- END DETAILS MODAL -->
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
@@ -202,7 +205,7 @@ function determineStatus($status)
                                 <?php
                                 foreach ($major_violations as $violation) {
                                     ?>
-                                    <option value = "<?= $violation->violation_id; ?>" data-type = "<?= $violation->violation_type; ?>" title = "<?= ucfirst($violation->violation_name); ?>" <?= set_select('classification', $violation->violation_id); ?>><?= ucfirst($violation->violation_name); ?></option>    
+                                                    <option value = "<?= $violation->violation_id; ?>" data-type = "<?= $violation->violation_type; ?>" title = "<?= ucfirst($violation->violation_name); ?>" <?= set_select('classification', $violation->violation_id); ?>><?= ucfirst($violation->violation_name); ?></option>    
                                     <?php
                                 }
                                 ?>
@@ -321,9 +324,9 @@ function determineStatus($status)
 </script>
 
 <script type="text/javascript">
-    window.onload = function () {
+    window.onload = function() {
 
-        $(document).on("focusin keyup", "#user_number.autocomplete", function () {
+        $(document).on("focusin keyup", "#user_number.autocomplete", function() {
             $.ajax({
                 "method": "POST",
                 "url": '<?= base_url(); ?>' + "UserIncidentReport/search_user_number",
@@ -331,7 +334,7 @@ function determineStatus($status)
                 "data": {
                     'id': $(".autocomplete").val()
                 },
-                success: function (res) {
+                success: function(res) {
                     $("#user_number_menu").empty();
                     if (res.length == 0) {
                         $("#user_number_menu").append("<li class = 'no-matches'><a>No match found</a></li>");
@@ -341,7 +344,7 @@ function determineStatus($status)
                         }
                     }
                 },
-                error: function (res) {
+                error: function(res) {
                     console.log(res);
                 }
             });
@@ -352,13 +355,13 @@ function determineStatus($status)
             // Create the no matches entry if it does not exists yet
             if (!$dropdown.data("containsNoMatchesEntry")) {
                 $("input.autocomplete + ul.dropdown-menu").append(
-                        '<li class="no-matches hidden"><a>No matches</a></li>'
-                        );
+                    '<li class="no-matches hidden"><a>No matches</a></li>'
+                );
                 $dropdown.data("containsNoMatchesEntry", true);
             }
 
             // Show only matching values
-            $dropdown.find("li:not(.no-matches)").each(function (key, li) {
+            $dropdown.find("li:not(.no-matches)").each(function(key, li) {
                 var $li = $(li);
                 $li[new RegExp($input.val(), "i").exec($li.text()) ? "removeClass" : "addClass"]("hidden");
             });
@@ -368,7 +371,7 @@ function determineStatus($status)
 
         });
 
-        $(document).on("focus click", "input.autocomplete + ul.dropdown-menu li", function (e) {
+        $(document).on("focus click", "input.autocomplete + ul.dropdown-menu li", function(e) {
             // Prevent any action on the window location
             e.preventDefault();
 
@@ -393,5 +396,4 @@ function determineStatus($status)
         });
 
     }
-
 </script>
