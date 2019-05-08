@@ -503,7 +503,7 @@ function determineStatus($status)
 															<div class="col-xs-12 text-center">
 																<br/>
 																<h5><strong>Image</strong></h5>
-																<img src="<?= base_url().$report->img_src; ?>"/>
+																<img src="<?= base_url().'uploads/images/'.$report->img_src?>" width="350" class="thumbnail"/>
 															</div>
 															<?php endif;?>
 														</div>

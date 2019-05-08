@@ -116,6 +116,7 @@
         <table class="table table-bordered datatable">
           <thead>
             <tr>
+              <th>Image</th>
               <th>Violation</th>
               <th>Tapped At</th>
               <th>Actions</th>
@@ -124,6 +125,7 @@
           <tbody>
             <?php foreach($pending_reports as $mr):?>
             <tr>
+              <td><a href="<?= base_url().'uploads/images/'.$mr->img_src?>" target="_blank"><img src="<?= base_url().'uploads/images/'.$mr->img_src?>"/></a></td>
               <td><?= $mr->violation_name?></td>
               <td><?= date("F d,Y - h:i A", $mr->tapped_at)?></td>
               <td>
