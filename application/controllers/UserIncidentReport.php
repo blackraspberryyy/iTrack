@@ -161,15 +161,17 @@ class UserIncidentReport extends CI_Controller
             $this->UserIncidentReport_model->get_user_id($this->uri->segment(3))[0]->user_id;
             // echo $this->db->last_query();
             // die;
+
+            $user = $this->UserIncidentReport_model->get_user_id($this->uri->segment(3))[0];
             $incident_report = array(
                 'user_reported_by' => $this->session->userdata('userid'), //NULL if the ADMIN is the one to report
-                'user_id' => $this->UserIncidentReport_model->get_user_id($this->uri->segment(3))[0]->user_id,
+                'user_id' => $user->user_id,
                 'violation_id' => $this->input->post('classification'),
                 'incident_report_datetime' => strtotime($this->input->post('date_time')),
                 'incident_report_place' => $this->input->post('place'),
                 'effects_id' => 1,
                 //'incident_report_age' => $this->input->post('user_age'),
-                'incident_report_section_year' => $this->input->post('user_section_year'),
+                'incident_report_section_year' => $user->user_section.'/'.$user->user_year,
                 'incident_report_message' => $this->input->post('message'),
                 'incident_report_added_at' => time(),
             );
@@ -204,7 +206,7 @@ class UserIncidentReport extends CI_Controller
                 'incident_report_place' => $this->input->post('place'),
                 'effects_id' => 1,
                 //'incident_report_age' => $this->input->post('user_age'),
-                'incident_report_section_year' => $this->input->post('user_section_year'),
+                'incident_report_section_year' => '', // to be added when admin adds a user
                 'incident_report_message' => $this->input->post('message'),
                 'incident_report_added_at' => time(),
             );

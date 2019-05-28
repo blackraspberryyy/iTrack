@@ -148,13 +148,14 @@
                                                 <small><?= form_error('place'); ?></small>
                                             </div>
                                         </div>
+                                        <!-- 
                                         <div class="row">
-                                            <!-- <div class = "col-xs-3 col-xs-offset-2 <?= !empty(form_error('user_age')) ? 'has-error' : ''; ?>">
-                                                                                                                                                                                                                                                                        <br/>
-                                                                                                                                                                                                                                                                        <span class="control-label">Age</span><br/>
-                                                                                                                                                                                                                                                                        <input type="text" maxlength="3" onkeypress = 'return keypresshandler(event)' class="form-control" name = "user_age" id = "user_age" placeholder="Age" value = "<?= set_value('user_age'); ?>">
-                                                                                                                                                                                                                                                                        <small><?= form_error('user_age'); ?></small>
-                                                                                                                                                                                                                                                                    </div> -->
+                                            <div class = "col-xs-3 col-xs-offset-2 <?= !empty(form_error('user_age')) ? 'has-error' : ''; ?>">
+                                                <br/>
+                                                <span class="control-label">Age</span><br/>
+                                                <input type="text" maxlength="3" onkeypress = 'return keypresshandler(event)' class="form-control" name = "user_age" id = "user_age" placeholder="Age" value = "<?= set_value('user_age'); ?>">
+                                                <small><?= form_error('user_age'); ?></small>
+                                            </div>
                                             <div class="col-xs-8 col-xs-offset-2 <?= !empty(form_error('user_section_year')) ? 'has-error' : ''; ?>">
                                                 <br />
                                                 <span class="control-label">Section/Year</span><br />
@@ -162,6 +163,7 @@
                                                 <small><?= form_error('user_section_year'); ?></small>
                                             </div>
                                         </div>
+                                        -->
                                         <div class="row">
                                             <div class="col-xs-8 col-xs-offset-2 <?= !empty(form_error('message')) ? 'has-error' : ''; ?>">
                                                 <br />

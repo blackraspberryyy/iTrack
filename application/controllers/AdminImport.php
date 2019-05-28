@@ -59,6 +59,8 @@ class AdminImport extends CI_Controller {
                         "user_email"        => $data['F'],
                         "user_picture"      => 'images/admin/200900001.gif',
                         "user_course"       => $data['G'],
+                        "user_section"      => $data['H'],
+                        "user_year"         => $data['I'],
                         "user_isActive"     => 1,
                         "user_added_at"     => time(),
                         "user_updated_at"   => time()

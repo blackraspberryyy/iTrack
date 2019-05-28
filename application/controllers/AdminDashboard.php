@@ -46,6 +46,7 @@ class AdminDashboard extends CI_Controller {
         $ongoing_incident_reports_count = $this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 0)) != "" ? count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 0))) : 0;
         $finished_incident_reports_count = $this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 1)) != "" ? count($this->AdminDashboard_model->getIncidentReports(array("incident_report_status" => 1))) : 0;
         $incident_reports = $this->AdminDashboard_model->getComprehensiveIncidentReport();
+        $distinct_violations = $this->AdminDashboard_model->getDistinctViolationOnIncidentReport();
         $wma = 0;
         $agd = 0;
         $da = 0;
@@ -86,10 +87,10 @@ class AdminDashboard extends CI_Controller {
 
         $legal_paper_size = array(215.9,355.6);
         $reports_title = "ITrack Reports";
-        $samplePDF = new Pdf("P", "mm", $legal_paper_size, true, 'UTF-8', false);
+        $samplePDF = new Pdf("p", "mm", $legal_paper_size, true, 'UTF-8', false);
         $samplePDF->SetMargins(PDF_MARGIN_LEFT, 12, PDF_MARGIN_RIGHT, true);
         $samplePDF->SetAutoPageBreak(TRUE, 20);
-        $samplePDF->AddPage('P', $legal_paper_size);
+        $samplePDF->AddPage('L', $legal_paper_size);
         $samplePDF->setTitle($reports_title);
 
         $header = '
@@ -99,80 +100,174 @@ class AdminDashboard extends CI_Controller {
             </div>
         ';
 
-        $body = '
-            <h4>Incident Reports: </h4>
-            <table cellpadding="4" border="1">
-                <tr>
-                    <th style="width:15%;">Courses</th>
-                    <th style="width:85%;">No of Incident</th>
-                </tr>
-                <tr>
-                    <th>WMA</th>
-                    <td>'.$this->formatReport($wma).' incidents</td>
-                    </tr>
-                <tr>
-                    <th>AGD</th>
-                    <td>'.$this->formatReport($agd).' incidents</td>
-                </tr>
-                <tr>
-                    <th>DA</th>
-                    <td>'.$this->formatReport($da).' incidents</td>
-                </tr>
-                <tr>
-                    <th>EMC</th>
-                    <td>'.$this->formatReport($emc).' incidents</td>
-                </tr>
-                <tr>
-                    <th>SMBA</th>
-                    <td>'.$this->formatReport($smba).' incidents</td>
-                </tr>
-                <tr>
-                    <th>CS</th>
-                    <td>'.$this->formatReport($cs).' incidents</td>
-                </tr>
-                <tr>
-                    <th>ECE</th>
-                    <td>'.$this->formatReport($ece).' incidents</td>
-                </tr>
-                <tr>
-                    <th>EE</th>
-                    <td>'.$this->formatReport($ee).' incidents</td>
-                </tr>
-                <tr>
-                    <th>CPE</th>
-                    <td>'.$this->formatReport($cpe).' incidents</td>
-                </tr>
-                <tr>
-                    <th>ME</th>
-                    <td>'.$this->formatReport($me).' incidents</td>
-                </tr>
-                <tr>
-                    <th>CS</th>
-                    <td>'.$this->formatReport($cs).' incidents</td>
-                </tr>
-            </table>
-            <br/><br/><br/>
-            <table border="1">
-                <tr>
-                    <th align="center">Students</th>
-                    <th align="center">Teacher</th>
-                    <th align="center">Ongoing Incident Reports</th>
-                    <th align="center">Finished Incident Reports</th>
-                </tr>
-                <tr>
-                    <td align="center">'.$students_count.'</td>
-                    <td align="center">'.$teacher_count.'</td>
-                    <td align="center">'.$ongoing_incident_reports_count.'</td>
-                    <td align="center">'.$finished_incident_reports_count.'</td>
-                </tr>
-            </table>
+        $table = '
+            <tr>
+                <td style="width: 16%; text-align: center;">Major/Minor</td>
+                <td style="text-align: center; width: 84%">Program</td>
+            </tr>
+            <tr>
+                <td rowspan="2" style="text-align: center;">Nature of Offense</td>
+                <td style="width:6%;" colspan="5">CE</td>
+                <td style="width:6%;" colspan="5">CPE</td>
+                <td style="width:6%;" colspan="5">ECE</td>
+                <td style="width:6%;" colspan="5">EE</td>
+                <td style="width:6%;" colspan="5">EMC</td>
+                <td style="width:6%;" colspan="5">DA</td>
+                <td style="width:6%;" colspan="5">ME</td>
+                <td style="width:6%;" colspan="5">CS</td>
+                <td style="width:6%;" colspan="5">WMA</td> 
+                <td style="width:6%;" colspan="5">AGD</td>
+                <td style="width:6%;" colspan="5">SMBA</td>
+                <td style="width:6%;" colspan="5">ACT</td>
+                <td style="text-align: center;" colspan="10">TOTAL</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- CE -->
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- CPE -->
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- ECE -->
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- EE -->
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- EMC -->
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- DA -->
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- ME -->
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- CS -->
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- WMA -->
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- AGD -->
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- SMBA -->
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>T</td>
+                <!-- ACT -->
+                <td colspan="10"> </td>
+            </tr>
         ';
+        
+        $plot = $this->plot($incident_reports, $distinct_violations);
+        $body = '<table border="1" cellpadding="1">'.$table.$plot.'</table>';
 
         $content = $header.$body;
         $samplePDF->writeHTML($content);
         $samplePDF->Output($reports_title);
-        
-        exit;
+    }
+
+
+    public function plot($incident_reports, $distinct_violations) {
+        $returnString = '';
+        foreach($distinct_violations as $violation){
+            // start with <tr>
+            $returnString = $returnString.'<tr>';
+            
+            // do plotting here
+            $returnString = 
+                $returnString.'<td>'.$violation->violation_name.'</td>'.$this->plotToTerm($incident_reports, $violation->violation_id)
+            ;
+            
+            // end with </tr>
+            $returnString = $returnString.'</tr>';
+        }
+        return $returnString;
+    }
+
+    public function plotToTerm($incident_reports, $violation_id){
+        $total = 0;
+        $str = '';
+
+        $courses = ['CE', 'CPE', 'ECE', 'EE', 'EMC', 'DA', 'ME', 'CS', 'WMA', 'AGD', 'SMBA'];
+
+        // for student user
+        foreach($courses as $c){
+            $first = $this->AdminDashboard_model->getIncidentReportCount($c, $violation_id, '1st');
+            $second = $this->AdminDashboard_model->getIncidentReportCount($c, $violation_id, '2nd');
+            $third = $this->AdminDashboard_model->getIncidentReportCount($c, $violation_id, '3rd');
+            $fourth = $this->AdminDashboard_model->getIncidentReportCount($c, $violation_id, '4th');
+            $terminal = $this->AdminDashboard_model->getIncidentReportCount($c, $violation_id, 'Terminal');
+            $str = $str.
+                '<td>'.($first == 0 ? ' ' : $first).'</td>'.
+                '<td>'.($second == 0 ? ' ' : $second).'</td>'.
+                '<td>'.($third == 0 ? ' ' : $third).'</td>'.
+                '<td>'.($fourth == 0 ? ' ' : $fourth).'</td>'.
+                '<td>'.($terminal == 0 ? ' ' : $terminal).'</td>'
+            ;
+            $total = $total + $first + $second + $third + $fourth + $terminal;
+        }
+
+        $firstA = $this->AdminDashboard_model->getIncidentReportCount($c, $violation_id, '1st', TRUE);
+        $secondA = $this->AdminDashboard_model->getIncidentReportCount($c, $violation_id, '2nd', TRUE);
+        $thirdA = $this->AdminDashboard_model->getIncidentReportCount($c, $violation_id, '3rd', TRUE);
+        $fourthA = $this->AdminDashboard_model->getIncidentReportCount($c, $violation_id, '4th', TRUE);
+        $terminalA = $this->AdminDashboard_model->getIncidentReportCount($c, $violation_id, 'Terminal', TRUE);
+
+        // for teacher user
+        $str = $str.
+            '<td>'.($firstA == 0 ? ' ' : $first).'</td>'.
+            '<td>'.($secondA == 0 ? ' ' : $secondA).'</td>'.
+            '<td>'.($thirdA == 0 ? ' ' : $thirdA).'</td>'.
+            '<td>'.($fourthA == 0 ? ' ' : $fourthA).'</td>'.
+            '<td>'.($terminalA == 0 ? ' ' : $terminalA).'</td>'
+        ;
+
+        $total = $total + $firstA + $secondA + $thirdA + $fourthA + $terminalA;
+        //TOTAL
+        $str = $str.
+            '<td colspan="10" style="text-align:center;">'.$total.'</td>'
+        ;
+        return $str;
     }
 
     public function formatReport($course) {

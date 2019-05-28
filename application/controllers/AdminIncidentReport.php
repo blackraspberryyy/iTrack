@@ -85,7 +85,6 @@ class AdminIncidentReport extends CI_Controller
 
         if ($this->input->post('user_course') == 'student') {
             $this->form_validation->set_rules('user_course', 'Course', 'required');
-            $this->form_validation->set_rules('user_section_year', 'Section/Year', 'required');
         }
 
         $this->form_validation->set_rules('date_time', 'Date and Time', 'required');
@@ -138,7 +137,7 @@ class AdminIncidentReport extends CI_Controller
                 'incident_report_datetime' => strtotime($this->input->post('date_time')),
                 'incident_report_place' => $this->input->post('place'),
                 //'incident_report_age' => $this->input->post('user_age'),
-                'incident_report_section_year' => $this->input->post('user_section_year'),
+                'incident_report_section_year' => $user->user_section.'/'.$user->user_year,
                 'incident_report_message' => $this->input->post('message'),
                 'incident_report_isAccepted' => 1,
                 'incident_report_added_at' => time(),
@@ -287,7 +286,6 @@ class AdminIncidentReport extends CI_Controller
 
         if ($this->input->post('user_course') == 'student') {
             $this->form_validation->set_rules('user_course', 'Course', 'required');
-            $this->form_validation->set_rules('user_section_year', 'Section/Year', 'required');
         }
 
         $this->form_validation->set_rules('date_time', 'Date and Time', 'required');
@@ -326,15 +324,16 @@ class AdminIncidentReport extends CI_Controller
                 $violation_id = $this->input->post('classification');
             }
 
+            $user = $this->AdminIncidentReport_model->get_user_id($this->input->post('user_number'))[0];
             $incident_report = array(
                 'user_reported_by' => null, //NULL if the ADMIN is the one to report
-                'user_id' => $this->AdminIncidentReport_model->get_user_id($this->input->post('user_number'))[0]->user_id,
+                'user_id' => $user->user_id,
                 'violation_id' => $violation_id,
                 'effects_id' => $this->input->post('effect'),
                 'incident_report_datetime' => strtotime($this->input->post('date_time')),
                 'incident_report_place' => $this->input->post('place'),
                 //'incident_report_age' => $this->input->post('user_age'),
-                'incident_report_section_year' => $this->input->post('user_section_year'),
+                'incident_report_section_year' => $user->user_section.'/'.$user->user_year,
                 'incident_report_message' => $this->input->post('message'),
                 'incident_report_added_at' => time(),
             );

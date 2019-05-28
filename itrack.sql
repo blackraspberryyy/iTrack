@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2019 at 06:49 PM
+-- Generation Time: May 28, 2019 at 08:21 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.2
 
@@ -199,9 +199,11 @@ INSERT INTO `incident_report` (`incident_report_id`, `user_id`, `user_reported_b
 (1, 3, 4, 18, 1, NULL, '', 1530611400, 'F1202 FIT', 19, 'W31/2018', 'Student has been disrespectful since the day we met.', 1, 1, 1531802826),
 (2, 2, NULL, 24, 1, NULL, '', 1535781302, 'somwehere', 19, 'W31/3rd', 'asd', 1, 1, 1535781302),
 (3, 1, NULL, 24, 1, NULL, '', 1537502785, 'F1206', 19, 'W41', 'ASD', 0, 1, 1537502785),
-(4, NULL, 4, 15, 1, NULL, '', 1544754299, 'll', 19, 'erty', 'wryuko', 1, 0, 1544754130),
+(4, 2, 4, 15, 1, NULL, '', 1544754299, 'll', 19, 'erty', 'wryuko', 1, 0, 1544754130),
 (5, 2, NULL, 15, 1, NULL, '', 1545266820, 'Sample', 19, 'W31', 'test', 1, 1, 1545266951),
-(6, 2, NULL, 15, 1, NULL, '', 1545267360, 'wer', 19, '123123', '21312313', 1, 1, 1545267488);
+(6, 2, NULL, 15, 1, NULL, '', 1545267360, 'wer', 19, '123123', '21312313', 1, 1, 1545267488),
+(7, 2, NULL, 15, 1, NULL, NULL, 1559058600, 'Office', 0, '/4th', 'asdsadsa', 1, 1, 1559058651),
+(8, 2, NULL, 15, 1, NULL, NULL, 1559058840, 'Office', 0, 'W41/4th', 'dsadsa', 1, 1, 1559058866);
 
 -- --------------------------------------------------------
 
@@ -274,7 +276,10 @@ INSERT INTO `log` (`log_id`, `user_id`, `log_type`, `log_desc`, `log_added_at`) 
 (53, NULL, 'trail', 'Added deparment.', 1557242046),
 (54, NULL, 'trail', 'Set user to pending incident report.', 1557247539),
 (55, NULL, 'trail', 'Set user to pending incident report.', 1557247602),
-(56, NULL, 'trail', 'Set user to pending minor report.', 1557247706);
+(56, NULL, 'trail', 'Set user to pending minor report.', 1557247706),
+(57, NULL, 'trail', 'Filed an incident report', 1559058651),
+(58, NULL, 'trail', 'Filed an incident report', 1559058866),
+(59, NULL, 'trail', 'Set user to pending incident report.', 1559063811);
 
 -- --------------------------------------------------------
 
@@ -409,7 +414,9 @@ INSERT INTO `notifications` (`id`, `user_id`, `title`, `body`, `created_at`) VAL
 (4, 4, 'iTrack Notification 3', 'Incididunt ut consequat minim esse do veniam velit adipisicing.', 1544722745),
 (5, 4, 'iTrack Notification 0', 'Lorem ipsum dolor sit amet.', 1544723539),
 (6, 2, 'You have been reported.', 'Your violation is possession of alcoholic drink/prohibited drug.', 1545266951),
-(7, 2, 'You have been reported.', 'Your violation is possession of alcoholic drink/prohibited drug.', 1545267488);
+(7, 2, 'You have been reported.', 'Your violation is possession of alcoholic drink/prohibited drug.', 1545267488),
+(8, 2, 'You have been reported.', 'Your violation is possession of alcoholic drink/prohibited drug.', 1559058651),
+(9, 2, 'You have been reported.', 'Your violation is possession of alcoholic drink/prohibited drug.', 1559058866);
 
 -- --------------------------------------------------------
 
@@ -429,6 +436,8 @@ CREATE TABLE `user` (
   `user_email` varchar(255) NOT NULL,
   `user_picture` varchar(256) NOT NULL,
   `user_course` varchar(256) DEFAULT NULL,
+  `user_section` text NOT NULL,
+  `user_year` text NOT NULL,
   `user_access` enum('student','teacher') NOT NULL,
   `user_isactive` tinyint(1) NOT NULL DEFAULT '1',
   `user_added_at` int(11) NOT NULL,
@@ -439,12 +448,12 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_number`, `user_serial_no`, `user_firstname`, `user_lastname`, `user_middlename`, `user_password`, `user_fcm_token`, `user_email`, `user_picture`, `user_course`, `user_access`, `user_isactive`, `user_added_at`, `user_updated_at`) VALUES
-(1, '201511961', '72ADAFC4', 'Cham', 'Coscos', 'Mosquito', '8B5382D8441C3B21679FA89D75833E60888C49F8', '', 'hanzcoscos@gmail.com', 'images/student/dca2f1b853a2b0233c9a9f0983eab084.jpg', 'BSITWMA', 'student', 1, 1531202862, 1531623977),
-(2, '201512570', '498590A4', 'Meryll', 'Rodriguez', 'Ponce De Leon', '5EBFFD12F0A9184A3D623016B860CCAE820FC35C', 'fye9oLNcW7A:APA91bFhv5ujDnpNiPIB_c8oIrzQfdPqmMjTASOXKdQ_AOjYkVv6wTVU3LvtKYzcXJ7GRJ0jd-EBSUUKAnk5MvsmV1_LB_da0OY1l-f1WaWeoBN-uf8Kw6NAOpM8BNO3d27lHtL1IQ9v', 'mirayrodriguez21@gmail.com', 'images/student/1d71346309099d931fa2fb9fdbf8cb60.jpg', 'BSITWMA', 'student', 1, 1531329730, 1531624031),
-(3, '201510592', '735EE1D4', 'Ralph Adrian', 'Buen', NULL, 'D6424ECC823CA663BDCBAEA8E2D9DF58A4D0E2B8', '', 'rabuen@fit.edu.ph', 'images/student/c28aeafdba8274a90dba7e4072286433.jpg', 'BSITWMA', 'student', 1, 1531380182, 1531624066),
-(4, '200812161', '', 'Jane', 'Doe', 'Allison', '4a82cb6db537ef6c5b53d144854e146de79502e8', 'fye9oLNcW7A:APA91bFhv5ujDnpNiPIB_c8oIrzQfdPqmMjTASOXKdQ_AOjYkVv6wTVU3LvtKYzcXJ7GRJ0jd-EBSUUKAnk5MvsmV1_LB_da0OY1l-f1WaWeoBN-uf8Kw6NAOpM8BNO3d27lHtL1IQ9v', 'jda@fit.edu.ph', 'images/teacher/f63c2792c8d1553e7dd418a064e932ea.png', NULL, 'teacher', 1, 1531555055, 1535794831),
-(5, '201512030', 'DB99AFC4', 'Trisha', 'Cunanan', 'Balingit', 'B4C644ED8FA2EB260BA20F361E02BCF05C312D14', '', 'trishikim@gmail.com', 'images/student/27c88789c0d90160620c3502ab66586a.jpg', 'BSITWMA', 'student', 1, 1535793953, 1535794002);
+INSERT INTO `user` (`user_id`, `user_number`, `user_serial_no`, `user_firstname`, `user_lastname`, `user_middlename`, `user_password`, `user_fcm_token`, `user_email`, `user_picture`, `user_course`, `user_section`, `user_year`, `user_access`, `user_isactive`, `user_added_at`, `user_updated_at`) VALUES
+(1, '201511961', '72ADAFC4', 'Cham', 'Coscos', 'Mosquito', '8B5382D8441C3B21679FA89D75833E60888C49F8', '', 'hanzcoscos@gmail.com', 'images/student/dca2f1b853a2b0233c9a9f0983eab084.jpg', 'BSITWMA', 'W41', '4th', 'student', 1, 1531202862, 1531623977),
+(2, '201512570', '498590A4', 'Meryll', 'Rodriguez', 'Ponce De Leon', '5EBFFD12F0A9184A3D623016B860CCAE820FC35C', 'fye9oLNcW7A:APA91bFhv5ujDnpNiPIB_c8oIrzQfdPqmMjTASOXKdQ_AOjYkVv6wTVU3LvtKYzcXJ7GRJ0jd-EBSUUKAnk5MvsmV1_LB_da0OY1l-f1WaWeoBN-uf8Kw6NAOpM8BNO3d27lHtL1IQ9v', 'mirayrodriguez21@gmail.com', 'images/student/1d71346309099d931fa2fb9fdbf8cb60.jpg', 'BSITWMA', 'W41', '4th', 'student', 1, 1531329730, 1531624031),
+(3, '201510592', '735EE1D4', 'Ralph Adrian', 'Buen', NULL, 'D6424ECC823CA663BDCBAEA8E2D9DF58A4D0E2B8', '', 'rabuen@fit.edu.ph', 'images/student/c28aeafdba8274a90dba7e4072286433.jpg', 'BSITWMA', 'W41', 'Terminal', 'student', 1, 1531380182, 1531624066),
+(4, '200812161', '', 'Jane', 'Doe', 'Allison', '4a82cb6db537ef6c5b53d144854e146de79502e8', 'fye9oLNcW7A:APA91bFhv5ujDnpNiPIB_c8oIrzQfdPqmMjTASOXKdQ_AOjYkVv6wTVU3LvtKYzcXJ7GRJ0jd-EBSUUKAnk5MvsmV1_LB_da0OY1l-f1WaWeoBN-uf8Kw6NAOpM8BNO3d27lHtL1IQ9v', 'jda@fit.edu.ph', 'images/teacher/f63c2792c8d1553e7dd418a064e932ea.png', NULL, '', '', 'teacher', 1, 1531555055, 1535794831),
+(5, '201512030', 'DB99AFC4', 'Trisha', 'Cunanan', 'Balingit', 'B4C644ED8FA2EB260BA20F361E02BCF05C312D14', '', 'trishikim@gmail.com', 'images/student/27c88789c0d90160620c3502ab66586a.jpg', 'BSITWMA', 'W31', '3rd', 'student', 1, 1535793953, 1535794002);
 
 -- --------------------------------------------------------
 
@@ -633,13 +642,13 @@ ALTER TABLE `effects`
 -- AUTO_INCREMENT for table `incident_report`
 --
 ALTER TABLE `incident_report`
-  MODIFY `incident_report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `incident_report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `minor_reports`
@@ -657,7 +666,7 @@ ALTER TABLE `minor_reports_quota`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user`
