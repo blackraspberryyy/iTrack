@@ -29,7 +29,6 @@ class AdminImport extends CI_Controller {
     }
 
     public function importExcel() {
-        
         $file_mimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         if(isset($_FILES['xlsx_file']['name']) && in_array($_FILES['xlsx_file']['type'], $file_mimes)) {
             $arr_file = explode('.', $_FILES['xlsx_file']['name']);
@@ -42,11 +41,12 @@ class AdminImport extends CI_Controller {
             $spreadsheet = $reader->load($_FILES['xlsx_file']['tmp_name']);
             $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
             
+            $messages = array();
             $students = array();
             foreach($sheetData as $key => $data){
                 if($key === 1){
                     // row is a header
-                    //ignore this loop
+                    // ignore this loop
                 }else{
                     $tmp = array(
                         "user_number"       => $data['A'],
@@ -65,20 +65,53 @@ class AdminImport extends CI_Controller {
                         "user_added_at"     => time(),
                         "user_updated_at"   => time()
                     );
-                    $students[] = $tmp;
+
+                    if(!$this->isExistingInUsers($tmp['user_number'])){
+                        $students[] = $tmp;
+                    }else{
+                        $messages[] = 'User with '.$tmp['user_number'].' is already existing.<br/>';
+                    }
                 }
             }
 
-            $this->AdminImport_model->add_students($students);
-            $this->session->set_flashdata("success_import", "Students imported successfully.");
+            if(!empty($students)){
+                $this->AdminImport_model->add_students($students);
+            }
+            if(empty($messages)){
+                $this->session->set_flashdata("success_import", "Students imported successfully.");
+            }else{
+                $this->session->set_flashdata("success_import", "Students imported successfully. With some errors: <br/>".$this->displayMessages($messages));
+            }
 
             //-- AUDIT TRAIL
-            $this->Logger->saveToAudit("admin", "Import STudents from Excel File");
+            $this->Logger->saveToAudit("admin", "Import Students from Excel File");
             redirect(base_url().'AdminImport');
 
         }else{
             $this->session->set_flashdata("error_import", "There have been errors in importing the excel file.");
             redirect(base_url().'AdminImport');            
         }
+    }
+    
+    public function isExistingInUsers($user_number){
+        $user_number = trim($user_number);
+        $user_number = strip_tags($user_number);
+        $existingUsers = $this->AdminImport_model->getUsers();
+        $bool = false;
+        foreach($existingUsers as $user){
+            if($user->user_number == $user_number ){
+                $bool = true;
+                break;
+            }
+        }
+        return $bool;
+    }
+
+    public function displayMessages($messages){
+        $str = '';
+        foreach($messages as $m){
+            $str = $str.$m;
+        }
+        return $str;
     }
 }
