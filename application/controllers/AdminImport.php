@@ -41,15 +41,15 @@ class AdminImport extends CI_Controller {
             $spreadsheet = $reader->load($_FILES['xlsx_file']['tmp_name']);
             $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
             
-            $messages = array();
             $students = array();
+            $user_numbers = array();
             foreach($sheetData as $key => $data){
                 if($key === 1){
                     // row is a header
                     // ignore this loop
                 }else{
                     $tmp = array(
-                        "user_number"       => $data['A'],
+                        "user_number"       => $this->sanitizeUserNumber($data['A']),
                         "user_serial_no"    => '',
                         "user_firstname"    => $data['B'],
                         "user_lastname"     => $data['C'],
@@ -74,6 +74,8 @@ class AdminImport extends CI_Controller {
                 }
             }
 
+            $students = $this->removeDuplicates($students);
+
             if(!empty($students)){
                 $this->AdminImport_model->add_students($students);
             }
@@ -93,9 +95,28 @@ class AdminImport extends CI_Controller {
         }
     }
     
+    public function removeDuplicates($students){
+        $user_numbers = array_column($students, 'user_number');
+        $without_duplicates = array_unique($user_numbers);
+        $students_without_dupes = array();
+
+        foreach($without_duplicates as $w){
+            $students_without_dupes[] = $students[array_search($w, $user_numbers)];
+        }
+        
+        return $students_without_dupes;
+    }
+
+    public function sanitizeUserNumber($user_number){
+        $tmp = '';
+        if($user_number){
+            $tmp = trim($user_number);
+            $tmp = strip_tags($tmp);
+        }
+        return $tmp;
+    }
+
     public function isExistingInUsers($user_number){
-        $user_number = trim($user_number);
-        $user_number = strip_tags($user_number);
         $existingUsers = $this->AdminImport_model->getUsers();
         $bool = false;
         foreach($existingUsers as $user){
